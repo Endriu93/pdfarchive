@@ -34,7 +34,7 @@ public class UploadServlet extends HttpServlet {
 		String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = getFileName2(request);
-	    InputStream fileContent = filePart.getInputStream();	
+	   // InputStream fileContent = filePart.getInputStream();	
 	    response.getWriter().println(fileName);
 	}
 private static String getFileName(Part part) {
