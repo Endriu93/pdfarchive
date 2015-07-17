@@ -31,11 +31,11 @@ public class UploadServlet extends HttpServlet {
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = getFileName(filePart);
 	    InputStream fileContent = filePart.getInputStream();	
-	    response.getWriter().println("OK");
+	    response.getWriter().println(fileName);;
 
 	}
 private static String getFileName(Part part) {
-    for (String cd : part.getHeader("content-disposition").split(";")) {
+    for (String cd : part.getHeader("Content-Disposition").split(";")) {
         if (cd.trim().startsWith("filename")) {
             String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
             return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
