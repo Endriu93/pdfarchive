@@ -35,7 +35,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-	    String fileName = getFileName2(request);
+	    String fileName = getFileName(filePart);
 	   // InputStream fileContent = filePart.getInputStream();	
 	    response.getWriter().println(fileName);
 	}
