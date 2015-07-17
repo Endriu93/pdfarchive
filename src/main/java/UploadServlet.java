@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,6 +49,9 @@ private static String getFileName(Part part) {
 private String getFileName2(HttpServletRequest request)
 {
 	MultipartHttpServletRequest multiPartRequest = new StandardMultipartHttpServletRequest(request);
+	Iterator<String> it = multiPartRequest.getFileNames();
+	if(it.hasNext())
     return multiPartRequest.getFileNames().next();
+	else return "empty iterator";
 }
 }
