@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.multipart.*;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 /**
  * Servlet implementation class UploadServlet
  */
@@ -33,8 +34,7 @@ public class UploadServlet extends HttpServlet {
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = getFileName2(request);
 	    InputStream fileContent = filePart.getInputStream();	
-	    response.getWriter().println(fileName);;
-
+	    response.getWriter().println(fileName);
 	}
 private static String getFileName(Part part) {
     for (String cd : part.getHeader("Content-Disposition").split(";")) {
@@ -47,7 +47,7 @@ private static String getFileName(Part part) {
 }
 private String getFileName2(HttpServletRequest request)
 {
-	MultipartHttpServletRequest multiPartRequest = new DefaultMultipartHttpServletRequest(request);
+	MultipartHttpServletRequest multiPartRequest = new StandardMultipartHttpServletRequest(request);
     return multiPartRequest.getFileNames().next();
 }
 }
