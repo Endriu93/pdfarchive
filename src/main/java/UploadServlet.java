@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 import org.springframework.web.multipart.*;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 /**
  * Servlet implementation class UploadServlet
  */
@@ -45,7 +47,7 @@ private static String getFileName(Part part) {
 }
 private String getFileName2(HttpServletRequest request)
 {
-    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-    return multipartRequest.getFileNames().next();
+	MultipartHttpServletRequest multiPartRequest = new DefaultMultipartHttpServletRequest(request);
+    return multiPartRequest.getFileNames().next();
 }
 }
