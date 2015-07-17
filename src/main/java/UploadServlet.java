@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
+import org.springframework.web.multipart.*;
 /**
  * Servlet implementation class UploadServlet
  */
@@ -29,7 +29,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-	    String fileName = getFileName(filePart);
+	    String fileName = getFileName2(request);
 	    InputStream fileContent = filePart.getInputStream();	
 	    response.getWriter().println(fileName);;
 
@@ -42,5 +42,10 @@ private static String getFileName(Part part) {
         }
     }
     return null;
+}
+private String getFileName2(HttpServletRequest request)
+{
+    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    return multipartRequest.getFileNames().next();
 }
 }
