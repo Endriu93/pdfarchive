@@ -41,9 +41,9 @@ public class UploadServlet extends HttpServlet {
 	    String fileName = getFileName(filePart);
 	    InputStream fileContent = filePart.getInputStream();	
 	    PDDocument pd = new PDDocument();
-	    pd.load(fileContent);
-	    response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+ 	    	    fileContent.available());
-	    response.getWriter().println(extractTextFromPdf(fileContent));
+	    //pd.load(fileContent);
+	    response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
+	    //response.getWriter().println(extractTextFromPdf(fileContent));
 	}
 	// zwraca nazwę pliku przekazanego Partu
 	private static String getFileName(Part part) {
