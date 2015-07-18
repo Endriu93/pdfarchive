@@ -44,9 +44,9 @@ public class UploadServlet extends HttpServlet {
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
 	    String author = doc.getDocumentInformation().getAuthor();
+	    response.getWriter().println(" textSize: "+text.length()+" author: "+author+ "Language: "+doc.getDocumentCatalog().getLanguage());
 	    doc.close();
-	    response.getWriter().println(" textSize: "+text.length()+" author: "+author);
-	    
+
 	    response.getWriter().println(text);
 	   
 	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
