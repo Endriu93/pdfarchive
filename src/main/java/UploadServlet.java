@@ -43,6 +43,7 @@ public class UploadServlet extends HttpServlet {
 	    PDDocument doc = PDDocument.load(fileContent);
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
+	    doc.close();
 	    response.getWriter().println("file content: "+fileContent.available()+" textSize: "+text.length());
 	    
 	    response.getWriter().println(text);
