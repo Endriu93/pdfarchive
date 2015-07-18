@@ -56,7 +56,9 @@ public class UploadServlet extends HttpServlet {
 	private String extractTextFromPdf(InputStream filestream) throws IOException {
 	    PDDocument pd = new PDDocument();
 	    pd.load(filestream);
-	    return pd.toString();
+	    
+	    PDFTextStripper stripper = new PDFTextStripper();
+	    return stripper.getText(pd);
 	   
 	    
 	}
