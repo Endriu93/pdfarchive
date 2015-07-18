@@ -39,11 +39,10 @@ public class UploadServlet extends HttpServlet {
 		String ch = request.getCharacterEncoding();
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = getFileName(filePart);
-	    InputStream fileContent = filePart.getInputStream();	
-	    PDDocument pd = new PDDocument();
-	    //pd.load(fileContent);
-	    response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
-	    //response.getWriter().println(extractTextFromPdf(fileContent));
+	    InputStream fileContent = filePart.getInputStream();
+	   
+	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
+	    response.getWriter().println(extractTextFromPdf(fileContent));
 	}
 	// zwraca nazwę pliku przekazanego Partu
 	private static String getFileName(Part part) {
