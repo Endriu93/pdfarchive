@@ -1,5 +1,9 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -10,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
 
@@ -35,6 +41,7 @@ public class UploadServlet extends HttpServlet {
 	    String fileName = getFileName(filePart);
 	    InputStream fileContent = filePart.getInputStream();	
 	    response.getWriter().println(fileName+"  encoding: "+ch);
+	    response.getWriter().println(extractTextFromPdf(fileContent));
 	}
 	// zwraca nazwę pliku przekazanego Partu
 	private static String getFileName(Part part) {
@@ -46,7 +53,13 @@ public class UploadServlet extends HttpServlet {
 		}
     return null;
 	}
+	private String extractTextFromPdf(InputStream filestream) throws IOException {
+	    PDDocument pd = new PDDocument();
+	    pd.load(filestream);
+	    return pd.toString();
+	   
+	    
+	}
+	    
 	
-	
-
 }
