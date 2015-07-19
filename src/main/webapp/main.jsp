@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>File Upload:</h3>
-Select a file to upload: ąą <br />
+Select a file to upload: Ą ą ą  <br />
 <form action="UploadServlet" method="post"  
                         enctype="multipart/form-data">
 <input type="file" name="file" size="50" />
