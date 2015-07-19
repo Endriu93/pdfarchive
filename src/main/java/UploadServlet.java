@@ -46,7 +46,7 @@ public class UploadServlet extends HttpServlet {
 	    String author = doc.getDocumentInformation().getAuthor();
 	    response.getWriter().println(" textSize: "+text.length()+" author: "+author+ "Language: "+doc.getDocumentCatalog().getLanguage());
 	    doc.close();
-	    response.setHeader("Accept-Language", "pl");
+	    response.setHeader("Content-Language", "pl");
 	    response.getWriter().println(text);
 	   
 	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
