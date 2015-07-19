@@ -1,2 +1,2 @@
 echo "********this is a test to ensure it's running.  You should see this line in your git push output"
-export LANG=ru_RU.UTF-8
+export LANG=pl_PL.UTF-8
