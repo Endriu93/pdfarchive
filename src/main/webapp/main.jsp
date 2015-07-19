@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta http-equiv="Accept-Language" content="pl">
 <title>File Uploading Form</title>
 </head>
 <body>
