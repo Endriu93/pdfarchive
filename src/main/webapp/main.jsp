@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <title>File Uploading Form</title>
 </head>
 <body>
