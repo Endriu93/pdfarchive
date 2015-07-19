@@ -47,6 +47,7 @@ public class UploadServlet extends HttpServlet {
 	    response.getWriter().println(" textSize: "+text.length()+" author: "+author+ "Language: "+doc.getDocumentCatalog().getLanguage());
 	    doc.close();
 	    response.setHeader("Content-Language", "pl");
+	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().println(text);
 	   
 	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
