@@ -50,7 +50,7 @@ public class UploadServlet extends HttpServlet {
 	    response.setHeader("Charset", "UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().println(text);
-	    response.getWriter().println("ąąąąęęłłśśćć");
+	    response.getWriter().println("ąąąąęęłłśśćć"+"encoding"+response.getCharacterEncoding());
 	   
 	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
 	    //response.getWriter().println(extractTextFromPdf(fileContent));

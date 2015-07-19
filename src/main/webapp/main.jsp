@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Accept-Language" content="pl">
- <meta charset="UTF-8">
+<meta charset="UTF-8">
 <title>File Uploading Form</title>
 </head>
 <body>
