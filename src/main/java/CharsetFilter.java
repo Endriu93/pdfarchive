@@ -10,7 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-  @WebFilter(filterName = "UTF-8")
   public class CharsetFilter implements Filter
    {
    private String encoding;
