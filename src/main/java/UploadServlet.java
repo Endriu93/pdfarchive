@@ -39,25 +39,19 @@ public class UploadServlet extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 	    response.setHeader("Content-Type", "text/html;charset=UTF-8");
 	    
-
-		String ch = request.getCharacterEncoding();
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = getFileName(filePart);
 	    InputStream fileContent = filePart.getInputStream();
 	    PDDocument doc = PDDocument.load(fileContent);
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
-	    String author = doc.getDocumentInformation().getAuthor();
-	    response.getWriter().println(" textSize: "+text.length()+" author: "+author+ "Language: "+doc.getDocumentCatalog().getLanguage());
 	    doc.close();
-	   // response.setHeader("Content-Language", "pl");
-	    //response.setHeader("Charset", "UTF-8");
+	  
+	    response.getWriter().println(fileName);
 	    response.getWriter().println(text);
-	    response.getWriter().println("ą"+"encoding"+response.getCharacterEncoding());
-	    response.getWriter().println("filename: "+getFileName(filePart));
+	  
 	   
-	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
-	    //response.getWriter().println(extractTextFromPdf(fileContent));
+	  
 	}
 	// zwraca nazwę pliku przekazanego Partu
 	private static String getFileName(Part part) {
@@ -69,15 +63,7 @@ public class UploadServlet extends HttpServlet {
 		}
     return null;
 	}
-	private String extractTextFromPdf(InputStream filestream) throws IOException {
-	    PDDocument pd = new PDDocument();
-	    pd.load(filestream);
-	    
-	    PDFTextStripper stripper = new PDFTextStripper();
-	    return stripper.getText(pd);
-	   
-	    
-	}
+	
 	    
 	
 }
