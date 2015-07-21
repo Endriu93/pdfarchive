@@ -38,6 +38,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    response.setCharacterEncoding("UTF-8");
 	    response.setHeader("Content-Type", "text/html;charset=UTF-8");
+	    
 
 		String ch = request.getCharacterEncoding();
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
@@ -53,6 +54,7 @@ public class UploadServlet extends HttpServlet {
 	    //response.setHeader("Charset", "UTF-8");
 	    response.getWriter().println(text);
 	    response.getWriter().println("ą"+"encoding"+response.getCharacterEncoding());
+	    response.getWriter().println("filename: "+getFileName(filePart));
 	   
 	    //response.getWriter().println(fileName+"  encoding: "+ch + " inputStream size: "+  fileContent.available());
 	    //response.getWriter().println(extractTextFromPdf(fileContent));
