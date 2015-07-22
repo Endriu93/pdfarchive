@@ -10,8 +10,8 @@ import com.mysql.jdbc.Driver;
 public class Database {
 	
 	private static Database database = null;
-	private static final String host = "$OPENSHIFT_MYSQL_DB_HOST";
-	private static final String port = "$OPENSHIFT_MYSQL_DB_PORT";
+	private static final String host = java.lang.System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+	private static final String port = java.lang.System.getenv("OPENSHIFT_MYSQL_DB_PORT");
 	private static final String databaseName = "pdfarchive";
 	private static final String user = "adminIBymkZq";
 	private static final String password = "DRTJ4PEjeMsG";
