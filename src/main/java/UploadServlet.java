@@ -57,9 +57,9 @@ public class UploadServlet extends HttpServlet {
 	    try {
 	    	database.connect();
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("classNotFound");
+			e.printStackTrace(response.getWriter());
 		} catch (SQLException e) {
-			throw new RuntimeException("Error connecting to database");
+			e.printStackTrace(response.getWriter());
 		}
 	    
 	    // TODO
