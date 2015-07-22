@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.sql.SQLException;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -27,9 +28,16 @@ import org.springframework.web.multipart.support.StandardMultipartHttpServletReq
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+    private Database database = null;
     public UploadServlet() {
         super();
+        try {
+			database.getInstance();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,6 +57,8 @@ public class UploadServlet extends HttpServlet {
 	  
 	    response.getWriter().println(fileName);
 	    response.getWriter().println(text);
+	    
+	    
 	  
 	   
 	  
