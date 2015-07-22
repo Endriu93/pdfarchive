@@ -31,7 +31,7 @@ public class UploadServlet extends HttpServlet {
     private Database database = null;
     public UploadServlet() {
         super();
-		database.getInstance();
+		database = Database.getInstance();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
