@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+
 import com.mysql.jdbc.Driver;
 
 public class Database {
@@ -13,28 +15,45 @@ public class Database {
 	private static final String databaseName = "pdfarchive";
 	private static final String user = "adminIBymkZq";
 	private static final String password = "DRTJ4PEjeMsG";
+	
+	private Connection connection = null;
+	
+	
 
-	//returns an instance of Database with created Connection  do MySql
-	public static Database getInstance() throws ClassNotFoundException, SQLException
+	//returns an instance of Database 
+	public static Database getInstance() 
 	{
 		if(database == null)
 			{
 				database = new Database();
-				System.out.println("-------- MySQL JDBC Connection Testing ------------");
-				 
-					Class.forName("com.mysql.jdbc.Driver");
-					System.out.println("MySQL JDBC Driver Registered!");
-					Connection connection = null;
-			 
-					connection = DriverManager
-					.getConnection("jdbc:mysql://"+host+":"+port+"/"+databaseName,user, password);
-			 
-					if (connection != null) {
-						System.out.println("You made it, take control your database now!");
-					} else {
-						System.out.println("Failed to make connection!");
-					}
 			}
 		return database;
 	}	
+	
+	public boolean connect() throws ClassNotFoundException, SQLException
+	{
+		System.out.println("-------- MySQL JDBC Connection Testing ------------");
+		 
+		Class.forName("com.mysql.jdbc.Driver");
+		System.out.println("MySQL JDBC Driver Registered!");
+		Connection connection = null;
+ 
+		connection = DriverManager
+		.getConnection("jdbc:mysql://"+host+":"+port+"/"+databaseName,user, password);
+ 
+		if (connection != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void closeConnection() throws SQLException
+	{
+		connection.close();
+	}
+	
+	public boolean addPdf(PDDocument doc)
+	{
+		return true;
+	}
 }

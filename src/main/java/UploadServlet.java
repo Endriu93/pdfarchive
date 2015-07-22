@@ -31,7 +31,7 @@ public class UploadServlet extends HttpServlet {
     private Database database = null;
     public UploadServlet() {
         super();
-       
+		database.getInstance();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class UploadServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    response.setCharacterEncoding("UTF-8");
-	    response.setHeader("Content-Type", "text/html;charset=UTF-8");
+	    response.setHeader("Content-Type","text/html;charset=UTF-8");
 	    
 	    
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
@@ -53,14 +53,25 @@ public class UploadServlet extends HttpServlet {
 	    response.getWriter().println(fileName);
 	    response.getWriter().println(text);
 	    
+	   
 	    try {
-			database.getInstance();
-			System.out.println("ddd");
+	    	database.connect();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw new RuntimeException("classNotFound");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error connecting to database");
 		}
+	    
+	    // TODO
+	    
+	    try {
+	    	database.closeConnection();
+	    }
+		
+		catch (SQLException e) {
+			throw new RuntimeException("Error connecting to database");
+		}
+		
 	  
 	}
 	// zwraca nazwę pliku przekazanego Partu
