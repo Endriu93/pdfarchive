@@ -49,6 +49,7 @@ public class Database {
 	
 	public void closeConnection() throws SQLException
 	{
+		if(connection!=null)
 		connection.close();
 	}
 	
