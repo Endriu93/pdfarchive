@@ -31,11 +31,8 @@ public class Database {
 	}	
 	
 	public boolean connect() throws ClassNotFoundException, SQLException
-	{
-		System.out.println("-------- MySQL JDBC Connection Testing ------------");
-		 
+	{		 
 		Class.forName("com.mysql.jdbc.Driver");
-		System.out.println("MySQL JDBC Driver Registered!");
 		Connection connection = null;
  
 		connection = DriverManager

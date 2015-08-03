@@ -19,8 +19,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
-
-
 /**
  * Servlet implementation class UploadServlet
  */
@@ -72,7 +70,6 @@ public class UploadServlet extends HttpServlet {
 			throw new RuntimeException("Error connecting to database");
 		}
 		
-	  
 	}
 	// zwraca nazwę pliku przekazanego Partu
 	private static String getFileName(Part part) {
