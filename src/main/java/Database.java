@@ -23,7 +23,7 @@ public class Database {
 	//returns an instance of Database 
 	public static Database getInstance() 
 	{
-		if(database == null)
+		if(database == null) //
 			{
 				database = new Database();
 			}
