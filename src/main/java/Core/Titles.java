@@ -1,6 +1,6 @@
-package core;
+package Core;
 
-public class Tags implements Dictionary {
+public class Titles implements Dictionary {
 
 	@Override
 	public void addEntity(String name) {
