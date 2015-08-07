@@ -1,4 +1,4 @@
-package Core;
+package Core.dictionaries;
 
 public class Tags implements Dictionary {
 

@@ -1,4 +1,4 @@
-package Core;
+package Core.dictionaries;
 
 import java.sql.SQLException;
 

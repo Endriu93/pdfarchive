@@ -1,9 +1,11 @@
-package Core;
+package Core.dictionaries;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import Core.Database;
 
 public class Categories implements Dictionary {
 
@@ -69,7 +71,7 @@ public class Categories implements Dictionary {
 		Statement statement = connection.createStatement();
 		resultSet = statement.executeQuery(get);
 		resultSet.next();
-		res = resultSet.getString(0);
+		res = resultSet.getString(1);
 		connection.close();
 		resultSet.close();
 		return res;
@@ -85,7 +87,7 @@ public class Categories implements Dictionary {
 		Statement statement = connection.createStatement();
 		resultSet = statement.executeQuery(get);
 		resultSet.next();
-		res = resultSet.getInt(0);
+		res = resultSet.getInt(1);
 		connection.close();
 		resultSet.close();
 		return res;
