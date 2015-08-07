@@ -12,19 +12,19 @@ create index  Documents_ADD_DATE on Documents (ADD_DATE);
 
 create table if not exists Authors (
 AUTHOR_ID int primary key not null,
-AUTHOR_NAME text );
+AUTHOR_NAME unique not null );
 
 create index  Authors_AUTHOR_NAME on Authors(AUTHOR_NAME(10));
 
 create table if not exists Titles (
 TITLE_ID int primary key not null,
-NAME text );
+NAME text unique not null);
 
 create index  Titles_NAME on Titles(NAME(10));
 
 create table if not exists Words (
 WORD_ID int primary key not null,
-NAME text );
+NAME text unique not null);
 
 create index  Words_NAME on Words(NAME(10));
 
@@ -42,7 +42,7 @@ create index  IndexInfo_IS_INDEXED on IndexInfo(IS_INDEXED);
 
 create table if not exists Tags (
 TAG_ID int not null primary key,
-NAME text not null );
+NAME text unique not null );
 
 create index  Tags_NAME on Tags(NAME(10));
 
@@ -52,7 +52,7 @@ TAG_ID int not null references Tags(TAG_ID) ON DELETE CASCADE );
 
 create table if not exists Categories (
 CATEGORY_ID int not null primary key,
-NAME text not null );
+NAME unique not null );
 
 create index  Category_NAME on Categories(NAME(10));
 
