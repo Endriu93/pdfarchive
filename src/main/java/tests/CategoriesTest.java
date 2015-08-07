@@ -11,31 +11,34 @@ import Core.Database;
 
 public class CategoriesTest {
 
-	Categories categories;
+	DictionaryTable dct;
+	Database db;
 	@Before
 	public void setUp() throws Exception {
-		Database db = new Database("pdfarchive","localhost" , "3306", "root", "xxx");
-		categories = new Categories(db);
-				
+		db = new Database("pdfarchive","localhost" , "3306", "root", "xxx");				
 	}
-
+	
 	@Test
-	public void baseFunctionalities() {
-		try{
-			int id=0;
-			String name=null;
-		categories.addEntity("Java");
-		categories.addEntity("Java");
-
-		id = categories.getEntityByName("Java");
-		name = categories.getEntityById(id);
-		assertEquals("Java".toLowerCase(), name.toLowerCase());
+	public void DictionaryTableTest()
+	{
+		try
+		{
+		dct = new DictionaryTable(db,Dct.CATEGORIES);
+		int id=0;
+		String name=null;
+		dct.addEntity("Java");
+		dct.addEntity("Cpp");
+	
+		id = dct.getEntityByName("Cpp");
+		name = dct.getEntityById(id);
+		assertEquals("Cpp".toLowerCase(), name.toLowerCase());		
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			fail("exception thrown");
+			fail("Unexpected exception thrown");
 		}
+		
 	}
 
 }
