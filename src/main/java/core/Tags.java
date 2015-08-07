@@ -1,6 +1,6 @@
-package wegrzyn.pdfarchive.core;
+package core;
 
-public class Words implements Dictionary {
+public class Tags implements Dictionary {
 
 	@Override
 	public void addEntity(String name) {

@@ -1,4 +1,4 @@
-package wegrzyn.pdfarchive.core;
+package core;
 
 public class Titles implements Dictionary {
 

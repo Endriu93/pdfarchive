@@ -1,4 +1,4 @@
-package wegrzyn.pdfarchive.core;
+package core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
