@@ -9,7 +9,7 @@ import org.junit.Test;
 import Core.dictionaries.*;
 import Core.Database;
 
-public class CategoriesTest {
+public class DistionaryTest {
 
 	DictionaryTable dct;
 	Database db;
@@ -19,7 +19,7 @@ public class CategoriesTest {
 	}
 	
 	@Test
-	public void DictionaryTableTest()
+	public void categoriesTest()
 	{
 		try
 		{
@@ -32,6 +32,31 @@ public class CategoriesTest {
 		id = dct.getEntityByName("Cpp");
 		name = dct.getEntityById(id);
 		assertEquals("Cpp".toLowerCase(), name.toLowerCase());		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			fail("Unexpected exception thrown");
+		}
+		
+	}
+	@Test
+	public void AuthorsTest()
+	{
+		try
+		{
+		dct = new DictionaryTable(db,Dct.AUTHORS);
+		int id=0;
+		String name=null;
+		dct.addEntity("Andrzej Węgrzyn");
+		dct.addEntity("Andrzej Węgrzyn");
+	
+		id = dct.getEntityByName("Andrzej Węgrzyn");
+		name = dct.getEntityById(id);
+		assertEquals("andrzej węgrzyn".toLowerCase(), name.toLowerCase());
+		//assertEquals(dct.deleteEntityById(id),true);
+		assertTrue(dct.deleteEntityByName(name));
+		
 		}
 		catch(Exception e)
 		{
