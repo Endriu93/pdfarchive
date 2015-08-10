@@ -1,6 +1,13 @@
 package Core;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,34 +124,89 @@ public class Documents {
    *  @param document : Object implementing Document interface. Functions of Document interface are used while inserting Document to Database and information exchange with some Database Tables.
  * @throws SQLException 
  * @throws ClassNotFoundException 
+ * @return true if insert was successful
+ * @throws FileNotFoundException 
    */
-  public void addDocument(Document document) throws ClassNotFoundException, SQLException {
-		connection = database.getConnection();
-		connection.setAutoCommit(false);
-		
-		DictionaryTable words = new DictionaryTable(database,Dct.WORDS);
-		DictionaryTable authors = new DictionaryTable(database,Dct.AUTHORS);
-		DictionaryTable titles = new DictionaryTable(database,Dct.TITLES);
-		DictionaryTable tags = new DictionaryTable(database,Dct.TAGS);
-		DictionaryTable categories = new DictionaryTable(database,Dct.CATEGORIES);
-		
-		//Link author = new Link(database,LinksTableEnum.)
+  public boolean addDocument(Document document) throws ClassNotFoundException, SQLException, FileNotFoundException {
 
-		
-  }
+	  	PreparedStatement myStmt = null;
+		FileInputStream input = null;
 
-  public InputStream getData(Integer id) throws SQLException, ClassNotFoundException {
-	  	InputStream res;
-		String get = String.format("select DATA from Documents where  DOCUMENT_ID = %d ;",id);
-		
+
+	  	boolean res;
+		String insert = "insert into Documents values ("+
+						"default, "+
+						"LOAD_FILE('"+
+						document.getDataPath()+"'),"+
+						String.valueOf(document.getAuthorID())+", "+
+						String.valueOf(document.getTitleId())+", "+
+						document.getDescription()+", "+
+						document.getAddDate()+", "+
+						document.getCreateDate()+"' "+
+						String.valueOf(document.getSize())+
+						" );";
+		String insert2 = "insert into Documents values(default,?,?,?,?,?,?,?)";
+		File theFile = new File(document.getDataPath());
+		input = new FileInputStream(theFile);
+		System.out.println(insert);
 		connection = database.getConnection();
 		Statement statement = connection.createStatement();
-		resultSet = statement.executeQuery(get);
-		resultSet.next();
-		res = resultSet.getBinaryStream(1);
+		myStmt = connection.prepareStatement(insert2);
+		myStmt.setBinaryStream(1, input);
+		myStmt.setInt(2, document.getAuthorID());
+		myStmt.setInt(3, document.getTitleId());
+		myStmt.setString(4,document.getDescription());
+		myStmt.setString(5, document.getAddDate());
+		myStmt.setString(6, document.getCreateDate());
+		myStmt.setInt(7, document.getSize());
+		
+		System.out.println("Reading input file: " + theFile.getAbsolutePath());
+		
+		// 4. Execute statement
+		System.out.println("\nStoring resume in database: " + theFile);
+		System.out.println(myStmt.toString());
+		
+		myStmt.executeUpdate();
+		
+		System.out.println("\nCompleted successfully!");
+		
+		
+		res = statement.executeUpdate(insert) > 0 ? true : false;
 		connection.close();
 		resultSet.close();
 		return res;
+  }
+
+  public File getData(Integer id) throws SQLException, ClassNotFoundException, IOException {
+	  	InputStream input = null;
+		FileOutputStream output = null;
+		
+		String get = String.format("select DATA from Documents where DOCUMENT_ID = %d",id);
+		Statement statement = connection.createStatement();
+		resultSet = statement.executeQuery(get);
+		// 3. Set up a handle to the file
+		File theFile = new File("resume_from_db.pdf");
+		output = new FileOutputStream(theFile);
+
+		if (resultSet.next()) {
+
+			input = resultSet.getBinaryStream("resume"); 
+			System.out.println("Reading resume from database...");
+			System.out.println(get);
+			
+			byte[] buffer = new byte[1024];
+			while (input.read(buffer) > 0) {
+				output.write(buffer);
+			}
+			
+			System.out.println("\nSaved to file: " + theFile.getAbsolutePath());
+			
+			System.out.println("\nCompleted successfully!");				
+		}
+		
+		return theFile;
+
+		
   }
 
 }
