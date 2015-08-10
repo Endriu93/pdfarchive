@@ -15,7 +15,7 @@ public class DistionaryTest {
 	Database db;
 	@Before
 	public void setUp() throws Exception {
-		db = new Database("pdfarchive","localhost" , "3306", "root", "xxx");				
+		db = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");				
 	}
 	
 	@Test
