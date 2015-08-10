@@ -47,8 +47,8 @@ public class PreparedDocument implements Document {
 		this.size= size;
 	}
 	@Override
-	public String getDataPath() {
-		return null;
+	public InputStream getData() {
+		return data;
 	}
 
 	@Override

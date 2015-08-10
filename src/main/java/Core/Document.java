@@ -9,7 +9,7 @@ public interface Document {
   /* {author=Andrzej Węgrzyn}*/
 
 
-  public String getDataPath();
+  public InputStream getData();
 
   public int getAuthorID();
 

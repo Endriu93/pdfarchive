@@ -1,21 +1,18 @@
 package Core;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Connection;
 
-import Core.dictionaries.Dct;
-import Core.dictionaries.DictionaryTable;
-import Core.links.Link;
+
 
 /** 
  *  This class is a database level class and is responsible for a simple database operations. It doesn't make any logic. 
@@ -130,51 +127,36 @@ public class Documents {
   public boolean addDocument(Document document) throws ClassNotFoundException, SQLException, FileNotFoundException {
 
 	  	PreparedStatement myStmt = null;
-		FileInputStream input = null;
 
 
 	  	boolean res;
-		String insert = "insert into Documents values ("+
-						"default, "+
-						"LOAD_FILE('"+
-						document.getDataPath()+"'),"+
-						String.valueOf(document.getAuthorID())+", "+
-						String.valueOf(document.getTitleId())+", "+
-						document.getDescription()+", "+
-						document.getAddDate()+", "+
-						document.getCreateDate()+"' "+
-						String.valueOf(document.getSize())+
-						" );";
+		
 		String insert2 = "insert into Documents values(default,?,?,?,?,?,?,?)";
-		File theFile = new File(document.getDataPath());
-		input = new FileInputStream(theFile);
-		System.out.println(insert);
+		
 		connection = database.getConnection();
 		Statement statement = connection.createStatement();
 		myStmt = connection.prepareStatement(insert2);
-		myStmt.setBinaryStream(1, input);
+		myStmt.setBinaryStream(1, document.getData());
 		myStmt.setInt(2, document.getAuthorID());
 		myStmt.setInt(3, document.getTitleId());
 		myStmt.setString(4,document.getDescription());
-		myStmt.setString(5, document.getAddDate());
-		myStmt.setString(6, document.getCreateDate());
+		myStmt.setDate(5, new Date(2001,7,7));
+		myStmt.setDate(6, new Date(2001,3,3));
 		myStmt.setInt(7, document.getSize());
 		
-		System.out.println("Reading input file: " + theFile.getAbsolutePath());
+		System.out.println("Reading input file: ");
 		
 		// 4. Execute statement
-		System.out.println("\nStoring resume in database: " + theFile);
+		System.out.println("\nStoring resume in database: " );
 		System.out.println(myStmt.toString());
 		
 		myStmt.executeUpdate();
 		
 		System.out.println("\nCompleted successfully!");
 		
-		
-		res = statement.executeUpdate(insert) > 0 ? true : false;
 		connection.close();
 		resultSet.close();
-		return res;
+		return true;
   }
 
   public File getData(Integer id) throws SQLException, ClassNotFoundException, IOException {

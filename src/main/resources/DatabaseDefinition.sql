@@ -1,11 +1,11 @@
 create table if not exists Documents (
 DOCUMENT_ID int auto_increment not null primary key,
-DATA BLOB not null,	-- raw Data
+DATA LONGBLOB not null,	-- raw Data
 AUTHOR_ID int not null references Authors(AUTHOR_ID),
 TITLE_ID text not null references Titles(TITLE_ID),
 DESCRIPTION text not null,
-ADD_DATE datetime not null,
-CREATE_DATE datetime not null, -- it is the date of document creation, modification
+ADD_DATE date not null,
+CREATE_DATE date not null, -- it is the date of document creation, modification
 SIZE int not null check (SIZE>0) );
 
 drop index Documents_ADD_DATE on Documents;
