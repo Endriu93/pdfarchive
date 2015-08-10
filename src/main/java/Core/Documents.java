@@ -155,7 +155,6 @@ public class Documents {
 		System.out.println("\nCompleted successfully!");
 		
 		connection.close();
-		resultSet.close();
 		return true;
   }
 
@@ -189,6 +188,28 @@ public class Documents {
 		return theFile;
 
 		
+  }
+  public InputStream getDataByTitleId(int id) throws SQLException
+  {
+	  String select = String.format("select DATA from Documents where TITLE_ID = %d",id);
+	  Statement stmt = connection.createStatement();
+	  resultSet = stmt.executeQuery(select);
+	  
+	  InputStream input;
+	  input = resultSet.getBinaryStream(1);
+	  return input;
+  }
+  public InputStream getDataByAuthorId(int id) throws SQLException, ClassNotFoundException
+  {
+	  String select = String.format("select DATA from Documents where AUTHOR_ID = %d",id);
+	  connection = database.getConnection();
+	  Statement stmt = connection.createStatement();
+	  resultSet = stmt.executeQuery(select);
+	  
+	  InputStream input;
+	  resultSet.next();
+	  input = resultSet.getBinaryStream(1);
+	  return input;
   }
 
 }
