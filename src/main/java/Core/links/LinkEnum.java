@@ -1,12 +1,12 @@
 package Core.links;
 
-import Core.dictionaries.Dct;
+import Core.dictionaries.DictionaryEnum;
 /**
  * 
  * @author Comarch
  *	
  */
-public enum LinksTableEnum {
+public enum LinkEnum {
 	DOCUMENTWORD("DocumentWord","DOCUMENT_ID","WORD_ID"),
 	DOCUMENTTAG("DocumentTag","DOCUMENT_ID","TAG_ID"),
 	DOCUMENTCATEGORY("DocumentCategory","DOCUMENT_ID","CATEGORY_ID");
@@ -15,7 +15,7 @@ public enum LinksTableEnum {
 	private String left;
 	private String right;
 	
-	LinksTableEnum(String tableName, String left , String right)
+	LinkEnum(String tableName, String left , String right)
 	{
 		tbName = tableName;
 		this.left = left;

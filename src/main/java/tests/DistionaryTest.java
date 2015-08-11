@@ -11,7 +11,7 @@ import Core.Database;
 
 public class DistionaryTest {
 
-	DictionaryTable dct;
+	Dictionary dct;
 	Database db;
 	@Before
 	public void setUp() throws Exception {
@@ -23,7 +23,7 @@ public class DistionaryTest {
 	{
 		try
 		{
-		dct = new DictionaryTable(db,Dct.CATEGORIES);
+		dct = new Dictionary(db,DictionaryEnum.CATEGORIES);
 		int id=0;
 		String name=null;
 		dct.addEntity("Java");
@@ -45,7 +45,7 @@ public class DistionaryTest {
 	{
 		try
 		{
-		dct = new DictionaryTable(db,Dct.AUTHORS);
+		dct = new Dictionary(db,DictionaryEnum.AUTHORS);
 		int id=0;
 		String name=null;
 		dct.addEntity("Andrzej Węgrzyn");

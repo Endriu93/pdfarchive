@@ -13,7 +13,7 @@ import Core.Database;
 public class Link {
 
   private Database database;
-  private LinksTableEnum LinkEnum;
+  private LinkEnum LinkEnum;
   private Connection connection;
   private Statement statement;
   private ResultSet resultSet;
@@ -21,7 +21,7 @@ public class Link {
   /** 
    *  add pair of ids to table
    */
-  public Link(Database db, LinksTableEnum ln)
+  public Link(Database db, LinkEnum ln)
   {
 	  database = db;
 	  LinkEnum = ln;

@@ -126,15 +126,10 @@ public class Documents {
    */
   public boolean addDocument(Document document) throws ClassNotFoundException, SQLException, FileNotFoundException {
 
-	  	PreparedStatement myStmt = null;
-
-
-	  	boolean res;
-		
+	  	PreparedStatement myStmt = null;		
 		String insert2 = "insert into Documents values(default,?,?,?,?,?,?,?)";
 		
 		connection = database.getConnection();
-		Statement statement = connection.createStatement();
 		myStmt = connection.prepareStatement(insert2);
 		myStmt.setBinaryStream(1, document.getData());
 		myStmt.setInt(2, document.getAuthorID());
@@ -153,9 +148,18 @@ public class Documents {
 		myStmt.executeUpdate();
 		
 		System.out.println("\nCompleted successfully!");
-		
+	
 		connection.close();
 		return true;
+  }
+  public int getLastAddedItemId() throws ClassNotFoundException, SQLException
+  {
+	  String select = "SELECT DOCUMENT_ID FROM Documents ORDER BY DOCUMENT_ID DESC LIMIT 1";
+	  connection = database.getConnection();
+	  Statement st = connection.createStatement();
+	  resultSet = st.executeQuery(select);
+	  resultSet.next();
+	  return resultSet.getInt(1);
   }
 
   public File getData(Integer id) throws SQLException, ClassNotFoundException, IOException {
