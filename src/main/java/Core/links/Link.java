@@ -1,6 +1,7 @@
 package Core.links;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,6 +35,22 @@ public class Link {
 		Statement statement = connection.createStatement();
 		result = statement.executeUpdate(insert) > 0 ? true : false;
 		
+		connection.close();
+		return result;
+  }
+  public boolean addPair(Integer left_id, List<Integer> right_id) throws ClassNotFoundException, SQLException {
+		boolean result=true;
+		String insert = String.format("insert ignore into %s values (%d,?);",LinkEnum.getTableName(),left_id);
+		connection = database.getConnection();
+		PreparedStatement statement2 = connection.prepareStatement(insert);
+		connection.setAutoCommit(false);
+		for(Integer id : right_id)
+		{
+			statement2.setInt(1, id);
+			statement2.executeUpdate();
+			statement2.clearParameters();
+		}
+		connection.commit();
 		connection.close();
 		return result;
   }

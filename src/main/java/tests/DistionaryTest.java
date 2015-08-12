@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import junit.framework.Assert;
 import Core.dictionaries.*;
@@ -77,7 +78,8 @@ public class DistionaryTest {
 		try{
 		Dictionary words = new Dictionary(db,DictionaryEnum.WORDS);
 		String[] entities = {"UL","YAHOO","SPRING"};
-		words.addEntities(entities);
+		List<Integer> list = words.addEntities(entities);
+		assertEquals(list.size(),3);
 		words.getEntityByName("YAHOO");
 		}
 		catch(SQLException e)

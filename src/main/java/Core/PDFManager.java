@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -53,11 +54,11 @@ public class PDFManager {
 		int AuthorId = authors.addEntity(info.getAuthor());
 		int TitleId = titles.addEntity(info.getTitle());
 		int CategoryId = categories.addEntity(Category);
-		tags.addEntities(Tags);
+		List<Integer> tagIds = tags.addEntities(Tags);
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
 	    String[] w = text.split(" ");
-	    words.addEntities(w);
+	    List<Integer> wordIds = words.addEntities(w);
 	    
 	    PreparedDocument document = new PreparedDocument();
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,7 +74,9 @@ public class PDFManager {
 	    
 	    documents.addDocument(document);
 	    
-	    //doc_word.addPair(documents.getLastAddedItemId(), )
+	    doc_word.addPair(documents.getLastAddedItemId(),wordIds );
+	    doc_tag.addPair(documents.getLastAddedItemId(),tagIds);
+	    doc_category.addPair(documents.getLastAddedItemId(),CategoryId);
 	    
 	    doc.close();
 	}

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Core.Database;
 /**
@@ -53,27 +55,38 @@ public class Dictionary {
 		return id;
 	}
 	
-	public void addEntities(String[] names) throws ClassNotFoundException, SQLException
+	public List<Integer> addEntities(String[] names) throws ClassNotFoundException, SQLException
 	{
+		List<Integer> ids = new ArrayList<Integer>();
 		String insert = "insert ignore into "+
 				TableEnum+
 				" values ( "+
 				"default,"+
 				" ? "+
 				");";
+		String select = String.format("select %s from %s where %s = ?",TableEnum.getId(),TableEnum.getTableName(),TableEnum.getName()); 
+		
 		System.out.println(insert);
 		connection = database.getConnection();
 		PreparedStatement statement = connection.prepareStatement(insert);
+		PreparedStatement statement2 = connection.prepareStatement(select);
 		connection.setAutoCommit(false);
 		for(String name : names)
 		{
 			statement.setString(1, name);
 			result = statement.executeUpdate() > 0 ? true : false;
 			statement.clearParameters();
+			statement2.setString(1, name);
+			resultSet = statement2.executeQuery();
+			resultSet.next();
+			ids.add(resultSet.getInt(1));
+			resultSet.close();
+			statement2.clearParameters();
 
 		}
 		connection.commit();
 		connection.close();
+		return ids;
 	}
 
 	public boolean deleteEntityByName(String name) throws ClassNotFoundException, SQLException {
