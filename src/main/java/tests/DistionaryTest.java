@@ -1,8 +1,12 @@
 package tests;
 
 import static org.junit.Assert.*;
+
+import java.sql.SQLException;
+
 import junit.framework.Assert;
 import Core.dictionaries.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,6 +68,56 @@ public class DistionaryTest {
 			fail("Unexpected exception thrown");
 		}
 		
+	}
+	
+	@Test
+	public void addEntitiesTest()
+	{
+		Exception ex = null;
+		try{
+		Dictionary words = new Dictionary(db,DictionaryEnum.WORDS);
+		String[] entities = {"UL","YAHOO","SPRING"};
+		words.addEntities(entities);
+		words.getEntityByName("YAHOO");
+		}
+		catch(SQLException e)
+		{	ex = e;
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) {
+			ex = e;
+			e.printStackTrace();
+		}
+		finally
+		{
+			assertNull(ex);
+		}
+	}
+	
+	@Test
+	public void testAddEntity()
+	{
+		Exception ex = null;
+		Dictionary authors = new Dictionary(db,DictionaryEnum.AUTHORS);
+		try{
+		int id = authors.addEntity("Marian Kowalski");
+		int id2 = authors.getEntityByName("Marian Kowalski");
+		
+		assertEquals(id,id2);
+		}
+		catch(SQLException e)
+		{
+			ex = e;
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) {
+			ex = e;
+			e.printStackTrace();
+		}
+		finally
+		{
+			assertNull(ex);
+		}
 	}
 
 }

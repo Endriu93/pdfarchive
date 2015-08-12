@@ -16,7 +16,7 @@ public class Database {
   public String Host;
   
   public Database(String DbName, String Host, String port, String user, String password) {
-	  this.DbName = DbName+"?characterEncoding=utf-8";
+	  this.DbName = DbName+"?characterEncoding=utf8";
 	  this.User = user;
 	  this.Port = port;
 	  this.Password = password;

@@ -31,4 +31,8 @@ public enum DictionaryEnum {
 	{
 		return Name;
 	}
+	public String getTableName()
+	{
+		return TabName;
+	}
 }

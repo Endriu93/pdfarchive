@@ -1,7 +1,15 @@
 package Core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.util.PDFTextStripper;
 
 import Core.dictionaries.Dictionary;
 import Core.dictionaries.DictionaryEnum;
@@ -37,8 +45,36 @@ public class PDFManager {
 		 p_document = new PreparedDocument();
 	}
 	
-	public void upload(PDDocument doc, String description, String[] tags, String Category, boolean ifindex )
+	public void upload(InputStream documentData, String description, String[] Tags, String Category, boolean ifindex ) throws IOException, ClassNotFoundException, SQLException
 	{
+		PDDocument doc = PDDocument.load(documentData);
 		PDDocumentInformation info = doc.getDocumentInformation();
+		
+		int AuthorId = authors.addEntity(info.getAuthor());
+		int TitleId = titles.addEntity(info.getTitle());
+		int CategoryId = categories.addEntity(Category);
+		tags.addEntities(Tags);
+	    PDFTextStripper stripper = new PDFTextStripper();
+	    String text = stripper.getText(doc);
+	    String[] w = text.split(" ");
+	    words.addEntities(w);
+	    
+	    PreparedDocument document = new PreparedDocument();
+	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    Date date = new Date();
+	    System.out.println(dateFormat.format(date)); //2014/08/06 15:59:48
+	    document.setAddDate(dateFormat.format(date));
+	    document.setCreateDate(dateFormat.format(info.getCreationDate().getTime()));
+	    document.setAuthorId(AuthorId);
+	    document.setTitleId(TitleId);
+	    document.setDescription(description);
+	    document.setData(documentData);
+	    document.setSize(doc.getNumberOfPages());
+	    
+	    documents.addDocument(document);
+	    
+	    //doc_word.addPair(documents.getLastAddedItemId(), )
+	    
+	    doc.close();
 	}
 }

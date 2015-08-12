@@ -1,6 +1,7 @@
 package Core.dictionaries;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,7 +26,9 @@ public class Dictionary {
 		this.database = database;
 		TableEnum = dctName;
 	  }
-	public void addEntity(String name) throws SQLException, ClassNotFoundException {
+	
+	// returns id of given name
+	public int addEntity(String name) throws SQLException, ClassNotFoundException {
 		
 		String insert = "insert ignore into "+
 				TableEnum+
@@ -33,12 +36,44 @@ public class Dictionary {
 				"default,"+
 				" '"+name.toLowerCase()+"' "+
 				");";
+		String get = "select "+TableEnum.getId()+" from "+TableEnum+" where "+TableEnum.getName()+" = '"+name.toLowerCase()+"'";
 		System.out.println(insert);
 		connection = database.getConnection();
+		connection.setAutoCommit(false);
 		Statement statement = connection.createStatement();
 		result = statement.executeUpdate(insert) > 0 ? true : false;
+		Statement ps = connection.createStatement();
+		resultSet = ps.executeQuery(get);
+		resultSet.next();
+		int id = resultSet.getInt(1);
+		connection.commit();
+		resultSet.close();
 		connection.close();
 		
+		return id;
+	}
+	
+	public void addEntities(String[] names) throws ClassNotFoundException, SQLException
+	{
+		String insert = "insert ignore into "+
+				TableEnum+
+				" values ( "+
+				"default,"+
+				" ? "+
+				");";
+		System.out.println(insert);
+		connection = database.getConnection();
+		PreparedStatement statement = connection.prepareStatement(insert);
+		connection.setAutoCommit(false);
+		for(String name : names)
+		{
+			statement.setString(1, name);
+			result = statement.executeUpdate() > 0 ? true : false;
+			statement.clearParameters();
+
+		}
+		connection.commit();
+		connection.close();
 	}
 
 	public boolean deleteEntityByName(String name) throws ClassNotFoundException, SQLException {
