@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
+import util.ReusableInputStream;
 import Core.Database;
 import Core.PDFManager;
 
@@ -20,18 +21,18 @@ public class PDFManagerTest {
 	Database database;
 	@Before
 	public void setUp() throws Exception {
-		database = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
+		database = new Database("pdfarchive","localhost" , "3306", "root", "xxx");
 		manager = new PDFManager(database);
 	}
 
 	@Test
 	public void test() {
 		Exception ex = null;
-		File file = new File("C:/Users/Comarch/Downloads/wakacje_2015_zasady.pdf");
+		File file = new File("/home/bb/pdfy/sample.pdf");
 		InputStream input;
 
 		try {
-			input = new FileInputStream(file);
+			input = new ReusableInputStream(new FileInputStream(file));
 			System.out.println("input available: "+input.available());
 			manager.upload(input, "zasady przyjęcia do akademików", new String[]{"PK","Akademik"}, "Mieszkanie", false);
 		} catch (ClassNotFoundException e) {

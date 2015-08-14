@@ -52,8 +52,8 @@ public class DocumentsTest {
 		
 		
 		
-		File file = new File("C:/Users/Comarch/Downloads/wakacje_2015_zasady.pdf");
-		//File file = new File("/home/bb/pdfy/sample.pdf");
+		//File file = new File("C:/Users/Comarch/Downloads/wakacje_2015_zasady.pdf");
+		File file = new File("/home/bb/pdfy/sample.pdf");
 		PreparedDocument pd =new PreparedDocument();
 				
 		try {
@@ -74,8 +74,8 @@ public class DocumentsTest {
 			int id = authors.getEntityByName(Author);
 			InputStream inputstream = dc.getDataByAuthorId(id);
 			
-		//	File f = new File("/home/bb/pdfy/returned");
-			File f = new File("C:/Users/Comarch/Downloads/returned.pdf");
+			File f = new File("/home/bb/pdfy/returned");
+		//	File f = new File("C:/Users/Comarch/Downloads/returned.pdf");
 			FileOutputStream fo = new FileOutputStream(f);
 			
 			byte[] b = new byte[1024];
