@@ -73,10 +73,10 @@ public class Dictionary {
 		connection.setAutoCommit(false);
 		for(String name : names)
 		{
-			statement.setString(1, name);
+			statement.setString(1, name.toLowerCase());
 			result = statement.executeUpdate() > 0 ? true : false;
 			statement.clearParameters();
-			statement2.setString(1, name);
+			statement2.setString(1, name.toLowerCase());
 			resultSet = statement2.executeQuery();
 			resultSet.next();
 			ids.add(resultSet.getInt(1));
@@ -95,7 +95,7 @@ public class Dictionary {
 						TableEnum+
 						" where "+
 						TableEnum.getName()+
-						"= '"+name+"' ;";
+						"= '"+name.toLowerCase()+"' ;";
 		
 		connection = database.getConnection();
 		Statement statement = connection.createStatement();

@@ -21,6 +21,9 @@ import Core.links.LinkEnum;
 
 public class PDFManager {
 	
+	public final  static String UNDEFINED_AUTHOR = "undefined";
+	public final  static String UNDEFINED_CREATE_DATE = "undefined";
+
 	Database database;
 	Dictionary words;
 	Dictionary authors ;
@@ -75,7 +78,9 @@ public class PDFManager {
 	    document.setAuthorId(AuthorId);
 	    document.setTitleId(TitleId);
 	    document.setDescription(description);
+	    System.out.println("upload: "+documentData.available());
 	    document.setData(documentData);
+	    documentData.close();
 	    document.setSize(doc.getNumberOfPages());
 	    
 	    documents.addDocument(document);
