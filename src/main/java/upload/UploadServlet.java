@@ -47,8 +47,10 @@ public class UploadServlet extends HttpServlet {
 	   
 	    response.getWriter().println(fileName);
 	   
-	    
-	    Database database = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
+	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+	    Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
+	  //comarch // Database database = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
 		PDFManager manager = new PDFManager(database);
 		
 		InputStream input = new ReusableInputStream(fileContent);
