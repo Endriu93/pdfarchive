@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class SimpleCORSFilter2
  */
-@WebFilter("/SimpleCORSFilter2")
 public class SimpleCORSFilter2 implements Filter {
 
 	ServletContext context = null;
@@ -23,7 +22,7 @@ public class SimpleCORSFilter2 implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		context = fConfig.getServletContext();
+		//context = fConfig.getServletContext();
 	}
     /**
      * Default constructor. 
@@ -53,7 +52,7 @@ public class SimpleCORSFilter2 implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         
-        context.log("SimpleCorsFilter: doFilter()");
+        //context.log("SimpleCorsFilter: doFilter()");
 		chain.doFilter(request, response);
 	}
 
