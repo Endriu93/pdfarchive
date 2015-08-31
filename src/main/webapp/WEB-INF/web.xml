@@ -20,7 +20,7 @@
   
   <filter>
     <filter-name>SimpleCorsFilter</filter-name>
-    <filter-class>upload.SimpleCorsFilter2</filter-class>
+    <filter-class>upload.SimpleCORSFilter2</filter-class>
   </filter>
 
   <filter-mapping>

@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SimpleCORSFilter2 implements Filter {
 
-	ServletContext context = null;
-	/**
+/*	ServletContext context = null;
+*/	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
