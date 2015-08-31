@@ -1,0 +1,3 @@
+This seems to be a good way to upload file
+
+http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
