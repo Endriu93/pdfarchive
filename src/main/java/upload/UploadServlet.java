@@ -47,6 +47,7 @@ public class UploadServlet extends HttpServlet {
 	    InputStream fileContent = filePart.getInputStream();
 	   
 	    response.getWriter().println(fileName);
+	    response.getWriter().println("start: "+System.currentTimeMillis());
 	   
 	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
 	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
@@ -59,12 +60,12 @@ public class UploadServlet extends HttpServlet {
 		try {
 			manager.upload(input, "zasady przyjęcia do akademików", new String[]{"PK","Akademik"}, "Mieszkanie", false);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    response.getWriter().println("stop: "+System.currentTimeMillis());
+
 		
 	}
 	// zwraca nazwę pliku przekazanego Partu
