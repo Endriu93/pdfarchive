@@ -47,7 +47,8 @@ public class UploadServlet extends HttpServlet {
 	    InputStream fileContent = filePart.getInputStream();
 	   
 	    response.getWriter().println(fileName);
-	    response.getWriter().println("start: "+System.currentTimeMillis());
+//	    response.getWriter().println("start: "+System.currentTimeMillis());
+	    long start = System.currentTimeMillis();
 	   
 	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
 	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
@@ -64,8 +65,8 @@ public class UploadServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	    response.getWriter().println("stop: "+System.currentTimeMillis());
-
+//	    response.getWriter().println("stop: "+System.currentTimeMillis());
+	    response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
 		
 	}
 	// zwraca nazwę pliku przekazanego Partu

@@ -49,7 +49,7 @@
 	        $('progress').attr({value:e.loaded,max:e.total});
 	    }
  }
- function completeHandler() {alert("fiel was uploaded"); $("#progress").hide();};
+ function completeHandler(received,status) {alert("status: "+status+" received: "+received); $("#progress").hide();};
  function errorHandler() {alert("error Occured");$("#progress").hide();}
 	
  </script>
