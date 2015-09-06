@@ -1,0 +1,154 @@
+@charset "UTF-8";
+
+html {
+	background-color: #333333;
+	background-size: 100% 100%;
+  	font-family: Helvetica, Arial, Sans-Serif;}
+/* remove documents's default margins */
+body {
+	margin:0px;
+}
+
+header {	
+	height:50px; 
+	background-image: linear-gradient(#eeeeee,#cccccc);
+	margin:auto; /* auto value makes browser to calculate left, right margins and centers horizontally this elementiaep */
+	padding:0px;
+    border-style: solid; /* before designing border we must specify border-style */
+    border-width: 0px;
+}
+
+nav {
+	height:50px;
+	
+}
+
+#main {
+	background-image: linear-gradient(#ffffff,#dddddd);
+	padding: 20px;
+	text-align: center;
+	height:100%;
+}
+
+#upload {
+	display:inline-block;
+	background-image: linear-gradient(#6E93DC,#9AB0DC); /*2764DC*/ 
+	/* width and height wrap according to child */
+	margin:auto;
+	padding:30px;
+	border-style:solid;
+	border-radius: 15px;
+	border-color: #eeeeee;
+	font-size: 1.5em;
+}
+
+#upload_form {
+	display:flex;
+	border:inherit;
+	border-color:#888888;
+	border-radius:inherit;
+	background-image: linear-gradient(#ffffff,#dddddd);
+	margin:auto;
+	padding:10px;
+	height:300px;
+	width:900px;
+	font-size:0.9em;
+}
+
+#upload_button{
+	width:200px;
+	height:60px;
+	background-image: linear-gradient(#2BBA00,#71CD52);
+	margin:auto;
+	margin-top:30px;
+	border:inherit;
+	border-radius:inherit;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-size:1.5em;
+}
+
+#upload_form_selection{
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */
+    flex: 1;
+    box-sizing: border-box;
+    border:inherit;
+	border-radius:inherit;
+	padding:10px;
+	overflow: auto; }
+
+#upload_form_extras {
+	-webkit-flex: 2; /* Safari 6.1+ */
+    -ms-flex: 2; /* IE 10 */
+    flex: 2;
+    display:flex;
+    flex-direction:column;
+    box-sizing: border-box;
+    border:inherit;
+	border-radius:inherit;
+	padding:10px;
+}
+
+.center {
+	margin: auto;
+}
+
+.textleft {
+	text-align:left;
+}
+
+.font08
+{
+	font-size:0.8em;
+}
+#extra_container {
+	display:flex;
+	flex-grow:5;
+	flex-direction:column;
+	justify-content: space-around;
+	padding:5px;
+/* 	border-style:dotted;
+	border-radius: 5px;
+	border-width:3px;
+	border-color: red;
+	*/
+}
+
+.extInCtn {
+	display:flex;
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */
+    justify-content: space-between;
+	background-image: linear-gradient(#bbbbbb,#dddddd);
+ 	padding:3px;
+ 	border-style:dotted;
+	border-radius: 0px;
+	border-width:1px;
+	border-color: #eeeeee;
+}
+
+.itemText {
+    width:150px;
+    border:inherit;
+    border-radius:inherit;
+    overflow: hidden;
+}
+
+.itemInput {
+    width:100px;
+    border:inherit;
+    border-radius:inherit;
+    overflow: hidden;    
+}
+
+.itemValue {
+    width:200px;
+    border:inherit;
+    border-radius:inherit;
+    overflow: hidden;    
+}
+
+.widthMatchParent {
+	width:100%;
+}
+

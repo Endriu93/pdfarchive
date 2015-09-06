@@ -1,11 +1,11 @@
 $(document).ready(
 		 function(){
 			 window.console.log("line 10");
-			 $(':file').change(fileSelected);
+			 $('#fileToUpload').change(fileSelected);
 			 window.console.log("line 17");
 			 $("progress").hide();
-			 $(':button').click(function(){
-				    var formData = new FormData($('form')[0]);
+			 $('#upload_button').click(function(){
+				    var formData = new FormData($('form1')[0]);
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
 				        type: 'POST',

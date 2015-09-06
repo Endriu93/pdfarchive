@@ -1,29 +1,91 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
-		<meta charset="UTF-8">
+ 		<link rel="stylesheet" type="text/css" href="css/upload.css">		
+ 		<meta charset="UTF-8">
 		<title>upload pdf</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="js/upload.js"></script>
 	</head>
+	
 	<body>
-		<!-- <form enctype="multipart/form-data">
-		    <input name="file" type="file" />
-		    <input type="button" value="Upload" />
-		</form> -->
-		<form id="form1" enctype="multipart/form-data">
-		    <div class="row">
-		      <label for="fileToUpload">Select a File to Upload</label><br />
-		      <input type="file" name="file" id="fileToUpload" onchange="fileSelected();"/>
-		    </div>
-		    <div id="fileName"></div>
-		    <div id="fileSize"></div>
-		    <div id="fileType"></div>
-		    <div class="row">
-		      <input type="button" value="Upload" />
-		    </div>
-		    <div id="progressNumber"></div>
-		    <progress></progress>
-	  	</form>
+	
+		<header>
+		</header>
+		<nav>
+		</nav>
+		<div id=main>
+			<div id="upload">
+				<div id="upload_form">
+					<div id="upload_form_selection">
+						<form id="form1" enctype="multipart/form-data">
+						    <div style="margin-bottom:10px;">Select a File to Upload</div>
+						    <input class="center" type="file" name="file" id="fileToUpload" onchange="fileSelected();"/>
+						    <ul class="textleft font08" >
+						    	<li id="fileName"></li>
+						    	<li id="fileSize"></li>
+						    	<li id="fileType"></li>
+						    </ul>
+						    <div id="progressNumber"></div>
+						    <progress></progress>
+					  	</form>
+				  	</div>
+				  	<div id="upload_form_extras">
+					    <div style="margin-bottom:10px;">File extra info</div>
+					    <div id="extra_container" class="font08">
+					    	<div class="extInCtn">
+					    		<div class="itemText">select category</div>
+					    		<div class="itemInput">
+						    		<select class="widthMatchParent">
+									  <option value="volvo">Volvo</option>
+									  <option value="saab">Saab</option>
+									  <option value="opel">Opel</option>
+									  <option value="audi">Audi</option>
+									</select>
+					    		</div>
+					    		<div class="itemValue"></div>
+					    		<img src="images/ok.png" alt="default" height="30px;"> 
+					    	</div>
+					    	<div class="extInCtn">
+					    		<div class="itemText">set title</div>
+					    		<div class="itemInput">
+						    		<input type="text" id="title_set">
+					    		</div>
+					    		<div class="itemValue"></div>
+					    		<img src="images/ok.png" alt="default" height="30px;"> 
+					    	</div>
+					    	<div class="extInCtn">
+					    		<div class="itemText">set description</div>
+					    		<div class="itemInput">
+						    		<input type="text" id="description_set">
+					    		</div>
+					    		<div class="itemValue"></div>
+					    		<img src="images/ok.png" alt="default" height="30px;"> 
+					    	</div>
+					    	<div class="extInCtn">
+					    		<div class="itemText">set tags</div>
+					    		<div class="itemInput">
+						    		<input type="text" id="title_set">
+					    		</div>
+					    		<div class="itemValue"></div>
+					    		<img src="images/ok.png" alt="default" height="30px;"> 
+					    	</div>
+					    	<div class="extInCtn">
+					    		<div class="itemText">index words?</div>
+					    		<div class="itemInput">
+						    		<input type="text" id="title_set">
+					    		</div>
+					    		<div class="itemValue"></div>
+					    		<img src="images/ok.png" alt="default" height="30px;"> 
+					    	</div>
+					    </div>
+												    
+				  	</div>
+			  	</div>
+			  	<button id="upload_button">upload</button>
+		  	</div>
+	  	</div>
+	  	
 	</body>
 </html>
