@@ -51,7 +51,7 @@ nav {
 	margin:auto;
 	padding:10px;
 	height:300px;
-	width:900px;
+	width:1000px;
 	font-size:0.9em;
 }
 
@@ -101,6 +101,10 @@ nav {
 {
 	font-size:0.8em;
 }
+.font06
+{
+	font-size:0.6em;
+}
 #extra_container {
 	display:flex;
 	flex-grow:5;
@@ -119,6 +123,7 @@ nav {
 	-webkit-flex: 1; /* Safari 6.1+ */
     -ms-flex: 1; /* IE 10 */
     justify-content: space-between;
+    align-items: center; /* align vertical */
 	background-image: linear-gradient(#bbbbbb,#dddddd);
  	padding:3px;
  	border-style:dotted;
@@ -128,27 +133,72 @@ nav {
 }
 
 .itemText {
-    width:150px;
+	display:flex;
+	justify-content:center;
+	align-items: center; /* align vertical */
+    width:130px;
     border:inherit;
     border-radius:inherit;
     overflow: hidden;
 }
 
 .itemInput {
-    width:100px;
+	display:flex;
+	justify-content:space-between;
+	align-items: center; /* align vertical */
+    width:150px;
     border:inherit;
     border-radius:inherit;
     overflow: hidden;    
 }
 
 .itemValue {
-    width:200px;
+	max-height:50px;
+    width:300px;
     border:inherit;
     border-radius:inherit;
-    overflow: hidden;    
+    overflow: auto;  
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    padding:2px;
+      
 }
 
 .widthMatchParent {
 	width:100%;
+}
+
+.tag {
+	height:12px;
+	display: flex;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+	padding:2px;
+	padding-left:5px;
+	padding-right:5px;
+	font-size:0.7em;
+	background-color:#777777;
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+    border-radius:4px;
+    margin:2px;
+}
+.tag_inside {
+	height:12px;
+	margin-left:5px;
+}
+
+.itemInput_accept {
+	width:30px;
+	height:30px;
+	transition: height 1s;
+}
+.itemInput_accept:hover {
+	transform:scale(0.8,0.8);
+}
+input[type="text"] , select {
+	width:100px;
 }
 

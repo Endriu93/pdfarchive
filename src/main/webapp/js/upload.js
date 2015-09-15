@@ -1,11 +1,19 @@
 $(document).ready(
 		 function(){
+			 var container = $(".extInCtn");
+			 var ss = container.attr("id");
+			 for(var i=0; i<container.length; i++)
+				 {
+				 var id = $(container.get(i)).attr("id");
+				 var max = $(container.get(i)).attr("data-maxCount");
+				 ItemCountChecker.init(id,max);
+				 }
 			 window.console.log("line 10");
 			 $('#fileToUpload').change(fileSelected);
 			 window.console.log("line 17");
 			 $("progress").hide();
 			 $('#upload_button').click(function(){
-				    var formData = new FormData($('form1')[0]);
+				    var formData = new FormData($('#form1')[0]);
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
 				        type: 'POST',
@@ -27,9 +35,95 @@ $(document).ready(
 				        contentType: false,
 				        processData: false
 				    });
-				});                                                                                  
-			 });
-		 
+				});   
+			 
+
+			 $(".itemInput_accept").click(function(){
+				 var id = $(this).closest(".extInCtn").attr("id");
+				 if(!ItemCountChecker.available(id)) return false;
+				 var value;
+				 var select = $(this).parent().find("input");
+				 if(select.length!=0) 
+					 {
+					 value = select.val();
+					 }
+				 else
+					 {
+					 select=$(this).parent().find("select");
+					 value = select.val();
+					 }
+				 var closest = $(this).closest(".extInCtn");
+				 var content="<div class=\"tag\">"+value
+				 +"<img src=\"images/remove2.png\" data-toggle=\"tooltip\" title=\"remove this tag\" class=\"tag_inside\">"
+				 +"</div>"
+				 var tag = $(content);
+				 var img = tag.find(".tag_inside");
+				 img.click(function(){
+					 var id = $($(this).closest(".extInCtn")).attr("id");
+					 $(this).parent().remove(); ItemCountChecker.subtract(id)
+					 });
+				 img.hover(function(){$(this).attr("src","images/remove_red.png")},
+			 				function(){$(this).attr("src","images/remove2.png")});
+				 closest.find(".itemValue").append(tag);
+				 ItemCountChecker.add(id);
+				 });
+			 
+
+		
+});
+
+ var ItemValidator =  {
+		 items: new Object(),
+		 images: new Object(),
+		 valid: function(id)
+		 {
+			 this.items[id]=true;
+ 			 this.images[id].attr("src","images/ok.png");
+		 },
+ 		 invalid: function(id)
+ 		 {
+ 			 this.items[id]=false;
+ 			 this.images[id].attr("src","images/error.png");
+ 		 },
+		 init: function(id)
+		 {
+			this.items[id]=false;
+			this.images[id]=$($("#"+id).find(".validationImage"));
+		 }
+ 		 
+ }
+ var ItemCountChecker = {
+		 count: new Object(),
+		 max: new Object(),
+		
+ 		init: function(id,maxa)
+ 		{
+ 			this.max[id] = parseInt(maxa);
+ 			this.count[id]=0;
+ 			ItemValidator.init(id);
+ 			ItemValidator.invalid(id)
+ 		},
+		add: function(id)
+		{
+			this.count[id]++;
+			if(this.count[id]>0) ItemValidator.valid(id);
+		},
+ 		subtract: function(id)
+ 		{
+ 			if(this.count[id]>0)
+ 			 this.count[id]--;
+ 			if(this.count[id]==0) ItemValidator.invalid(id);
+ 		},
+ 		available: function(id)
+ 		{
+ 			if(this.max[id]==this.count[id])
+ 				return false;
+ 			else return true;
+ 		}	 
+ }
+ function checkCount(id){
+	 
+ }
  function progressHandlingFunction(e){
 	    if(e.lengthComputable){
 	        $('progress').attr({value:e.loaded,max:e.total});
