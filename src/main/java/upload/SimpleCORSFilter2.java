@@ -50,7 +50,7 @@ public class SimpleCORSFilter2 implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Filename,Description,Category,Tags");
         
         //context.log("SimpleCorsFilter: doFilter()");
 		chain.doFilter(request, response);
