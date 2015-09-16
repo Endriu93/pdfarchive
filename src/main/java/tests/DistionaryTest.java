@@ -20,7 +20,7 @@ public class DistionaryTest {
 	Database db;
 	@Before
 	public void setUp() throws Exception {
-		db = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");				
+		db = new Database("pdfarchive","localhost" , "3306", "root", "xxx");				
 	}
 	
 	@Test
@@ -43,7 +43,23 @@ public class DistionaryTest {
 			e.printStackTrace();
 			fail("Unexpected exception thrown");
 		}
-		
+	}
+	
+	@Test
+	public void catGetEntitiesTest()
+	{
+		try{
+			dct = new Dictionary(db,DictionaryEnum.CATEGORIES);
+			dct.addEntity("Java");
+			dct.addEntities(new String[]{"Work","Learning"});
+			List<String> res = dct.getEntities();
+			assertTrue(res.size()>1);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			fail("Unexpected exception thrown");
+		}
 	}
 	@Test
 	public void AuthorsTest()
