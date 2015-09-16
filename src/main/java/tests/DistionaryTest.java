@@ -8,6 +8,9 @@ import java.util.List;
 import junit.framework.Assert;
 import Core.dictionaries.*;
 
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,6 +63,30 @@ public class DistionaryTest {
 			e.printStackTrace();
 			fail("Unexpected exception thrown");
 		}
+	}
+	
+	@Test
+	public void xmlTest()
+	{
+		 String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+		 String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+		 Dictionary categories = new Dictionary(db,DictionaryEnum.CATEGORIES);
+		 try {
+			List<String> cat = categories.getEntities();
+			Document doc = new Document();
+			Element root = new Element("categories");
+			doc.addContent(root);
+			for(String c : cat)
+			{
+				Element el = new Element("category");
+				el.addContent(c);
+				root.addContent(el);
+			}
+			XMLOutputter out = new XMLOutputter();
+			System.out.println(out.outputString(doc));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 	@Test
 	public void AuthorsTest()
