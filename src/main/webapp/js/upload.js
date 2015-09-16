@@ -67,11 +67,33 @@ $(document).ready(
 				 closest.find(".itemValue").append(tag);
 				 ItemCountChecker.add(id);
 				 });
+			 	var categories = $("#category").find("select");
+			 	loadCategories(categories);			 
 			 
 
 		
 });
 
+function loadCategories(select){
+	$.ajax({
+        url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
+        type: 'GET',
+        //Ajax events
+        success: function(xml){
+        	var root = $(xml).find('category')
+        	root.each(function(){
+        		var val = $(this).text();
+        		if(val.trim())
+        		select.append("<option>"+val+"</option>");
+        	 });
+        },
+        error: function(xhr,errorStatus,errorThrown){window.alert(errorStatus+"::"+errorThrown);},
+        //Options to tell jQuery not to process data or worry about content-type.
+        cache: false,
+        processData: false
+    });
+	
+}
  var ItemValidator =  {
 		 items: new Object(),
 		 images: new Object(),
