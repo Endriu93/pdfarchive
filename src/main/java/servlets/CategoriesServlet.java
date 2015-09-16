@@ -54,7 +54,7 @@ public class CategoriesServlet extends HttpServlet {
 				root.addContent(el);
 			}
 			XMLOutputter out = new XMLOutputter();
-			response.getWriter().println(out.outputString(doc));
+			response.getWriter().println(out.outputString(doc)+"ok");
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 		} 
