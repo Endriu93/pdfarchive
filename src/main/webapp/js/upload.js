@@ -13,10 +13,18 @@ $(document).ready(
 			 window.console.log("line 17");
 			 $("progress").hide();
 			 $('#upload_button').click(function(){
+				    var Filename = "testFileName.pdf";
+				    var Description = $("#description").find(".tag").text();
+				    var Category = $("#category").find(".tag").text();
+				    var Tags = [];
+				    var i=0;
+				    $("#tags").find(".tag").each(function(){
+				    	Tags[i++] = $(this).text();
+				    });
 				    var formData = new FormData($('#form1')[0]);
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
-				        type: 'POST',
+				        type:'POST',
 				        xhr: function() {  // Custom XMLHttpRequest
 				            var myXhr = $.ajaxSettings.xhr();
 				            if(myXhr.upload){ // Check if upload property exists
@@ -24,8 +32,14 @@ $(document).ready(
 				            }
 				            return myXhr;
 				        },
+				        beforeSend: function (request)
+			            {
+			                request.setRequestHeader("Filename",Filename);
+			                request.setRequestHeader("Description",Description);
+			                request.setRequestHeader("Category",Category);
+			                request.setRequestHeader("Tags",Tags[0]);
+			            },
 				        //Ajax events
-				       // beforeSend: beforeSendHandler,
 				        success: uploadComplete,
 				        error: uploadFailed,
 				        // Form data

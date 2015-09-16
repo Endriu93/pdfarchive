@@ -43,7 +43,9 @@ public class UploadServlet extends HttpServlet {
 	    
 	    
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-	    String fileName = getFileName(filePart);
+	    String fileName = request.getHeader("Filename");
+	    String description = request.getHeader("Description");
+	    String category = request.getHeader("Category");
 	    InputStream fileContent = filePart.getInputStream();
 	   
 	    response.getWriter().println(fileName);
@@ -59,7 +61,7 @@ public class UploadServlet extends HttpServlet {
 		InputStream input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
 		try {
-			manager.upload(input, "zasady przyjęcia do akademików", new String[]{"PK","Akademik"}, "Mieszkanie", false);
+			manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
