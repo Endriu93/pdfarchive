@@ -41,7 +41,7 @@ public class UploadServlet extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 	    response.setHeader("Content-Type","text/html;charset=UTF-8");
 	    
-	    
+	    try{
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = request.getHeader("Filename");
 	    String description = request.getHeader("Description");
@@ -60,12 +60,11 @@ public class UploadServlet extends HttpServlet {
 		
 		InputStream input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		try {
-			manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
+
+		catch(Throwable e)
+		{
+			e.printStackTrace(response.getWriter());
 		}
 //	    response.getWriter().println("stop: "+System.currentTimeMillis());
 	    response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
