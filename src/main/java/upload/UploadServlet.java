@@ -61,13 +61,13 @@ public class UploadServlet extends HttpServlet {
 		InputStream input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
 		manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
-
-		catch(Throwable e)
+	    }
+		catch(Exception e)
 		{
 			e.printStackTrace(response.getWriter());
 		}
 //	    response.getWriter().println("stop: "+System.currentTimeMillis());
-	    response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
+	 //   response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
 		
 	}
 	// zwraca nazwę pliku przekazanego Partu
