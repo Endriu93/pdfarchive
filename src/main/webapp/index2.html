@@ -9,8 +9,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/upload.js"></script>
+		<script src="js/nav.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
 		<script src="js/tests.js"></script>
-		 <style>
+		 <style> 
 		 /* override default tooltip settings*/
 			.ui-tooltip, .arrow:after {
 			background: black;
@@ -22,21 +24,19 @@
 			font: 0.7em "Helvetica Neue", Sans-Serif;
 			}
 		</style> 
-		
 	</head>
-	
 	<body>
 		<header>
 		</header>
 		<nav>
 			<ul>
-			    <li><a href="#">Home</a></li>
-			    <li><a href="">Upload File</a></li>
-			    <li><a href="">Your Files</a></li>
+			    <li><a>Home</a></li>
+			    <li id="navUploadFile"><a>Upload File</a></li>
+			    <li id="navYourFiles"><a>Your Files</a></li>
 		 	</ul>
 		</nav>
 		<div id=main>
-			<div id="upload">
+			<!-- <div id="upload">
 				<div id="upload_form">
 					<div id="upload_form_selection">
 						<form id="form1" enctype="multipart/form-data">
@@ -58,10 +58,10 @@
 					    		<div class="itemText">select category</div>
 					    		<div class="itemInput" data-maxCount="1">
 						    		<select>
-									  <!-- <option value="volvo">Volvo</option>
+									  <option value="volvo">Volvo</option>
 									  <option value="saab">Saab</option>
 									  <option value="opel">Opel</option>
-									  <option value="audi">Audi</option> -->
+									  <option value="audi">Audi</option>
 									</select>
 									<img src="images/accept2.png" height="30px" class="itemInput_accept">
 					    		</div>
@@ -70,7 +70,7 @@
 					    		</div>
 					    		<img src="images/def.png" alt="default" height="30px;" class="validationImage"> 
 					    	</div>
-					    	<!-- <div class="extInCtn" id="title" data-maxCount="1">
+					    	<div class="extInCtn" id="title" data-maxCount="1">
 					    		<div class="itemText">set title</div>
 					    		<div class="itemInput" data-maxCount="1">
 						    		<input type="text" id="title_set">
@@ -78,7 +78,7 @@
 					    		</div>
 					    		<div class="itemValue"></div>
 					    		<img src="images/ok.png" alt="default" height="30px;" class="validationImage"> 
-					    	</div> -->
+					    	</div>
 					    	<div class="extInCtn" id="description" data-maxCount="1">
 					    		<div class="itemText">set description</div>
 					    		<div class="itemInput" data-maxCount="1">
@@ -116,7 +116,7 @@
 				  	</div>
 			  	</div>
 			  	<button id="upload_button">upload</button>
-		  	</div>
+		  	</div> -->
 	  	</div>
 	  	
 	</body>

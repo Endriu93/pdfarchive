@@ -1,5 +1,5 @@
-$(document).ready(
-		 function(){
+
+function uploadInit(){
 			 var container = $(".extInCtn");
 			 var ss = container.attr("id");
 			 for(var i=0; i<container.length; i++)
@@ -8,10 +8,9 @@ $(document).ready(
 				 var max = $(container.get(i)).attr("data-maxCount");
 				 ItemCountChecker.init(id,max);
 				 }
-			 window.console.log("line 10");
 			 $('#fileToUpload').change(fileSelected);
-			 window.console.log("line 17");
-			 $("progress").hide();
+			 var progres = $("progress");
+			 progres.hide();
 			 $('#upload_button').click(function(){
 				    var Filename = "testFileName.pdf";
 				    var Description = $("#description").find(".tag").text();
@@ -83,10 +82,7 @@ $(document).ready(
 				 });
 			 	var categories = $("#category").find("select");
 			 	loadCategories(categories);			 
-			 
-
-		
-});
+}
 
 function loadCategories(select){
 	$.ajax({
