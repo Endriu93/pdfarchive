@@ -25,7 +25,7 @@
 }
 
 .files_nav_option {
-	transition: background-color 0.2s;
+	transition: background-image 0.2s;
 	background-image: linear-gradient(#dddddd,#dddddd,#dddddd);
 	border-style:solid;
 	border-width:1px;
@@ -37,7 +37,7 @@
 }
 
 .files_nav_option:hover, .filesnav_option:active {
-	transition: background-color 0.2s;
+	transition: background-image 0.2s;
 	background-image: linear-gradient(#dd0000,#990000);
 }
 

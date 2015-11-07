@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.container {
+	display:flex;
+	padding:15px;
+}
+
+.item {
+	padding:5px;
+	height:160px;
+	width:100px;
+}
+
+.item img {
+	width:100px;
+	height:140px;
+}
