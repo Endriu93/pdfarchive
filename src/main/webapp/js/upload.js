@@ -189,14 +189,14 @@ function loadCategories(select){
        document.getElementById('progressNumber').innerHTML = 'unable to compute';
      }
    }
- function uploadComplete(evt) {
+ function uploadComplete(xhr, ajaxOptions, thrownError) {
      /* This event is raised when the server send back a response */
      alert("File was uploaded succesfully");
      $("progress").hide();
    }
 
-   function uploadFailed(evt) {
-     alert("There was an error attempting to upload the file.");
+   function uploadFailed(xhr, ajaxOptions, thrownError) {
+     alert("There was an error attempting to upload the file."+xhr.status+" "+thrownError);
    }
 
    function uploadCanceled(evt) {
