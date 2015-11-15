@@ -51,21 +51,24 @@ public class PDFManager {
 		 p_document = new PreparedDocument();
 	}
 	
-	public void upload(InputStream documentData, String description, String[] Tags, String Category, boolean ifindex ) throws IOException, ClassNotFoundException, SQLException
+	public void upload(InputStream documentData, String description, String[] Tags, String Category, boolean ifindex, String filename ) throws IOException, ClassNotFoundException, SQLException
 	{
 		PDDocument doc = PDDocument.load(documentData);
 		documentData.close();
 		PDDocumentInformation info = doc.getDocumentInformation();
-		
+		if(filename==null) filename="untitled";
 		int AuthorId = authors.addEntity(info.getAuthor()==null ? "" : info.getAuthor());
-		int TitleId = titles.addEntity(info.getTitle()==null? "" : info.getTitle());
+		int TitleId = titles.addEntity(info.getTitle()==null? filename : info.getTitle());
 		int CategoryId = categories.addEntity(Category);
 		List<Integer> tagIds = tags.addEntities(Tags);
+		if(ifindex)
+		{
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
 	    String[] w = text.split(" ");
 	    List<Integer> wordIds = words.addEntities(w);
-	    
+	    doc_word.addPair(documents.getLastAddedItemId(),wordIds );
+		}
 	    PreparedDocument document = new PreparedDocument();
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    Date date = new Date();
@@ -85,7 +88,6 @@ public class PDFManager {
 	    
 	    documents.addDocument(document);
 	    
-	    doc_word.addPair(documents.getLastAddedItemId(),wordIds );
 	    doc_tag.addPair(documents.getLastAddedItemId(),tagIds);
 	    doc_category.addPair(documents.getLastAddedItemId(),CategoryId);
 	    

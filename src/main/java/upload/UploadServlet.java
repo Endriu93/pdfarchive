@@ -66,7 +66,7 @@ public class UploadServlet extends HttpServlet {
 		
 		InputStream input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
+		manager.upload(input,description, new String[]{"PK","Akademik"},category, false,fileName);
 	    }
 		catch(Exception e)
 		{
