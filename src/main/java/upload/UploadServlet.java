@@ -77,20 +77,9 @@ public class UploadServlet extends HttpServlet {
 	    	Date date2 = new Date();
 		    response.getWriter().println("end: "+sdf.format(date2));
 	    }
-//	    response.getWriter().println("stop: "+System.currentTimeMillis());
-	 //   response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
 		
 	}
-	// zwraca nazwę pliku przekazanego Partu
-	private static String getFileName(Part part) {
-		for (String cd : part.getHeader("Content-Disposition").split(";")) {
-			if (cd.trim().startsWith("filename")) {
-				String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-            return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
-			}
-		}
-    return null;
-	}
+	
 	
 	    
 	

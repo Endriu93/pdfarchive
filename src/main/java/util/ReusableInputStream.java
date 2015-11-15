@@ -12,18 +12,17 @@ public class ReusableInputStream extends InputStream {
 	
 	public ReusableInputStream(InputStream stream) throws IOException
 	{
-		
+		int n=-1;
 		output = new ByteArrayOutputStream();
-		byte[] array = new byte[1];
-		while(stream.read(array)>-1)
+		byte[] array = new byte[10000];
+		while((n=stream.read(array))>-1)
 		{
-			output.write(array);
-			System.out.println("...");
+			output.write(array,0,n);
 		}
 		output.write(0);
 		input = new ByteArrayInputStream(output.toByteArray());
 		input.mark(1 << 32);
-		System.out.println(input.available());
+//		System.out.println(input.available());
 	}
 	@Override	
 	public int read() throws IOException {
@@ -43,7 +42,7 @@ public class ReusableInputStream extends InputStream {
 	@Override
 	public int available()
 	{
-		System.out.println(input.available());
+//		System.out.println(input.available());
 		return input.available();
 	}
 	

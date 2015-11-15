@@ -188,17 +188,9 @@ public class Documents {
 		myStmt.setDate(6, new Date(2001, 3, 3));
 		myStmt.setInt(7, document.getSize());
 
-		System.out.println("Reading input file: ");
-
-		// 4. Execute statement
-		System.out.println("\nStoring resume in database: ");
-		System.out.println(myStmt.toString());
-		java.util.logging.Logger.getGlobal().fine("fine message");
-
+		System.out.println("adding file to database: "+System.currentTimeMillis());
 		myStmt.executeUpdate();
-
-		System.out.println("\nCompleted successfully!");
-
+		System.out.println("\nCompleted successfully: "+System.currentTimeMillis());
 		connection.close();
 		return true;
 	}

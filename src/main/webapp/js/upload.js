@@ -191,7 +191,8 @@ function loadCategories(select){
    }
  function uploadComplete(evt) {
      /* This event is raised when the server send back a response */
-     alert(evt.target.responseText);
+     alert("File was uploaded succesfully");
+     $("progress").hide();
    }
 
    function uploadFailed(evt) {
