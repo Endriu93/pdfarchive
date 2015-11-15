@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +41,7 @@ public class DocumentsTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		db = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
+		db = new Database("pdfarchive","localhost" , "3306", "root", "xxx");
 		dc = new Documents(db);
 	}
 
@@ -129,6 +131,33 @@ public class DocumentsTest {
 		}
 
 		
+	}
+	
+	@Test
+	public void testGetTitlesIds()
+	{
+		Exception ex = null;
+
+		try
+		{
+		 testDocuments();
+		 Dictionary titles = new Dictionary(db,DictionaryEnum.TITLES);
+		 int dcid = dc.getLastAddedItemId();
+		 List<Integer> ll = new ArrayList<Integer>();
+		 ll.add(dcid);
+		 List<Integer> titleidList = dc.getTitleIds(ll);
+		 List<String> returnedItem = titles.getEntities(titleidList);
+		 assertEquals(returnedItem.get(0),Title.toLowerCase());
+		}
+		catch(Exception e)
+		{
+			ex = e;
+			e.printStackTrace();
+		}
+		finally
+		{
+			assertNull(ex);
+		}
 	}
 
 }

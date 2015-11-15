@@ -3,6 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -149,6 +151,37 @@ public class DistionaryTest {
 		int id2 = authors.getEntityByName("Marian Kowalski");
 		
 		assertEquals(id,id2);
+		}
+		catch(SQLException e)
+		{
+			ex = e;
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) {
+			ex = e;
+			e.printStackTrace();
+		}
+		finally
+		{
+			assertNull(ex);
+		}
+	}
+	
+	@Test
+	public void testGetEntities()
+	{
+		Exception ex = null;
+		Dictionary titles = new Dictionary(db,DictionaryEnum.TITLES);
+		List<String> t = new ArrayList<String>();
+		t.add("title 3");
+		t.add("title 2");
+		Collections.sort(t);
+		try{
+		List<Integer> ids = titles.addEntities(t.toArray(new String[t.size()]));
+		List<String> result;
+		result = titles.getEntities(ids);
+		Collections.sort(result);
+		assertEquals(result,t);
 		}
 		catch(SQLException e)
 		{
