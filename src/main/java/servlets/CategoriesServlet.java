@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,6 +58,7 @@ public class CategoriesServlet extends HttpServlet {
 			response.getWriter().println(out.outputString(doc));
 			response.setHeader("Content-Type","text/xml");
 			java.util.logging.Logger.getGlobal().fine("fine message");
+			request.getSession().getServletContext().log("log");
 
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
