@@ -193,6 +193,7 @@ public class Documents {
 		// 4. Execute statement
 		System.out.println("\nStoring resume in database: ");
 		System.out.println(myStmt.toString());
+		java.util.logging.Logger.getGlobal().fine("fine message");
 
 		myStmt.executeUpdate();
 

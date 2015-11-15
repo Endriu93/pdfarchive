@@ -56,6 +56,8 @@ public class CategoriesServlet extends HttpServlet {
 			XMLOutputter out = new XMLOutputter();
 			response.getWriter().println(out.outputString(doc));
 			response.setHeader("Content-Type","text/xml");
+			java.util.logging.Logger.getGlobal().fine("fine message");
+
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 		} 

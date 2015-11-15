@@ -12,7 +12,7 @@ function uploadInit(){
 			 var progres = $("progress");
 			 progres.hide();
 			 $('#upload_button').click(function(){
-				    var Filename = "testFileName.pdf";
+				    var Filename = $("#fileName").text();
 				    var Description = $("#description").find(".tag").text();
 				    var Category = $("#category").find(".tag").text();
 				    var Tags = [];
@@ -172,9 +172,9 @@ function loadCategories(select){
        else
          fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
 
-       $("#fileName").html('Name: ' + file.name);
-       $("#fileSize").html('Size: ' + fileSize);
-       $("#fileType").html('Type: ' + file.type);
+       $("#fileName").html(file.name);
+       $("#fileSize").html(fileSize);
+       $("#fileType").html(file.type);
 
      }
    }
