@@ -3,15 +3,26 @@
 .container {
 	display:flex;
 	padding:15px;
+	width:100%;
+	flex-wrap: wrap-reverse;
 }
 
 .item {
 	padding:5px;
 	height:160px;
 	width:100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .item img {
 	width:100px;
 	height:140px;
+}
+
+.item .item_title {
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

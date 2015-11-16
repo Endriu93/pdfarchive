@@ -55,7 +55,7 @@ var ContentManager = {
                 var val = $(this).text();
                 content[i++] = '<div class="item">' +
                     '<img src="images/pdf.png" alt="pdf">' +
-                    '<span>' + val + '</span>' +
+                    '<span class="item_title">' + val + '</span>' +
                     '</div>';
             })
             var container_end = '</div>';
@@ -106,7 +106,7 @@ var ContentManager = {
                 var val = $(this).text();
                 content[i++] = '<div class="item">' +
                     '<img src="images/pdf.png" alt="pdf">' +
-                    '<span>' + val + '</span>' +
+                    '<span class="item_title">' + val + '</span>' +
                     '</div>';
             });
             var container_end = '</div>';
