@@ -12,7 +12,7 @@ function uploadInit(){
 			 var progres = $("progress");
 			 progres.hide();
 			 $('#upload_button').click(function(){
-				    var Filename = "testFileName.pdf";
+				    var Filename = $("#fileName").text();
 				    var Description = $("#description").find(".tag").text();
 				    var Category = $("#category").find(".tag").text();
 				    var Tags = [];
@@ -172,9 +172,9 @@ function loadCategories(select){
        else
          fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
 
-       $("#fileName").html('Name: ' + file.name);
-       $("#fileSize").html('Size: ' + fileSize);
-       $("#fileType").html('Type: ' + file.type);
+       $("#fileName").html(file.name);
+       $("#fileSize").html(fileSize);
+       $("#fileType").html(file.type);
 
      }
    }
@@ -189,13 +189,14 @@ function loadCategories(select){
        document.getElementById('progressNumber').innerHTML = 'unable to compute';
      }
    }
- function uploadComplete(evt) {
+ function uploadComplete(xhr, ajaxOptions, thrownError) {
      /* This event is raised when the server send back a response */
-     alert(evt.target.responseText);
+     alert("File was uploaded succesfully");
+     $("progress").hide();
    }
 
-   function uploadFailed(evt) {
-     alert("There was an error attempting to upload the file.");
+   function uploadFailed(xhr, ajaxOptions, thrownError) {
+     alert("There was an error attempting to upload the file."+xhr.status+" "+thrownError);
    }
 
    function uploadCanceled(evt) {

@@ -47,12 +47,15 @@ public class UploadServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 	    response.setHeader("Content-Type","text/html;charset=UTF-8");
 	    
+	    InputStream input;
+	    
 	    try{
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = request.getHeader("Filename");
 	    String description = request.getHeader("Description");
 	    String category = request.getHeader("Category");
 	    InputStream fileContent = filePart.getInputStream();
+	    if(fileContent==null) return;
 	   
 	    response.getWriter().println(fileName);
 //	    response.getWriter().println("start: "+System.currentTimeMillis());
@@ -64,9 +67,9 @@ public class UploadServlet extends HttpServlet {
 	  //comarch // Database database = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
 		PDFManager manager = new PDFManager(database);
 		
-		InputStream input = new ReusableInputStream(fileContent);
+		input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, new String[]{"PK","Akademik"},category, false);
+		manager.upload(input,description, new String[]{"PK","Akademik"},category, false,fileName);
 	    }
 		catch(Exception e)
 		{
@@ -76,21 +79,12 @@ public class UploadServlet extends HttpServlet {
 	    {
 	    	Date date2 = new Date();
 		    response.getWriter().println("end: "+sdf.format(date2));
+		    System.gc();
+		    
 	    }
-//	    response.getWriter().println("stop: "+System.currentTimeMillis());
-	 //   response.getWriter().println("time consumed by UploadServlet in seconds: "+(System.currentTimeMillis()-start)/1000);
 		
 	}
-	// zwraca nazwę pliku przekazanego Partu
-	private static String getFileName(Part part) {
-		for (String cd : part.getHeader("Content-Disposition").split(";")) {
-			if (cd.trim().startsWith("filename")) {
-				String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-            return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
-			}
-		}
-    return null;
-	}
+	
 	
 	    
 	

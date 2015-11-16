@@ -35,7 +35,7 @@ public class PDFManagerTest {
 		try {
 			input = new ReusableInputStream(new FileInputStream(file));
 			System.out.println("input available: "+input.available());
-			manager.upload(input, "zasady przyjęcia do akademików", new String[]{"PK","Akademik"}, "Mieszkanie", false);
+			manager.upload(input, "zasady przyjęcia do akademików", new String[]{"PK","Akademik"}, "Mieszkanie", false,"");
 		} catch (ClassNotFoundException e) {
 			ex= e;
 			e.printStackTrace();

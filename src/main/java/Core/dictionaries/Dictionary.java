@@ -161,5 +161,31 @@ public class Dictionary {
 		resultSet.close();
 		return res;
 	}
+	
+	public List<String> getEntities(List<Integer> ids) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<String> res= new ArrayList<String>();
+		StringBuilder inClause = new StringBuilder();
+		inClause.append("(");
+		int size = ids.size();
+		for(int i=0; i<size; ++i)
+		{
+			inClause.append(ids.get(i));
+			if(i<size-1) inClause.append(",");
+		}
+		inClause.append(")");
+		String get = String.format("select %s from %s where %s in %s;",TableEnum.getName(),TableEnum,TableEnum.getId(),inClause.toString());
+		connection = database.getConnection();
+		Statement statement = connection.createStatement();
+		resultSet = statement.executeQuery(get);
+		while(resultSet.next())
+		{
+			res.add(resultSet.getString(1));
+		}
+		connection.close();
+		resultSet.close();
+		System.out.println(get);
+		return res;
+	}
 
 }
