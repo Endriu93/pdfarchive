@@ -53,7 +53,7 @@ public class UploadCategory extends HttpServlet {
 				response.getWriter().println("Nazwa kategorii jest niepoprawna.");
 				return;
 			}
-			if(categories.getEntityByName(category)==Dictionary.EMPTY)
+			if(categories.getEntityByName(category)!=Dictionary.EMPTY)
 			{
 				response.getWriter().println("Wybrana kategoria już istnieje.");
 			}
