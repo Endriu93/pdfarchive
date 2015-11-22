@@ -193,6 +193,7 @@ function loadCategories(select){
      /* This event is raised when the server send back a response */
      alert("File was uploaded succesfully");
      $("progress").hide();
+     $("#progressNumber").html("");
    }
 
    function uploadFailed(xhr, ajaxOptions, thrownError) {

@@ -10,13 +10,13 @@
 .item {
 	padding:5px;
 	height:160px;
-	width:100px;
+	width:120px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .item img {
-	width:100px;
+	width:100%;
 	height:140px;
 }
 
