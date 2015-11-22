@@ -23,6 +23,7 @@ public class Dictionary {
 	private Statement statement;
 	private ResultSet resultSet;
 	private boolean result = false;
+	public static final int EMPTY = -1;
 	
 	public Dictionary(Database database, DictionaryEnum dctName) {
 		this.database = database;
@@ -139,8 +140,11 @@ public class Dictionary {
 		connection = database.getConnection();
 		Statement statement = connection.createStatement();
 		resultSet = statement.executeQuery(get);
-		resultSet.next();
-		res = resultSet.getInt(1);
+		if(resultSet.next())
+		{
+			res = resultSet.getInt(1);
+		}
+		else res = EMPTY;
 		connection.close();
 		resultSet.close();
 		return res;
