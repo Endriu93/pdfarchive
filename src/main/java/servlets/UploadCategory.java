@@ -42,8 +42,17 @@ public class UploadCategory extends HttpServlet {
 		 Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
 		 Dictionary categories = new Dictionary(database,DictionaryEnum.CATEGORIES);
 		 String category = request.getHeader("Category");
+		 String tmp;
+		 if(category!=null)
+		 tmp= category.trim();
+		 else tmp= "";
 
 		 try {
+			if(tmp.isEmpty())
+			{
+				response.getWriter().println("Nazwa kategorii jest niepoprawna.");
+				return;
+			}
 			if(categories.getEntityByName(category)==Dictionary.EMPTY)
 			{
 				response.getWriter().println("Wybrana kategoria już istnieje.");
@@ -57,8 +66,6 @@ public class UploadCategory extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 		} 
-		 
-
 	}
 
 	/**
