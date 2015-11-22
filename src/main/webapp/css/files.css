@@ -67,3 +67,7 @@
 	background-image: linear-gradient(#dd0000,#990000);
 }
 
+#categoryAddButton {
+	cursor:pointer;
+}
+
