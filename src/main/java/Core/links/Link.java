@@ -70,7 +70,33 @@ public class Link {
 		return res;
 	  
   }
-
+  
+  public List<Integer> getLeftIdsByRightIds(List<Integer> ids) throws SQLException, ClassNotFoundException {
+	  
+	  StringBuilder inClause = new StringBuilder();
+		inClause.append("(");
+		int size = ids.size();
+		for (int i = 0; i < size; ++i) {
+			inClause.append(ids.get(i));
+			if (i < size - 1)
+				inClause.append(",");
+		}
+		inClause.append(")");
+	  
+	  ArrayList<Integer> res = new ArrayList<Integer>();
+		String get = String.format("select %s from %s where  %s in %s ;",LinkEnum.getLeftName(),LinkEnum.getTableName(),LinkEnum.getRightName(),inClause);
+		connection = database.getConnection();
+		Statement statement = connection.createStatement();
+		resultSet = statement.executeQuery(get);
+		while(resultSet.next())
+		{
+			res.add(resultSet.getInt(1));
+		}
+		connection.close();
+		resultSet.close();
+		return res;
+	  
+}
   public List<Integer> getRightIdsByLeftId(Integer id) throws ClassNotFoundException, SQLException {
 	  ArrayList<Integer> res = new ArrayList<Integer>();
 			String get = String.format("select %s from %s where  %s = %d ;",LinkEnum.getRightName(),LinkEnum.getTableName(),LinkEnum.getLeftName(),id);

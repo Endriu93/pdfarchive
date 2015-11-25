@@ -131,7 +131,7 @@ public class Dictionary {
 		return res;
 	}
 
-	
+	// this method uses '==' comparison, hence it returns only one ID
 	public int getEntityByName(String name) throws SQLException, ClassNotFoundException {
 		int res;
 		String get = String.format("select %s from %s where  %s = '%s' ;",TableEnum.getId(),TableEnum,TableEnum.getName(),name.toLowerCase());
@@ -145,6 +145,25 @@ public class Dictionary {
 			res = resultSet.getInt(1);
 		}
 		else res = EMPTY;
+		connection.close();
+		resultSet.close();
+		return res;
+	}
+	
+	// this method uses 'like' comparator, hence it can return several Items
+	public List<Integer> getEntitiesByName(String name) throws SQLException, ClassNotFoundException {
+		
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		String get = String.format("select %s from %s where  %s like '%s' ;",TableEnum.getId(),TableEnum,name.toLowerCase(),TableEnum.getName());
+		System.out.println(get);
+		
+		connection = database.getConnection();
+		Statement statement = connection.createStatement();
+		resultSet = statement.executeQuery(get);
+		while(resultSet.next())
+		{
+			res.add(resultSet.getInt(1));
+		}
 		connection.close();
 		resultSet.close();
 		return res;

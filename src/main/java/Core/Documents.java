@@ -274,32 +274,29 @@ public class Documents {
 		}
 		return ids;
 	}
-
-	// /**
-	// *
-	// * @param ids
-	// * - list of Document ids
-	// * @return xml containing Files info.
-	// *
-	// */
-	// public String getXML(List<Integer> ids) {
-	//
-	// try {
-	// List<String> cat = categories.getEntities();
-	// Document doc = new Document();
-	// Element root = new Element("categories");
-	// doc.addContent(root);
-	// for (String c : cat) {
-	// Element el = new Element("category");
-	// el.addContent(c);
-	// root.addContent(el);
-	// }
-	// XMLOutputter out = new XMLOutputter();
-	// response.getWriter().println(out.outputString(doc));
-	// response.setHeader("Content-Type", "text/xml");
-	// } catch (Exception e) {
-	// e.printStackTrace(response.getWriter());
-	// }
-	// }
+	
+	public List<Integer> getDocumentIDsByTitles(List<Integer> ids) throws ClassNotFoundException, SQLException {
+		List<Integer> res = new ArrayList<Integer>();
+		
+		StringBuilder inClause = new StringBuilder();
+		inClause.append("(");
+		int size = ids.size();
+		for (int i = 0; i < size; ++i) {
+			inClause.append(ids.get(i));
+			if (i < size - 1)
+				inClause.append(",");
+		}
+		inClause.append(")");
+		
+		String select = "SELECT DOCUMENT_ID FROM Documents where TITLE_ID in "+inClause+" ;";
+		connection = database.getConnection();
+		Statement st = connection.createStatement();
+		resultSet = st.executeQuery(select);
+		while(resultSet.next())
+		{
+			res.add(resultSet.getInt(1));
+		}
+		return res;
+	}
 
 }

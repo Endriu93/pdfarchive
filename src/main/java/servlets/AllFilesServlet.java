@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,6 +19,8 @@ import Core.Database;
 import Core.Documents;
 import Core.dictionaries.Dictionary;
 import Core.dictionaries.DictionaryEnum;
+import Core.links.Link;
+import Core.links.LinkEnum;
 
 /**
  * Servlet implementation class AllFilesServlet
@@ -36,13 +40,14 @@ public class AllFilesServlet extends HttpServlet {
 		Database database = new Database("pdfarchive", dbHost, dbPort,
 				"adminIBymkZq", "DRTJ4PEjeMsG");
 		
-		Documents documents = new Documents(database);
-		Dictionary titles = new Dictionary(database,
-				DictionaryEnum.TITLES);
+		List<String> allTitles= new ArrayList<String>();
+		
+		
+		
 		try {
-			List<Integer> allDocumentsIDS = documents.getAllIDs();
-			List<Integer> allTitlesIDS = documents.getTitleIds(allDocumentsIDS);
-			List<String> allTitles = titles.getEntities(allTitlesIDS);
+			
+			
+			allTitles = filterFiles(request,database);
 		
 			Document doc = new Document();
 			Element root = new Element("Titles");
@@ -58,6 +63,70 @@ public class AllFilesServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 		}
+	}
+	
+	public List<String> filterFiles(HttpServletRequest request, Database database) throws ClassNotFoundException, SQLException
+	{
+		boolean isCategory=false;
+		boolean isTitle=false;
+		boolean isTag=false;
+		
+		String category = request.getHeader("Category");
+		String title = request.getHeader("Title");
+		String tag = request.getHeader("Tag");
+		
+		if(category!=null && !category.trim().isEmpty()) isCategory = true;
+		if(title!=null && !title.trim().isEmpty()) isTitle = true;
+		if(tag!=null && !tag.trim().isEmpty()) isTag = true;
+		
+		Documents documents = new Documents(database);
+		Dictionary titles = new Dictionary(database,
+				DictionaryEnum.TITLES);
+		Dictionary categories = new Dictionary(database,DictionaryEnum.CATEGORIES);
+		Dictionary tags = new Dictionary(database,DictionaryEnum.TAGS);
+
+		
+		Link docTag = new Link(database, LinkEnum.DOCUMENTTAG);
+		Link docCategory = new Link(database, LinkEnum.DOCUMENTCATEGORY);
+		
+		List<Integer> titleIDs = new ArrayList<Integer>();
+		List<Integer> tagIDs= new ArrayList<Integer>();
+		List<Integer> categoryIDs= new ArrayList<Integer>();
+
+		
+		if(isTitle)
+		{
+			titleIDs = titles.getEntitiesByName(title);
+		}
+		
+		if(isTag)
+		{
+			tagIDs = tags.getEntitiesByName(tag);
+		}
+		
+		if(isCategory)
+		{
+			categoryIDs = categories.getEntitiesByName(category);
+		}
+		
+		if (titleIDs.isEmpty() || tagIDs.isEmpty() || categoryIDs.isEmpty()) {
+			List<Integer> tIDS = documents.getTitleIds(documents.getAllIDs());
+			return titles.getEntities(tIDS);
+		}
+		
+		List<Integer> docsByTitle = documents.getDocumentIDsByTitles(titleIDs);
+		List<Integer> docsByTag = docTag.getLeftIdsByRightIds(tagIDs);
+		List<Integer> docsByCategory = docCategory.getLeftIdsByRightIds(categoryIDs);
+		
+		docsByTitle.retainAll(docsByCategory);
+		docsByTitle.retainAll(docsByTag);
+		
+		List<Integer> titlesResultIDs = documents.getTitleIds(docsByTitle); 
+		
+		if(titlesResultIDs.isEmpty()) return new ArrayList<String>();
+		
+		return titles.getEntities(titlesResultIDs);
+		
 	}
 
 }
