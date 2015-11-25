@@ -72,8 +72,8 @@ public class AllFilesServlet extends HttpServlet {
 		boolean isTag=false;
 		
 		String category = request.getHeader("Category");
-		String title = request.getHeader("Title");
-		String tag = request.getHeader("Tag");
+		String title = request.getHeader("Filename");
+		String tag = request.getHeader("Tags");
 		
 		if(category!=null && !category.trim().isEmpty()) isCategory = true;
 		if(title!=null && !title.trim().isEmpty()) isTitle = true;
