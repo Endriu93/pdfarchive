@@ -110,19 +110,19 @@ public class AllFilesServlet extends HttpServlet {
 		}
 		
 		// if filter fields are blank, then returns all Files
-		if (!isTitle && !isTag && isCategory) {
+		if (!isTitle && !isTag && !isCategory) {
 			List<Integer> tIDS = documents.getTitleIds(documents.getAllIDs());
 			return titles.getEntities(tIDS);
 		}
 		
-		List<Integer> docsByTitle = documents.getDocumentIDsByTitles(titleIDs);
-		List<Integer> docsByTag = docTag.getLeftIdsByRightIds(tagIDs);
-		List<Integer> docsByCategory = docCategory.getLeftIdsByRightIds(categoryIDs);
+		List<Integer> docsByTitle = titleIDs.isEmpty() ? new ArrayList<Integer>() : documents.getDocumentIDsByTitles(titleIDs);
+		List<Integer> docsByTag = tagIDs.isEmpty() ? new ArrayList<Integer>() : docTag.getLeftIdsByRightIds(tagIDs);
+		List<Integer> docsByCategory = categoryIDs.isEmpty() ? new ArrayList<Integer>() :  docCategory.getLeftIdsByRightIds(categoryIDs);
 		
 		docsByTitle.retainAll(docsByCategory);
 		docsByTitle.retainAll(docsByTag);
 		
-		List<Integer> titlesResultIDs = documents.getTitleIds(docsByTitle); 
+		List<Integer> titlesResultIDs = docsByTitle.isEmpty() ? new ArrayList<Integer>() : documents.getTitleIds(docsByTitle); 
 		
 		if(titlesResultIDs.isEmpty()) return new ArrayList<String>();
 		
