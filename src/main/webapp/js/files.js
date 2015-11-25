@@ -53,22 +53,150 @@ var ContentManager = {
     isMenuAttached: false,
     initContentManager: function (content) {
         this.mainDiv = content;
-        this.categoriesAdd = $('<div class="item" style="order: -1;">' +
+        this.categoriesAdd = $('<div id="categoryAddButton" class="item" style="order: -1;">' +
             '<img src="images/folder_add.png" alt="pdf">' +
             '<span class="item_title">add category</span>' +
             '</div>');
+        $( "#progressbar" ).progressbar({
+            value: false,
+            disabled:true
+        });
+        $("#serverReplyDialog").dialog({
+           autoOpen: false,
+           buttons: [
+               {
+                   text: "OK",
+                   icons: {
+                       primary: "ui-icon-check"
+                   },
+                   click: function() {
+                       $( this ).dialog( "close" );
+                   }
+               }
+           ]
+        });
+        $( "#categoryDialog" ).dialog({
+            autoOpen: false,
+            buttons: [
+                {
+                    text: "Add",
+                    icons: {
+                        primary: "ui-icon-check"
+                    },
+                    click: function() {
+                        var Category = $("#categoryAddInput").val();
+                        $( ".selector" ).progressbar( "option", "disabled", false );
+                        $.ajax({
+                            url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadCategory',  //Server script to process data
+                            type: 'GET',
+                            //Options to tell jQuery not to process data or worry about content-type.
+                            cache: false,
+                            processData: false,
+                            beforeSend: function (request)
+                            {
+                                request.setRequestHeader("Category",Category);
+                            }
+                        }).done(function(reply) {
+                            $("#serverReplyDialog").text(reply).promise().done(
+                                function() {
+                                    $( ".selector" ).progressbar( "option", "disabled", true );
+                                    $("#serverReplyDialog").dialog( "open" );
+                                }
+                            );
+                        }).always();
+                    }
+                },
+                {
+                    text: "Close",
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+        this.categoriesAdd.click(function (){
+            $( "#categoryDialog" ).dialog( "open" );
+        });
 
     },
     initContentMenu: function (content) {
+        var categories = [];
+        var tags= [];
+        var titles = [];
+        var ci = 0;
+        var tagi = 0;
+        var titlei = 0;
+        var cm = this;
         this.menuDiv = content;
         this.allFilesMenu = $("<div id='files_content_menu_inner'>" +
-                "<div><span class='files_content_menu_item_title'> searchByTag</span></div>"+
-                "<div><span class='files_content_menu_item_title'> searchByTitle</span></div>"+
-                "<div><span class='files_content_menu_item_title'> searchByCategory</span></div>"+
+                "<div><span class='files_content_menu_item_title'> searchByTag</span>+" +
+                    "<input type='text' id='searchInputTag'>"+
+                "</div>"+
+                "<div><span class='files_content_menu_item_title'> searchByTitle</span>" +
+                    "<input type='text' id='searchInputTitle'>"+
+                "</div>"+
+                "<div><span class='files_content_menu_item_title'> searchByCategory</span>" +
+                    "<input type='text' id='searchInputCategory'>"+
+                "</div>"+
                 "<div><span class='files_content_menu_item_title'>Szukaj</span>"+
                     "<img src='images/ok.png' alt='pdf'>"+
                 "</div>"+
             "</div>");
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('category')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                categories[ci++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputCategory").autocomplete({
+                source: categories
+            });
+        });
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TagsServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('tag')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                    tags[tagi++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputTag").autocomplete({
+                source: tags
+            });
+        });
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TitlesServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('title')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                    titles[titlei++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputTitle").autocomplete({
+                source: titles
+            });
+        });
+
     },
     initContentOuter: function (content) {
         this.outerDiv = content;
@@ -189,7 +317,7 @@ var ContentManager = {
                 if (cm.currentItem) cm.currentItem.detach();
                 if(cm.menuDiv) cm.allFilesMenu.detach();    // usuń menu
                 cm.isMenuAttached=false;
-                if(!cm.categoriesAddAttached)
+                //if(!cm.categoriesAddAttached)
                 cm.categoriesAdd.appendTo(cm.categories);
                 cm.categoriesAddAttached=true;
                 cm.categories.appendTo(cm.mainDiv);
