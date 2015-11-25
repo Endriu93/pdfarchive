@@ -109,7 +109,8 @@ public class AllFilesServlet extends HttpServlet {
 			categoryIDs = categories.getEntitiesByName(category);
 		}
 		
-		if (titleIDs.isEmpty() || tagIDs.isEmpty() || categoryIDs.isEmpty()) {
+		// if filter fields are blank, then returns all Files
+		if (!isTitle && !isTag && isCategory) {
 			List<Integer> tIDS = documents.getTitleIds(documents.getAllIDs());
 			return titles.getEntities(tIDS);
 		}
