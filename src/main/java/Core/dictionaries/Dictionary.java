@@ -154,7 +154,7 @@ public class Dictionary {
 	public List<Integer> getEntitiesByName(String name) throws SQLException, ClassNotFoundException {
 		
 		ArrayList<Integer> res = new ArrayList<Integer>();
-		String get = String.format("select %s from %s where  %s like '%s' ;",TableEnum.getId(),TableEnum,name.toLowerCase(),TableEnum.getName());
+		String get = String.format("select %s from %s where  %s like '%s' ;",TableEnum.getId(),TableEnum,TableEnum.getName(),name.toLowerCase());
 		System.out.println(get);
 		
 		connection = database.getConnection();
