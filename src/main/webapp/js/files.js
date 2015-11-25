@@ -141,10 +141,13 @@ var ContentManager = {
                 "<div><span class='files_content_menu_item_title'> searchByCategory</span>" +
                     "<input type='text' id='searchInputCategory'>"+
                 "</div>"+
-                "<div><span class='files_content_menu_item_title'>Szukaj</span>"+
+                "<div id='lookup'><span class='files_content_menu_item_title' >Szukaj</span>"+
                     "<img src='images/ok.png' alt='pdf'>"+
                 "</div>"+
             "</div>");
+        this.allFilesMenu.find('#lookup').click(function(){
+        	cm.showAllFiles();
+        });
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
             type: 'GET',
