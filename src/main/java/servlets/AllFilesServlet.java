@@ -119,7 +119,9 @@ public class AllFilesServlet extends HttpServlet {
 		List<Integer> docsByTag = tagIDs.isEmpty() ? new ArrayList<Integer>() : docTag.getLeftIdsByRightIds(tagIDs);
 		List<Integer> docsByCategory = categoryIDs.isEmpty() ? new ArrayList<Integer>() :  docCategory.getLeftIdsByRightIds(categoryIDs);
 		
+		if(isCategory)
 		docsByTitle.retainAll(docsByCategory);
+		if(isTag)
 		docsByTitle.retainAll(docsByTag);
 		
 		List<Integer> titlesResultIDs = docsByTitle.isEmpty() ? new ArrayList<Integer>() : documents.getTitleIds(docsByTitle); 
