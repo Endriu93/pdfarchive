@@ -47,7 +47,7 @@ public class AllFilesServlet extends HttpServlet {
 		try {
 			
 			
-			allTitles = filterFiles(request,database);
+			allTitles = filterFiles2(request,database);
 		
 			Document doc = new Document();
 			Element root = new Element("Titles");
@@ -122,6 +122,77 @@ public class AllFilesServlet extends HttpServlet {
 		if(isCategory)
 		docsByTitle.retainAll(docsByCategory);
 		if(isTag)
+		docsByTitle.retainAll(docsByTag);
+		
+		List<Integer> titlesResultIDs = docsByTitle.isEmpty() ? new ArrayList<Integer>() : documents.getTitleIds(docsByTitle); 
+		
+		if(titlesResultIDs.isEmpty()) return new ArrayList<String>();
+		
+		return titles.getEntities(titlesResultIDs);
+		
+	}
+	
+	public List<String> filterFiles2(HttpServletRequest request, Database database) throws ClassNotFoundException, SQLException
+	{
+//		boolean isCategory=false;
+//		boolean isTitle=false;
+//		boolean isTag=false;
+		
+		String category = request.getHeader("Category");
+		String title = request.getHeader("Filename");
+		String tag = request.getHeader("Tags");
+		
+		if(category==null) category = "";
+		if(title==null)title = "";
+		if(tag==null)tag="";
+		
+//		if(category!=null && !category.trim().isEmpty()) isCategory = true;
+//		if(title!=null && !title.trim().isEmpty()) isTitle = true;
+//		if(tag!=null && !tag.trim().isEmpty()) isTag = true;
+		
+		Documents documents = new Documents(database);
+		Dictionary titles = new Dictionary(database,
+				DictionaryEnum.TITLES);
+		Dictionary categories = new Dictionary(database,DictionaryEnum.CATEGORIES);
+		Dictionary tags = new Dictionary(database,DictionaryEnum.TAGS);
+
+		
+		Link docTag = new Link(database, LinkEnum.DOCUMENTTAG);
+		Link docCategory = new Link(database, LinkEnum.DOCUMENTCATEGORY);
+		
+		List<Integer> titleIDs = new ArrayList<Integer>();
+		List<Integer> tagIDs= new ArrayList<Integer>();
+		List<Integer> categoryIDs= new ArrayList<Integer>();
+
+		
+//		if(isTitle)
+//		{
+			titleIDs = titles.getEntitiesByName(title);
+//		}
+		
+//		if(isTag)
+//		{
+			tagIDs = tags.getEntitiesByName(tag);
+//		}
+		
+//		if(isCategory)
+//		{
+			categoryIDs = categories.getEntitiesByName(category);
+//		}
+		
+		// if filter fields are blank, then returns all Files
+//		if (!isTitle && !isTag && !isCategory) {
+//			List<Integer> tIDS = documents.getTitleIds(documents.getAllIDs());
+//			return titles.getEntities(tIDS);
+//		}
+		
+		List<Integer> docsByTitle = titleIDs.isEmpty() ? new ArrayList<Integer>() : documents.getDocumentIDsByTitles(titleIDs);
+		List<Integer> docsByTag = tagIDs.isEmpty() ? new ArrayList<Integer>() : docTag.getLeftIdsByRightIds(tagIDs);
+		List<Integer> docsByCategory = categoryIDs.isEmpty() ? new ArrayList<Integer>() :  docCategory.getLeftIdsByRightIds(categoryIDs);
+		
+//		if(isCategory)
+		docsByTitle.retainAll(docsByCategory);
+//		if(isTag)
 		docsByTitle.retainAll(docsByTag);
 		
 		List<Integer> titlesResultIDs = docsByTitle.isEmpty() ? new ArrayList<Integer>() : documents.getTitleIds(docsByTitle); 

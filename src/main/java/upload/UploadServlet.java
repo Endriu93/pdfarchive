@@ -54,6 +54,7 @@ public class UploadServlet extends HttpServlet {
 	    String fileName = request.getHeader("Filename");
 	    String description = request.getHeader("Description");
 	    String category = request.getHeader("Category");
+//	    String multipleTags = request.getHeader("Tags");
 	    InputStream fileContent = filePart.getInputStream();
 	    if(fileContent==null) return;
 	   
