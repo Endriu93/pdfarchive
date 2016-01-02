@@ -36,7 +36,7 @@ function uploadInit(){
 			                request.setRequestHeader("Filename",Filename);
 			                request.setRequestHeader("Description",Description);
 			                request.setRequestHeader("Category",Category);
-			                request.setRequestHeader("Tags",Tags[0]);
+			                request.setRequestHeader("Tags",Tags.join(":"));
 			            },
 				        //Ajax events
 				        success: uploadComplete,

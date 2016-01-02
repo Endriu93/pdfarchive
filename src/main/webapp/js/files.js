@@ -149,59 +149,14 @@ var ContentManager = {
                 "</div>"+
             "</div>");
         this.allFilesMenu.find('#lookup').click(function(){
-        	cm.showAllFiles();
+            var title = cm.allFilesMenu.find("#searchInputTitle").val();
+            var category = cm.allFilesMenu.find("#searchInputCategory").val();
+            var tag = cm.allFilesMenu.find("#searchInputTag").val();
+
+            cm.showAllFiles(title,category,tag);
         });
-        $.ajax({
-            url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
-            type: 'GET',
-            //Ajax events
-            cache: false,
-            processData: false
-        }).done(function(xml) {
-            var root = $(xml).find('category')
-            root.each(function () {
-                var val = $(this).text();
-                if (val.trim())
-                categories[ci++] = val;
-            });
-            cm.allFilesMenu.find("#searchInputCategory").autocomplete({
-                source: categories
-            });
-        });
-        $.ajax({
-            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TagsServlet',  //Server script to process data
-            type: 'GET',
-            //Ajax events
-            cache: false,
-            processData: false
-        }).done(function(xml) {
-            var root = $(xml).find('tag')
-            root.each(function () {
-                var val = $(this).text();
-                if (val.trim())
-                    tags[tagi++] = val;
-            });
-            cm.allFilesMenu.find("#searchInputTag").autocomplete({
-                source: tags
-            });
-        });
-        $.ajax({
-            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TitlesServlet',  //Server script to process data
-            type: 'GET',
-            //Ajax events
-            cache: false,
-            processData: false
-        }).done(function(xml) {
-            var root = $(xml).find('title')
-            root.each(function () {
-                var val = $(this).text();
-                if (val.trim())
-                    titles[titlei++] = val;
-            });
-            cm.allFilesMenu.find("#searchInputTitle").autocomplete({
-                source: titles
-            });
-        });
+
+        this.updateFilterAutocomplete();
 
     },
     initContentOuter: function (content) {
@@ -220,15 +175,26 @@ var ContentManager = {
         this.searchByCategory = $("<div></div>");
         this.searchByCategory.load("html/contents/AllFiles.html");
     },
-    showAllFiles: function () {
+    showAllFiles: function (title,category,tag) {
         //this.initAllFiles();
         var ref = this;
+        this.updateFilterAutocomplete();
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/AllFilesServlet',  //Server script to process data
             type: 'GET',
             //Options to tell jQuery not to process data or worry about content-type.
             cache: false,
-            processData: false
+            beforeSend: function (request)
+            {
+                if(title != undefined && category != undefined && tag != undefined)
+                {
+                    request.setRequestHeader("Filename",title);
+                    request.setRequestHeader("Category",category);
+                    request.setRequestHeader("Tags",tag);
+                }
+            },
+            processData: false,
+            contentType: false
         }).done(function (xml) {
             var container_start = '<div class="container">';
             var content = [];
@@ -245,7 +211,7 @@ var ContentManager = {
             var result = container_start + content.join("\n") + container_end;
             ref.allFiles = $(result);
             ref.allFilesCreated = true;
-        }).fail(function () {
+        }).fail(function ( jqXHR, textStatus, errorThrown ) {
             var container_start = '<div class="container">';
             var content = [];
             content[0] = '<div class="item">' +
@@ -256,6 +222,7 @@ var ContentManager = {
             var result = container_start + content.join("\n") + container_end;
             ref.allFiles = $(result);
             ref.allFilesCreated = true;
+            alert(textStatus);
         }).always(function () {
             ref.outerDiv.fadeOut(200);
             var cm = ref;
@@ -330,6 +297,66 @@ var ContentManager = {
                 cm.outerDiv.fadeIn(200);
                 cm.currentItem = cm.categories;
             })
+        });
+    },
+    updateFilterAutocomplete: function(){
+        var categories = [];
+        var tags= [];
+        var titles = [];
+        var ci = 0;
+        var tagi = 0;
+        var titlei = 0;
+        var cm = this;
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('category')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                    categories[ci++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputCategory").autocomplete({
+                source: categories
+            });
+        });
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TagsServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('tag')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                    tags[tagi++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputTag").autocomplete({
+                source: tags
+            });
+        });
+        $.ajax({
+            url: 'http://pdfarchive-wfiisaw.rhcloud.com/TitlesServlet',  //Server script to process data
+            type: 'GET',
+            //Ajax events
+            cache: false,
+            processData: false
+        }).done(function(xml) {
+            var root = $(xml).find('title')
+            root.each(function () {
+                var val = $(this).text();
+                if (val.trim())
+                    titles[titlei++] = val;
+            });
+            cm.allFilesMenu.find("#searchInputTitle").autocomplete({
+                source: titles
+            });
         });
     }
 };
