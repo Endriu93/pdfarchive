@@ -132,17 +132,20 @@ var ContentManager = {
         var cm = this;
         this.menuDiv = content;
         this.allFilesMenu = $("<div id='files_content_menu_inner'>" +
-                "<div><span class='files_content_menu_item_title'> searchByTag</span>+" +
+                "<div><span class='files_content_menu_item_title'> Tag</span>" +
                     "<input type='text' id='searchInputTag'>"+
                 "</div>"+
-                "<div><span class='files_content_menu_item_title'> searchByTitle</span>" +
+		"<div><span class='files_content_menu_item_title'> Word</span>" +
+                    "<input type='text' id='searchInputWord'>"+
+                "</div>"+
+                "<div><span class='files_content_menu_item_title'> Title</span>" +
                     "<input type='text' id='searchInputTitle'>"+
                 "</div>"+
-                "<div><span class='files_content_menu_item_title'> searchByCategory</span>" +
+                "<div><span class='files_content_menu_item_title'> Category</span>" +
                     "<input type='text' id='searchInputCategory'>"+
                 "</div>"+
-                "<div id='lookup'><span class='files_content_menu_item_title' >Szukaj</span>"+
-                    "<img src='images/ok.png' alt='pdf'>"+
+                "<div id='lookup'><span class='files_content_menu_item_title' >Search</span>"+
+                    "<img src='images/search.png' alt='pdf'>"+
                 "</div>"+
             "</div>");
         this.allFilesMenu.find('#lookup').click(function(){

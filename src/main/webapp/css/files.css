@@ -50,6 +50,13 @@
 	border-radius:2px;
 }
 
+#lookup
+{
+	display: flex;
+	align-items: center;
+	cursor:pointer;
+}
+
 .files_nav_option {
 	transition: background-image 0.2s;
 	background-image: linear-gradient(#dddddd,#dddddd,#dddddd);
