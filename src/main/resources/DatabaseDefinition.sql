@@ -69,3 +69,13 @@ unique key (NAME(25)));
 create table if not exists DocumentCategory (
 DOCUMENT_ID int not null references Documents(DOCUMENT_ID) ON DELETE CASCADE,
 CATEGORY_ID int not null references Categories(CATEGORY_ID) ON DELETE CASCADE );
+
+create table if not exists Users (
+USER_ID int primary key not null, #-- it will be used as sessionid hence this number must be complicated
+LOGIN text not null,
+PASSWORD text not null,
+unique key (LOGIN(30)));	#-- force in code to have login greater than 30 characters.
+
+create table if not exists DocumentUser (
+DOCUMENT_ID int not null references Documents(DOCUMENT_ID) ON DELETE CASCADE,
+USER_ID int not null references Users(USER_ID) ON DELETE CASCADE );
