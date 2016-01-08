@@ -2,22 +2,22 @@
 	<div id="upload_form">
 		<div id="upload_form_selection">
 			<form id="form1" enctype="multipart/form-data">
-			    <div style="margin-bottom:10px;">Select a File to Upload</div>
+			    <div style="margin-bottom:10px;">Wybierz plik do dodania</div>
 			    <input class="center" type="file" name="file" id="fileToUpload" onchange="fileSelected();"/>
 			    <ul class="textleft font08" >
-			    	<li>Name: <span id="fileName"></span></li>
-			    	<li>Size: <span id="fileSize"></span></li>
-			    	<li>Type: <span id="fileType"></span></li>
+			    	<li>Tytuł: <span id="fileName"></span></li>
+			    	<li>Rozmiar: <span id="fileSize"></span></li>
+			    	<li>Typ: <span id="fileType"></span></li>
 			    </ul>
 			    <div id="progressNumber"></div>
 			    <progress></progress>
 		  	</form>
 	  	</div>
 	  	<div id="upload_form_extras">
-		    <div style="margin-bottom:10px;">File extra info</div>
+		    <div style="margin-bottom:10px;">Dodatkowe informacje</div>
 		    <div id="extra_container" class="font08">
 		    	<div class="extInCtn" id="category" data-maxCount="1">
-		    		<div class="itemText">select category</div>
+		    		<div class="itemText">kategoria</div>
 		    		<div class="itemInput" data-maxCount="1">
 			    		<select>
 						  <!-- <option value="volvo">Volvo</option>
@@ -42,7 +42,7 @@
 		    		<img src="images/ok.png" alt="default" height="30px;" class="validationImage"> 
 		    	</div> -->
 		    	<div class="extInCtn" id="description" data-maxCount="1">
-		    		<div class="itemText">set description</div>
+		    		<div class="itemText">opis</div>
 		    		<div class="itemInput" data-maxCount="1">
 			    		<input type="text" id="description_set">
 						<img src="images/accept2.png" height="30px" class="itemInput_accept">
@@ -51,7 +51,7 @@
 		    		<img src="images/ok.png" alt="default" height="30px;" class="validationImage"> 
 		    	</div>
 		    	<div class="extInCtn" id="tags" data-maxCount="10">
-		    		<div class="itemText">set tags</div>
+		    		<div class="itemText">tagi</div>
 		    		<div class="itemInput" >
 			    		<input type="text" id="tags_set">
 			    		<img src="images/accept2.png" height="30px" class="itemInput_accept">	
@@ -62,11 +62,11 @@
 		    		<img src="images/ok.png" alt="default" height="30px;" class="validationImage"> 
 		    	</div>
 		    	<div class="extInCtn" id="words"data-maxCount="1">
-		    		<div class="itemText">index words?</div>
+		    		<div class="itemText">indeks słów</div>
 		    		<div class="itemInput" >
 						<select>
-						  <option value="yes">Yes</option>
-						  <option value="no">No</option>
+						  <option value="yes">Tak</option>
+						  <option value="no">Nie</option>
 						</select>	
 						<img src="images/accept2.png" height="30px" class="itemInput_accept">										    		
 					</div>
@@ -77,5 +77,5 @@
 									    
 	  	</div>
   	</div>
-  	<button id="upload_button">upload</button>
+  	<button id="upload_button">dodaj</button>
 </div>

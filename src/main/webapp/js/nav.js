@@ -6,20 +6,27 @@ mainDiv.css("display","none");
 
 var uploadDiv = $("<div></div>");
 uploadDiv.load("html/UploadFile.html");
-uploadDiv.appendTo(mainDiv);
-mainDiv.fadeIn("slow");
-mainDiv.promise().done(uploadInit);
 
 var filesDiv = $("<div></div>");
 filesDiv.load("html/FileManager.html");
 
+var loginDiv = $("<div></div>");
+loginDiv.load("html/Login.html");
+
+loginDiv.appendTo(mainDiv);
+mainDiv.fadeIn("slow");
+mainDiv.promise().done(loginInit);
+
+var currentDiv = loginDiv;
 var isInitialized = false;
+var isUploadInitialized = false;
 
 $("#navYourFiles").click(function(){
 	mainDiv.fadeOut(200);
 	mainDiv.promise().done(function(){
-		uploadDiv.detach();
+		currentDiv.detach();
 		filesDiv.appendTo(mainDiv);
+		currentDiv = filesDiv;
 		if(isInitialized==false)
 			{
 			initFilesManager();
@@ -32,8 +39,14 @@ $("#navYourFiles").click(function(){
 $("#navUploadFile").click(function(){
 	mainDiv.fadeOut(200);
 	mainDiv.promise().done(function(){
-		filesDiv.detach();
+		currentDiv.detach();
 		uploadDiv.appendTo(mainDiv);
+		currentDiv = uploadDiv;
+		if(isUploadInitialized==false)
+		{
+			uploadInit();
+			isUploadInitialized = true;
+		}
 		mainDiv.fadeIn(200);
 	})
 });

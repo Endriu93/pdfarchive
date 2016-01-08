@@ -55,7 +55,7 @@ var ContentManager = {
         this.mainDiv = content;
         this.categoriesAdd = $('<div id="categoryAddButton" class="item" style="order: -1;">' +
             '<img src="images/folder_add.png" alt="pdf">' +
-            '<span class="item_title">add category</span>' +
+            '<span class="item_title">dodaj kategorię</span>' +
             '</div>');
         $( "#progressbar" ).progressbar({
             value: false,
@@ -132,19 +132,19 @@ var ContentManager = {
         var cm = this;
         this.menuDiv = content;
         this.allFilesMenu = $("<div id='files_content_menu_inner'>" +
-                "<div><span class='files_content_menu_item_title'> Tag</span>" +
+                "<div><span class='files_content_menu_item_title'> tag</span>" +
                     "<input type='text' id='searchInputTag'>"+
                 "</div>"+
-		"<div><span class='files_content_menu_item_title'> Word</span>" +
+		"<div><span class='files_content_menu_item_title'> wyraz</span>" +
                     "<input type='text' id='searchInputWord'>"+
                 "</div>"+
-                "<div><span class='files_content_menu_item_title'> Title</span>" +
+                "<div><span class='files_content_menu_item_title'>tytuł</span>" +
                     "<input type='text' id='searchInputTitle'>"+
                 "</div>"+
-                "<div><span class='files_content_menu_item_title'> Category</span>" +
+                "<div><span class='files_content_menu_item_title'>kategoria</span>" +
                     "<input type='text' id='searchInputCategory'>"+
                 "</div>"+
-                "<div id='lookup'><span class='files_content_menu_item_title' >Search</span>"+
+                "<div id='lookup'><span class='files_content_menu_item_title' >Szukaj</span>"+
                     "<img src='images/search.png' alt='pdf'>"+
                 "</div>"+
             "</div>");
