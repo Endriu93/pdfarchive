@@ -10,11 +10,11 @@ alert("Please fill all fields...!!!!!!");
 }else {
 $.post("http://pdfarchive-wfiisaw.rhcloud.com/LoginServlet",{json: JSON.stringify({ email1: email, password1:password})},
 function(data) {
-if(data=='InvalidLogin') {
+if(data.trim()=='InvalidLogin') {
 $('input[type="text"]').css({"border":"2px solid red","box-shadow":"0 0 3px red"});
 $('input[type="password"]').css({"border":"2px solid #00F5FF","box-shadow":"0 0 5px #00F5FF"});
 alert("Użytkownik o podanej nazwie nie istnieje");
-}else if(data=='InvalidPassword'){
+}else if(data.trim()=='InvalidPassword'){
 $('input[type="text"],input[type="password"]').css({"border":"2px solid red","box-shadow":"0 0 3px red"});
 alert("Niepoprawne hasło");
 } else {
@@ -22,7 +22,8 @@ var loginData = jQuery.parseJSON(data);
 $("form")[0].reset();
 $('input[type="text"],input[type="password"]').css({"border":"2px solid #00F5FF","box-shadow":"0 0 5px #00F5FF"});
 mUser.set(loginData.id, loginData.login);
-alert("Witaj "+ loginData.login);
+//alert("Witaj "+ loginData.login);
+nav(2);
 } 
 });
 }

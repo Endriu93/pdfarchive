@@ -224,7 +224,7 @@ var ContentManager = {
             ref.allFilesCreated = true;
             alert(textStatus);
         }).always(function () {
-            ref.outerDiv.fadeOut(200);
+            ref.outerDiv.fadeOut(mAnimationSpeed);
             var cm = ref;
             ref.outerDiv.promise().done(function () {
                 if (cm.currentItem) cm.currentItem.detach();
@@ -234,7 +234,7 @@ var ContentManager = {
                 if(!cm.isMenuAttached)
                 cm.allFilesMenu.appendTo(cm.menuDiv);
 
-                cm.outerDiv.fadeIn(200);
+                cm.outerDiv.fadeIn(mAnimationSpeed);
                 cm.currentItem = cm.allFiles;
                 cm.currentMenu = cm.menu;
             })
@@ -284,7 +284,7 @@ var ContentManager = {
             var result = container_start + content.join("\n") + container_end;
             ref.categories = $(result);
         }).always(function () {
-            ref.outerDiv.fadeOut(200);
+            ref.outerDiv.fadeOut(mAnimationSpeed);
             var cm = ref;
             ref.outerDiv.promise().done(function () {
                 if (cm.currentItem) cm.currentItem.detach();
@@ -294,7 +294,7 @@ var ContentManager = {
                 cm.categoriesAdd.appendTo(cm.categories);
                 cm.categoriesAddAttached=true;
                 cm.categories.appendTo(cm.mainDiv);
-                cm.outerDiv.fadeIn(200);
+                cm.outerDiv.fadeIn(mAnimationSpeed);
                 cm.currentItem = cm.categories;
             })
         });

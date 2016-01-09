@@ -24,3 +24,7 @@ var mUser = {
 			this.login = "";
 		}
 }
+
+//values will be set after.
+var mAnimationSpeed = 400;
+
