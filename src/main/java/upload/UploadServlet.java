@@ -1,12 +1,17 @@
 package upload;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -35,6 +40,7 @@ import Core.PDFManager;
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ERR_MSG_TITLE_EXIST = "Dokument o podanej nazwie już istnieje w archiwum.";
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().println("OK ");
@@ -50,8 +56,26 @@ public class UploadServlet extends HttpServlet {
 	    InputStream input;
 	    
 	    try{
+	    int userID;
+	    String userIDString;
+	    Part userPart = request.getPart("UserID");
+	    userIDString = (new BufferedReader(new InputStreamReader(userPart.getInputStream()))).readLine();
+	    userID = Integer.parseInt(userIDString);
+	    
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 	    String fileName = request.getHeader("Filename");
+	    
+	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+	    Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
+	    
+	    // if provided title exist resend error message
+	    if(!validateFile(fileName,userIDString,database)) 
+	    	{
+	    		response.sendError(515,ERR_MSG_TITLE_EXIST);
+	    		return;
+	    	}
+	    
 	    String description = request.getHeader("Description");
 	    String category = request.getHeader("Category");
 	    String multipleTags = request.getHeader("Tags");
@@ -63,15 +87,13 @@ public class UploadServlet extends HttpServlet {
 //	    response.getWriter().println("start: "+System.currentTimeMillis());
 	    long start = System.currentTimeMillis();
 	   
-	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-	    Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
+	   
 	  //comarch // Database database = new Database("pdfarchive","localhost" , "3306", "root", "pilot93");
 		PDFManager manager = new PDFManager(database);
 		
 		input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, tags != null ? tags : new String[]{"other"},category, false,fileName);
+		manager.upload(input,description, tags != null ? tags : new String[]{"other"},category, false,fileName,userIDString);
 	    }
 		catch(Exception e)
 		{
@@ -85,6 +107,29 @@ public class UploadServlet extends HttpServlet {
 		    
 	    }
 		
+	}
+
+	private boolean validateFile(String fileName, String userIDString, Database database) throws ClassNotFoundException, SQLException {
+		String query = "select NAME from Titles inner join Documents on Titles.TITLE_ID=Documents.TITLE_ID"
+				+ " inner join DocumentUser on Documents.DOCUMENT_ID=DocumentUser.DOCUMENT_ID "
+				+ "where DocumentUser.USER_ID="+userIDString+";";
+		System.out.println(query);
+		Connection connection;
+		Statement statement;
+		ResultSet resultSet;
+		boolean result;
+		
+		connection = database.getConnection();
+		statement = connection.createStatement();
+		resultSet = statement.executeQuery(query);
+		
+		if(resultSet.next()) result = false;
+		else result = true;
+		
+		resultSet.close();
+		connection.close();
+		
+		return result;
 	}
 	
 	

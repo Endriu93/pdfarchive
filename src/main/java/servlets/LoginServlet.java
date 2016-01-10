@@ -2,6 +2,11 @@ package servlets;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +18,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonWriter;
+
+import Core.Database;
 
 /**
  * Servlet implementation class LoginServlet
@@ -47,28 +54,73 @@ public class LoginServlet extends HttpServlet {
 		String login = json.getString("email1");
 		String password = json.getString("password1");
 		
-		if(!validateLogin(login)) response.getWriter().println(INVALID_LOGIN);
-		else if(!validatePassword(login, password)) response.getWriter().println(INVALID_PASWORD);
-		else 
-		{
-			int userId = getUserId(login, password);
-			JsonObject json_out = Json.createObjectBuilder()
-					.add("id",userId)
-					.add("login", login)
-					.build();
-			JsonWriter writer = Json.createWriter(response.getWriter());
-			writer.writeObject(json_out);
+		String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+		String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+		Database database = new Database("pdfarchive", dbHost, dbPort,
+				"adminIBymkZq", "DRTJ4PEjeMsG");
+		
+		try {
+			if(!validateLogin(database,login)) response.getWriter().println(INVALID_LOGIN);
+			else if(!validatePassword(database,login, password)) response.getWriter().println(INVALID_PASWORD);
+			else 
+			{
+				int userId = getUserId(login, password);
+				JsonObject json_out = Json.createObjectBuilder()
+						.add("id",userId)
+						.add("login", login)
+						.build();
+				JsonWriter writer = Json.createWriter(response.getWriter());
+				writer.writeObject(json_out);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace(response.getWriter());
+		} catch (SQLException e) {
+			e.printStackTrace(response.getWriter());
 		}
 	}
 	
-	private boolean validateLogin(String login){
-		if(login.trim().equals("user")) return true;
-		else return false;
+	private boolean validateLogin(Database database,String login) throws ClassNotFoundException, SQLException {
+		String query = "select Users.LOGIN from Users where Users.LOGIN='"+login+"';";
+
+//		System.out.println(query);
+		Connection connection;
+		Statement statement;
+		ResultSet resultSet;
+		boolean result;
+
+		connection = database.getConnection();
+		statement = connection.createStatement();
+		resultSet = statement.executeQuery(query);
+
+		if(resultSet.next()) result = true;
+		else result = false;
+
+		resultSet.close();
+		connection.close();
+
+		return result;
 	}
 	
-	private boolean validatePassword(String login, String password){
-		if(password.equals("user")) return true;
-		else return false;
+	private boolean validatePassword(Database database,String login, String password) throws ClassNotFoundException, SQLException{
+		String query = "select * from Users where Users.LOGIN='"+login+"' and Users.PASSWORD='"+password+"';";
+
+//		System.out.println(query);
+		Connection connection;
+		Statement statement;
+		ResultSet resultSet;
+		boolean result;
+
+		connection = database.getConnection();
+		statement = connection.createStatement();
+		resultSet = statement.executeQuery(query);
+
+		if(resultSet.next()) result = true;
+		else result = false;
+
+		resultSet.close();
+		connection.close();
+
+		return result;
 	}
 	
 	private int getUserId(String login, String password)

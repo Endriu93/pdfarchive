@@ -2,7 +2,7 @@ $(document).ready(function(){
 	nav();
 });
 
-var mUser = {
+mUser = {
 		id:"",
 		login:"",
 		getLogin: function(){
@@ -22,9 +22,15 @@ var mUser = {
 		clear:function(){
 			this.id = "";
 			this.login = "";
+		},
+		makeUserJson: function(){
+			return {json: JSON.stringify({ userID: this.id.toString()})};
+		},
+		makeUserJsonString: function(){
+			return JSON.stringify({json: JSON.stringify({ userID: this.id.toString()})})
 		}
 }
 
 //values will be set after.
-var mAnimationSpeed = 400;
+mAnimationSpeed = 400;
 

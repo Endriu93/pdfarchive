@@ -88,7 +88,8 @@ var ContentManager = {
                         $( ".selector" ).progressbar( "option", "disabled", false );
                         $.ajax({
                             url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadCategory',  //Server script to process data
-                            type: 'GET',
+                            type: 'POST',
+                            data: mUser.makeUserJson(),
                             //Options to tell jQuery not to process data or worry about content-type.
                             cache: false,
                             processData: false,
@@ -181,7 +182,8 @@ var ContentManager = {
         this.updateFilterAutocomplete();
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/AllFilesServlet',  //Server script to process data
-            type: 'GET',
+            type: 'POST',
+            data: mUser.makeUserJson(),
             //Options to tell jQuery not to process data or worry about content-type.
             cache: false,
             beforeSend: function (request)
@@ -253,7 +255,8 @@ var ContentManager = {
         var ref = this;
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
-            type: 'GET',
+            type: 'POST',
+            data: mUser.makeUserJson(),
             //Options to tell jQuery not to process data or worry about content-type.
             cache: false,
             processData: false
@@ -309,7 +312,8 @@ var ContentManager = {
         var cm = this;
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
-            type: 'GET',
+            type: 'POST',
+            data: mUser.makeUserJson(),
             //Ajax events
             cache: false,
             processData: false
@@ -326,7 +330,8 @@ var ContentManager = {
         });
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/TagsServlet',  //Server script to process data
-            type: 'GET',
+            type: 'POST',
+            data: mUser.makeUserJson(),
             //Ajax events
             cache: false,
             processData: false
@@ -343,7 +348,8 @@ var ContentManager = {
         });
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/TitlesServlet',  //Server script to process data
-            type: 'GET',
+            type: 'POST',
+            data: mUser.makeUserJson(),
             //Ajax events
             cache: false,
             processData: false

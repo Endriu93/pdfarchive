@@ -21,6 +21,7 @@ function uploadInit(){
 				    	Tags[i++] = $(this).text();
 				    });
 				    var formData = new FormData($('#form1')[0]);
+				    formData.set('UserID',mUser.getId().toString());
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
 				        type:'POST',
@@ -87,7 +88,8 @@ function uploadInit(){
 function loadCategories(select){
 	$.ajax({
         url: 'http://pdfarchive-wfiisaw.rhcloud.com/CategoriesServlet',  //Server script to process data
-        type: 'GET',
+        type: 'POST',
+        data: mUser.makeUserJson(),
         //Ajax events
         success: function(xml){
         	var root = $(xml).find('category')

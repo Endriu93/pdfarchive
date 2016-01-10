@@ -65,7 +65,8 @@ create table if not exists DocumentTag (
 DOCUMENT_ID int not null,
 TAG_ID int not null,
 FOREIGN KEY(DOCUMENT_ID) references Documents(DOCUMENT_ID) ON DELETE CASCADE,
-FOREIGN KEY(TAG_ID) references Tags(TAG_ID) ON DELETE CASCADE);
+FOREIGN KEY(TAG_ID) references Tags(TAG_ID) ON DELETE CASCADE,
+PRIMARY KEY(DOCUMENT_ID,TAG_ID));
 
 create table if not exists Categories (
 CATEGORY_ID int not null auto_increment primary key,
@@ -92,13 +93,21 @@ create table if not exists DocumentUser (
 DOCUMENT_ID int not null,
 USER_ID int not null,
 FOREIGN KEY(DOCUMENT_ID) references Documents(DOCUMENT_ID) ON DELETE CASCADE,
-FOREIGN KEY(USER_ID) references Users(USER_ID) ON DELETE CASCADE);
+FOREIGN KEY(USER_ID) references Users(USER_ID) ON DELETE CASCADE,
+PRIMARY KEY(DOCUMENT_ID,USER_ID));
 
 create table if not exists CategoryUser (
 CATEGORY_ID int not null,
 USER_ID int not null,
 FOREIGN KEY(CATEGORY_ID) references Categories(CATEGORY_ID) ON DELETE CASCADE,
-FOREIGN KEY(USER_ID) references Users(USER_ID) ON DELETE CASCADE);
+FOREIGN KEY(USER_ID) references Users(USER_ID) ON DELETE CASCADE,
+PRIMARY KEY(CATEGORY_ID,USER_ID));
 
 CREATE TRIGGER onUserCreate after INSERT on Users 
 	FOR EACH ROW insert into CategoryUser values((select CATEGORY_ID from Categories where NAME='Rozne'),NEW.USER_ID);
+	
+#-- add users; 	
+INSERT INTO Users values(182934,'user','user');	
+INSERT INTO Users values(294562,'user1','user1');	
+INSERT INTO Users values(125429034,'user2','user2');	
+

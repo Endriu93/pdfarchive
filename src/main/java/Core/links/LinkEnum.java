@@ -9,7 +9,8 @@ import Core.dictionaries.DictionaryEnum;
 public enum LinkEnum {
 	DOCUMENTWORD("DocumentWord","DOCUMENT_ID","WORD_ID"),
 	DOCUMENTTAG("DocumentTag","DOCUMENT_ID","TAG_ID"),
-	DOCUMENTCATEGORY("DocumentCategory","DOCUMENT_ID","CATEGORY_ID");
+	DOCUMENTCATEGORY("DocumentCategory","DOCUMENT_ID","CATEGORY_ID"), 
+	DOCUMENTUSER("DocumentUser","DOCUMENT_ID","USER_ID");
 	
 	private String tbName;
 	private String left;

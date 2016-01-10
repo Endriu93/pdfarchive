@@ -1,6 +1,11 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +18,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
+import util.User;
 import Core.Database;
 import Core.dictionaries.Dictionary;
 import Core.dictionaries.DictionaryEnum;
@@ -35,14 +41,18 @@ public class TagsServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
 		 String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
 		 Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
 		 Dictionary tags = new Dictionary(database,DictionaryEnum.TAGS);
+		 
+		 String UserId = User.getUserID(request);
+		 
 		 try {
-			List<String> cat = tags.getEntities();
+//			List<String> cat = tags.getEntities();
+			List<String> cat = getTags(database, UserId); 
 			Document doc = new Document();
 			Element root = new Element("tags");
 			doc.addContent(root);
@@ -64,12 +74,37 @@ public class TagsServlet extends HttpServlet {
 		 
 
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+    private ArrayList<String> getTags(Database database, String userId) throws ClassNotFoundException, SQLException {
+		String query = "select Tags.NAME from Tags"
+						+ " inner join DocumentTag"
+						+ " on Tags.TAG_ID=DocumentTag.TAG_ID"
+						+ " inner join DocumentUser"
+						+ " on DocumentTag.DOCUMENT_ID=DocumentUser.DOCUMENT_ID"
+						+ " where DocumentUser.USER_ID = "+userId+";";
+		
+//		System.out.println(query);
+		Connection connection;
+		Statement statement;
+		ResultSet resultSet;
+		ArrayList<String> result;
+		
+		connection = database.getConnection();
+		statement = connection.createStatement();
+		resultSet = statement.executeQuery(query);
+		
+		result = new ArrayList<String>();
+		
+		while(resultSet.next())
+		{
+			result.add(resultSet.getString(1));
+		}
+		
+		resultSet.close();
+		connection.close();
+		
+		System.out.println("Tags Returned in getTags: "+result.size());
+		
+		return result;
 	}
 
 }

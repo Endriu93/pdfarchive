@@ -33,6 +33,7 @@ public class PDFManager {
 	Link doc_word ;
 	Link doc_tag ;
 	Link doc_category ;
+	Link doc_user;
 	Documents documents ;
 	Document p_document ;
 	
@@ -47,11 +48,12 @@ public class PDFManager {
 		 doc_word = new Link(database,LinkEnum.DOCUMENTWORD);
 		 doc_tag = new Link(database,LinkEnum.DOCUMENTTAG);
 		 doc_category = new Link(database,LinkEnum.DOCUMENTCATEGORY);
+		 doc_user = new Link(database,LinkEnum.DOCUMENTUSER);
 		 documents = new Documents(database);
 		 p_document = new PreparedDocument();
 	}
 	
-	public void upload(InputStream documentData, String description, String[] Tags, String Category, boolean ifindex, String filename ) throws IOException, ClassNotFoundException, SQLException
+	public void upload(InputStream documentData, String description, String[] Tags, String Category, boolean ifindex, String filename, String userIDString ) throws IOException, ClassNotFoundException, SQLException
 	{
 		PDDocument doc = PDDocument.load(documentData);
 		documentData.close();
@@ -90,6 +92,7 @@ public class PDFManager {
 	    
 	    doc_tag.addPair(documents.getLastAddedItemId(),tagIds);
 	    doc_category.addPair(documents.getLastAddedItemId(),CategoryId);
+	    doc_user.addPair(documents.getLastAddedItemId(),Integer.parseInt(userIDString));
 	    
 	    doc.close();
 	}
