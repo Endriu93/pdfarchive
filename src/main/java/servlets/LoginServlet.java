@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 			else if(!validatePassword(database,login, password)) response.getWriter().println(INVALID_PASWORD);
 			else 
 			{
-				int userId = getUserId(login, password);
+				int userId = getUserId(database,login, password);
 				JsonObject json_out = Json.createObjectBuilder()
 						.add("id",userId)
 						.add("login", login)
@@ -123,9 +123,28 @@ public class LoginServlet extends HttpServlet {
 		return result;
 	}
 	
-	private int getUserId(String login, String password)
+	private int getUserId(Database database,String login, String password) throws SQLException, ClassNotFoundException
 	{
-		return 1;
+		String query = "select Users.USER_ID from Users"
+						+ " where LOGIN='"+login+"' "
+						+ " and PASSWORD='"+password+"';";
+//		System.out.println(query);
+		Connection connection;
+		Statement statement;
+		ResultSet resultSet;
+		int result=0;
+
+		connection = database.getConnection();
+		statement = connection.createStatement();
+		resultSet = statement.executeQuery(query);
+
+		if(resultSet.next()) result = resultSet.getInt(1);
+		
+
+		resultSet.close();
+		connection.close();
+
+		return result;
 	}
 
 }
