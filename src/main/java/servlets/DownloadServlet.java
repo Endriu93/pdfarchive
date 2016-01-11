@@ -37,6 +37,12 @@ public class DownloadServlet extends HttpServlet {
 		
 		try {
 			InputStream file = getData(database, userID, title);
+			if(file==null)
+			{
+				response.getWriter().println("Nie znaleziono pliku");
+				response.setContentType("text/plain");
+				return;
+			}
 			byte[] bytes = new byte[10000];
 			while(file.read(bytes)!=-1)
 			{
@@ -51,7 +57,7 @@ public class DownloadServlet extends HttpServlet {
 			e.printStackTrace(response.getWriter());
 		}
 	}
-	 private InputStream getData(Database database, String userId,String title) throws ClassNotFoundException, SQLException {
+	 private InputStream getData(Database database, String userId,String title) throws ClassNotFoundException, SQLException, IOException {
 			String query = "select Documents.DATA from Documents"
 						+ " inner join Titles"
 						+ " on Documents.TITLE_ID = Titles.TITLE_ID"
@@ -63,7 +69,7 @@ public class DownloadServlet extends HttpServlet {
 						+ " and Titles.NAME = '"+title+"';";
 
 			
-//			System.out.println(query);
+			System.out.println(query);
 			Connection connection;
 			Statement statement;
 			ResultSet resultSet;
@@ -75,8 +81,9 @@ public class DownloadServlet extends HttpServlet {
 			
 			if(resultSet.next()) 
 			{
-				result= resultSet.getBinaryStream(1);
+				result = resultSet.getBinaryStream(1);
 			}
+			System.out.println("getDAta: size: "+result==null? "0" : result.available());
 			
 			resultSet.close();
 			connection.close();
