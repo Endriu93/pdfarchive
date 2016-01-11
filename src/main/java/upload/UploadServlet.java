@@ -112,7 +112,8 @@ public class UploadServlet extends HttpServlet {
 	private boolean validateFile(String fileName, String userIDString, Database database) throws ClassNotFoundException, SQLException {
 		String query = "select NAME from Titles inner join Documents on Titles.TITLE_ID=Documents.TITLE_ID"
 				+ " inner join DocumentUser on Documents.DOCUMENT_ID=DocumentUser.DOCUMENT_ID "
-				+ "where DocumentUser.USER_ID="+userIDString+";";
+				+ "where DocumentUser.USER_ID="+userIDString+" "
+				+ "and Titles.NAME='"+fileName+"' ;";
 		System.out.println(query);
 		Connection connection;
 		Statement statement;
