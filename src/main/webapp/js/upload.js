@@ -101,8 +101,7 @@ function loadCategories(select){
         },
         error: function(xhr,errorStatus,errorThrown){window.alert(errorStatus+"::"+errorThrown);},
         //Options to tell jQuery not to process data or worry about content-type.
-        cache: false,
-        processData: false
+        cache: false
     });
 	
 }

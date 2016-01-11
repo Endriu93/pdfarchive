@@ -92,7 +92,6 @@ var ContentManager = {
                             data: mUser.makeUserJson(),
                             //Options to tell jQuery not to process data or worry about content-type.
                             cache: false,
-                            processData: false,
                             beforeSend: function (request)
                             {
                                 request.setRequestHeader("Category",Category);
@@ -194,9 +193,7 @@ var ContentManager = {
                     request.setRequestHeader("Category",category);
                     request.setRequestHeader("Tags",tag);
                 }
-            },
-            processData: false,
-            contentType: false
+            }
         }).done(function (xml) {
             var container_start = '<div class="container">';
             var content = [];
@@ -258,8 +255,7 @@ var ContentManager = {
             type: 'POST',
             data: mUser.makeUserJson(),
             //Options to tell jQuery not to process data or worry about content-type.
-            cache: false,
-            processData: false
+            cache: false
         }).done(function (xml) {
             var container_start = '<div class="container">';
             var content = [];
@@ -315,8 +311,7 @@ var ContentManager = {
             type: 'POST',
             data: mUser.makeUserJson(),
             //Ajax events
-            cache: false,
-            processData: false
+            cache: false
         }).done(function(xml) {
             var root = $(xml).find('category')
             root.each(function () {
@@ -333,8 +328,7 @@ var ContentManager = {
             type: 'POST',
             data: mUser.makeUserJson(),
             //Ajax events
-            cache: false,
-            processData: false
+            cache: false
         }).done(function(xml) {
             var root = $(xml).find('tag')
             root.each(function () {
@@ -351,8 +345,7 @@ var ContentManager = {
             type: 'POST',
             data: mUser.makeUserJson(),
             //Ajax events
-            cache: false,
-            processData: false
+            cache: false
         }).done(function(xml) {
             var root = $(xml).find('title')
             root.each(function () {

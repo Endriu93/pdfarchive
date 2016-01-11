@@ -90,7 +90,7 @@ public class UploadCategory extends HttpServlet {
 
 		connection = database.getConnection();
 		statement = connection.createStatement();
-		statement.executeQuery(query);
+		statement.executeUpdate(query);
 
 		connection.close();
 	}
