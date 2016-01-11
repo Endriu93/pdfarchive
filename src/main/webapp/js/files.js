@@ -209,9 +209,12 @@ var ContentManager = {
             var container_end = '</div>';
             var result = container_start + content.join("\n") + container_end;
             ref.allFiles = $(result);
+    		var tita = ref.allFiles.find('.item').find('.item_title').text();
+    		var s=1;
+    		s=6;
             ref.allFiles.find(".item").click(
             		function(){
-            		var tit = $(this).find('.item_title').val();
+            		var tit = $(this).find('.item_title').text();
             		mDownloadUtil.performRequest(tit);
             		}
             		);
