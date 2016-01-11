@@ -209,6 +209,12 @@ var ContentManager = {
             var container_end = '</div>';
             var result = container_start + content.join("\n") + container_end;
             ref.allFiles = $(result);
+            ref.allFiles.find(".item").click(
+            		function(){
+            		var tit = $(this).find('.item_title').val();
+            		mDownloadUtil.performRequest(tit);
+            		}
+            		);
             ref.allFilesCreated = true;
         }).fail(function ( jqXHR, textStatus, errorThrown ) {
             var container_start = '<div class="container">';
@@ -220,6 +226,7 @@ var ContentManager = {
             var container_end = '</div>';
             var result = container_start + content.join("\n") + container_end;
             ref.allFiles = $(result);
+            
             ref.allFilesCreated = true;
             alert(textStatus);
         }).always(function () {

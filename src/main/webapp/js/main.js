@@ -29,8 +29,16 @@ mUser = {
 		makeUserJsonString: function(){
 			return JSON.stringify({json: JSON.stringify({ userID: this.id.toString()})})
 		}
-}
+};
 
 //values will be set after.
 mAnimationSpeed = 400;
+
+mDownloadUtil = {
+		performRequest: function(title){
+			$('#form_userID').val(mUser.getId().toString());
+			$('#form_title').val(title.toString());
+			$('#download_form').submit();
+		}
+}
 
