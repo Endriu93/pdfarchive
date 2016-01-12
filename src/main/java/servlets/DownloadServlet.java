@@ -44,6 +44,8 @@ public class DownloadServlet extends HttpServlet {
 				response.setContentType("text/plain");
 				return;
 			}
+			response.setContentType("application/pdf");
+
 			byte[] bytes = new byte[10000];
 			while((bytesread = file.read(bytes))!=-1)
 			{
@@ -52,11 +54,6 @@ public class DownloadServlet extends HttpServlet {
 			response.getOutputStream().close();
 			file.close();
 			
-			String headerKey = "Content-Disposition";
-	        String headerValue = String.format("filename=\"%s\"", title);
-	        response.setHeader(headerKey, headerValue);
-			
-			response.setContentType("application/pdf");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace(response.getWriter());
 		} catch (SQLException e) {
