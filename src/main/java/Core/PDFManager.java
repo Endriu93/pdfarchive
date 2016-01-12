@@ -88,6 +88,7 @@ public class PDFManager {
 	    doc_category.addPair(documents.getLastAddedItemId(),CategoryId);
 	    doc_user.addPair(documents.getLastAddedItemId(),Integer.parseInt(userIDString));
 	    
+	    
 	    if (ifindex) {
 			PDFTextStripper stripper = new PDFTextStripper();
 			String text = stripper.getText(doc);
@@ -99,6 +100,7 @@ public class PDFManager {
 			List<Integer> wordIds = new ArrayList<Integer>();
 			if (w != null)
 				wordIds = words.addEntities(w);
+			System.out.println(wordIds.size());
 			doc_word.addPair(documents.getLastAddedItemId(), wordIds);
 		}
 	    
