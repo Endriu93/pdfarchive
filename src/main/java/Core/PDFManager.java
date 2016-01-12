@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,7 +69,8 @@ public class PDFManager {
 	    PDFTextStripper stripper = new PDFTextStripper();
 	    String text = stripper.getText(doc);
 	    String[] w = text.split(" ");
-	    List<Integer> wordIds = words.addEntities(w);
+	    List<Integer> wordIds = new ArrayList<Integer>();
+	    if(w!=null) wordIds = words.addEntities(w);
 	    doc_word.addPair(documents.getLastAddedItemId(),wordIds );
 		}
 	    PreparedDocument document = new PreparedDocument();
