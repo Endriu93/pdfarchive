@@ -56,6 +56,10 @@ public class UploadServlet extends HttpServlet {
 	    InputStream input;
 	    
 	    try{
+	    	
+	    String index;
+	    Part indexPart = request.getPart("Index");
+	    index = (new BufferedReader(new InputStreamReader(indexPart.getInputStream()))).readLine();
 	    int userID;
 	    String userIDString;
 	    Part userPart = request.getPart("UserID");
@@ -93,7 +97,7 @@ public class UploadServlet extends HttpServlet {
 		
 		input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, tags != null ? tags : new String[]{"other"},category, false,fileName,userIDString);
+		manager.upload(input,description, tags != null ? tags : new String[]{"other"},category, index(index),fileName,userIDString);
 	    }
 		catch(Exception e)
 		{
@@ -131,6 +135,12 @@ public class UploadServlet extends HttpServlet {
 		connection.close();
 		
 		return result;
+	}
+	
+	private boolean index(String index)
+	{
+		if(index != null && index.trim().equalsIgnoreCase("yes")) return true;
+		else return false;
 	}
 	
 	

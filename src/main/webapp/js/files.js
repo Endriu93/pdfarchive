@@ -152,8 +152,9 @@ var ContentManager = {
             var title = cm.allFilesMenu.find("#searchInputTitle").val();
             var category = cm.allFilesMenu.find("#searchInputCategory").val();
             var tag = cm.allFilesMenu.find("#searchInputTag").val();
+            var word = cm.allFilesMenu.find("#searchInputWord").val();
 
-            cm.showAllFiles(title,category,tag);
+            cm.showAllFiles(title,category,tag,word);
         });
 
         this.updateFilterAutocomplete();
@@ -175,14 +176,14 @@ var ContentManager = {
         this.searchByCategory = $("<div></div>");
         this.searchByCategory.load("html/contents/AllFiles.html");
     },
-    showAllFiles: function (title,category,tag) {
+    showAllFiles: function (title,category,tag,word) {
         //this.initAllFiles();
         var ref = this;
         this.updateFilterAutocomplete();
         $.ajax({
             url: 'http://pdfarchive-wfiisaw.rhcloud.com/AllFilesServlet',  //Server script to process data
             type: 'POST',
-            data: mUser.makeUserJson(),
+            data: mSearchUtil.makeUserWordJson(word),
             //Options to tell jQuery not to process data or worry about content-type.
             cache: false,
             beforeSend: function (request)

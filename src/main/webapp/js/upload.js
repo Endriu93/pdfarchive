@@ -16,12 +16,14 @@ function uploadInit(){
 				    var Description = $("#description").find(".tag").text();
 				    var Category = $("#category").find(".tag").text();
 				    var Tags = [];
+				    var Index = $('#words').find(".tag").text();
 				    var i=0;
 				    $("#tags").find(".tag").each(function(){
 				    	Tags[i++] = $(this).text();
 				    });
 				    var formData = new FormData($('#form1')[0]);
 				    formData.set('UserID',mUser.getId().toString());
+				    formData.set('Index',Index);
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
 				        type:'POST',

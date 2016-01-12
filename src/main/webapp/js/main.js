@@ -34,6 +34,12 @@ mUser = {
 //values will be set after.
 mAnimationSpeed = 400;
 
+mSearchUtil = {
+		makeUserWordJson: function(word){
+			return {json: JSON.stringify({ userID: this.id.toString(), word: word.toString()})};
+		}	
+};
+
 mDownloadUtil = {
 		performRequest: function(title){
 			$('#form_userID').val(mUser.getId().toString());
