@@ -37,6 +37,7 @@ public class DownloadServlet extends HttpServlet {
 		
 		try {
 			InputStream file = getData(database, userID, title);
+			int bytesread=-1;
 			if(file==null)
 			{
 				response.getWriter().println("Nie znaleziono pliku");
@@ -44,11 +45,16 @@ public class DownloadServlet extends HttpServlet {
 				return;
 			}
 			byte[] bytes = new byte[10000];
-			while(file.read(bytes)!=-1)
+			while((bytesread = file.read(bytes))!=-1)
 			{
-				response.getOutputStream().write(bytes);
+				response.getOutputStream().write(bytes,0,bytesread);
 			}
-			response.getOutputStream().write(bytes);
+			response.getOutputStream().close();
+			file.close();
+			
+			String headerKey = "Content-Disposition";
+	        String headerValue = String.format("filename=\"%s\"", title);
+	        response.setHeader(headerKey, headerValue);
 			
 			response.setContentType("application/pdf");
 		} catch (ClassNotFoundException e) {
