@@ -64,19 +64,7 @@ public class PDFManager {
 		int TitleId = titles.addEntity(info.getTitle()==null? filename : info.getTitle());
 		int CategoryId = categories.addEntity(Category);
 		List<Integer> tagIds = tags.addEntities(Tags);
-		if (ifindex) {
-			PDFTextStripper stripper = new PDFTextStripper();
-			String text = stripper.getText(doc);
-			String[] w = text.split(" ");
-			for(String word : w)
-			{
-				word.replaceAll("[^A-Za-z0-9 ]/", "");
-			}
-			List<Integer> wordIds = new ArrayList<Integer>();
-			if (w != null)
-				wordIds = words.addEntities(w);
-			doc_word.addPair(documents.getLastAddedItemId(), wordIds);
-		}
+		
 	    PreparedDocument document = new PreparedDocument();
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    Date date = new Date();
@@ -99,6 +87,20 @@ public class PDFManager {
 	    doc_tag.addPair(documents.getLastAddedItemId(),tagIds);
 	    doc_category.addPair(documents.getLastAddedItemId(),CategoryId);
 	    doc_user.addPair(documents.getLastAddedItemId(),Integer.parseInt(userIDString));
+	    
+	    if (ifindex) {
+			PDFTextStripper stripper = new PDFTextStripper();
+			String text = stripper.getText(doc);
+			String[] w = text.split(" ");
+			for(String word : w)
+			{
+				word.replaceAll("[^A-Za-z0-9 ]", "");
+			}
+			List<Integer> wordIds = new ArrayList<Integer>();
+			if (w != null)
+				wordIds = words.addEntities(w);
+			doc_word.addPair(documents.getLastAddedItemId(), wordIds);
+		}
 	    
 	    doc.close();
 	}
