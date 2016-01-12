@@ -43,14 +43,14 @@ public class Dictionary {
 				Database.COLLATION;
 		System.out.println(insert);
 		connection = database.getConnection();
-		connection.setAutoCommit(false);
+		connection.setAutoCommit(true);
 		Statement statement = connection.createStatement();
 		result = statement.executeUpdate(insert) > 0 ? true : false;
 		Statement ps = connection.createStatement();
 		resultSet = ps.executeQuery(get);
 		resultSet.next();
 		int id = resultSet.getInt(1);
-		connection.commit();
+//		connection.commit();
 		resultSet.close();
 		connection.close();
 		
