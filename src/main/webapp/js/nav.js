@@ -4,15 +4,16 @@ function nav(val){
 	//is called when logout is clicked.
 if(val==1)
  	{
-		$("nav").hide(mAnimationSpeed, function() {
-			mainDiv.fadeOut(mAnimationSpeed);
-			mainDiv.promise().done(function() {
-				currentDiv.detach();
-				loginDiv.appendTo(mainDiv);
-				currentDiv = loginDiv;
-				mainDiv.fadeIn(mAnimationSpeed);
-			});
-		});
+//		$("nav").hide(mAnimationSpeed, function() {
+//			mainDiv.fadeOut(mAnimationSpeed);
+//			mainDiv.promise().done(function() {
+//				currentDiv.detach();
+//				loginDiv.appendTo(mainDiv);
+//				currentDiv = loginDiv;
+//				mainDiv.fadeIn(mAnimationSpeed);
+//			});
+//		});
+		location.reload();
 	}
 else if(val==2){	// is called when Login is valid.
 	$("nav").show(mAnimationSpeed,function(){
