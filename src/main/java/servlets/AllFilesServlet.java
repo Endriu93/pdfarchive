@@ -187,6 +187,8 @@ public class AllFilesServlet extends HttpServlet {
 		if(word==null) word="";
 		else word = word.trim();
 		
+		boolean searchByWord = !word.isEmpty();
+		
 		Documents documents = new Documents(database);
 		Dictionary titles = new Dictionary(database,
 				DictionaryEnum.TITLES);
@@ -221,7 +223,8 @@ public class AllFilesServlet extends HttpServlet {
 		
 		docsByTitle.retainAll(docsByCategory);
 		docsByTitle.retainAll(docsByTag);
-		docsByTitle.retainAll(docsByWord);
+		if (searchByWord)
+			docsByTitle.retainAll(docsByWord);
 		docsByTitle.retainAll(docsByUser);
 		
 		List<Integer> titlesResultIDs = docsByTitle.isEmpty() ? new ArrayList<Integer>() : documents.getTitleIds(docsByTitle); 

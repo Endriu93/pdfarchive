@@ -35,8 +35,9 @@ mUser = {
 mAnimationSpeed = 400;
 
 mSearchUtil = {
-		makeUserWordJson: function(word){
-			return {json: JSON.stringify({ userID: this.id.toString(), word: word.toString()})};
+		makeUserWordJson: function(word1){
+			ww= word1 ? word1.toString() : "";
+			return {json: JSON.stringify({ userID: mUser.id.toString(), word: ww })};
 		}	
 };
 
