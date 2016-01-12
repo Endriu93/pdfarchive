@@ -72,7 +72,7 @@ public class Dictionary {
 		connection = database.getConnection();
 		PreparedStatement statement = connection.prepareStatement(insert);
 		PreparedStatement statement2 = connection.prepareStatement(select);
-//		connection.setAutoCommit(false);
+		connection.setAutoCommit(false);
 		for(String name : names)
 		{
 			statement.setString(1, name.toLowerCase());
