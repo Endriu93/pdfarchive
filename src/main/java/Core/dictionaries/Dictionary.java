@@ -39,7 +39,8 @@ public class Dictionary {
 				"default,"+
 				" '"+name.toLowerCase()+"' "+
 				");";
-		String get = "select "+TableEnum.getId()+" from "+TableEnum+" where "+TableEnum.getName()+" = '"+name.toLowerCase()+"'";
+		String get = "select "+TableEnum.getId()+" from "+TableEnum+" where "+TableEnum.getName()+" = '"+name.toLowerCase()+"'"+
+				Database.COLLATION;
 		System.out.println(insert);
 		connection = database.getConnection();
 		connection.setAutoCommit(false);
@@ -65,7 +66,7 @@ public class Dictionary {
 				"default,"+
 				" ? "+
 				");";
-		String select = String.format("select %s from %s where %s = ?",TableEnum.getId(),TableEnum.getTableName(),TableEnum.getName()); 
+		String select = String.format("select %s from %s where %s = ?"+Database.COLLATION,TableEnum.getId(),TableEnum.getTableName(),TableEnum.getName()); 
 		
 		System.out.println(insert);
 		connection = database.getConnection();
@@ -96,7 +97,7 @@ public class Dictionary {
 						TableEnum+
 						" where "+
 						TableEnum.getName()+
-						"= '"+name.toLowerCase()+"' ;";
+						"= '"+name.toLowerCase()+"' "+Database.COLLATION+" ;";
 		
 		connection = database.getConnection();
 		Statement statement = connection.createStatement();
@@ -134,7 +135,7 @@ public class Dictionary {
 	// this method uses '==' comparison, hence it returns only one ID
 	public int getEntityByName(String name) throws SQLException, ClassNotFoundException {
 		int res;
-		String get = String.format("select %s from %s where  %s = '%s' ;",TableEnum.getId(),TableEnum,TableEnum.getName(),name.toLowerCase());
+		String get = String.format("select %s from %s where  %s = '%s' "+Database.COLLATION+";",TableEnum.getId(),TableEnum,TableEnum.getName(),name.toLowerCase());
 		System.out.println(get);
 		
 		connection = database.getConnection();
@@ -154,7 +155,7 @@ public class Dictionary {
 	public List<Integer> getEntitiesByName(String name) throws SQLException, ClassNotFoundException {
 		
 		ArrayList<Integer> res = new ArrayList<Integer>();
-		String get = String.format("select %s from %s where  %s like '%s' ;",TableEnum.getId(),TableEnum,TableEnum.getName(),"%"+name.toLowerCase()+"%");
+		String get = String.format("select %s from %s where  %s like '%s' "+Database.COLLATION+" ;",TableEnum.getId(),TableEnum,TableEnum.getName(),"%"+name.toLowerCase()+"%");
 		System.out.println(get);
 		
 		connection = database.getConnection();

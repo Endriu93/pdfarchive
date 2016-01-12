@@ -192,7 +192,7 @@ function loadCategories(select){
    }
  function uploadComplete(xhr, ajaxOptions, thrownError) {
      /* This event is raised when the server send back a response */
-     alert("File was uploaded succesfully");
+     alert("Poprawnie dodano plik do archiwum");
      $("progress").hide();
      $("#progressNumber").html("");
    }

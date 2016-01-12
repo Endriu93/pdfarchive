@@ -51,6 +51,7 @@ public class DownloadServlet extends HttpServlet {
 			{
 				response.getOutputStream().write(bytes,0,bytesread);
 			}
+			response.getOutputStream().flush();
 			response.getOutputStream().close();
 			file.close();
 			

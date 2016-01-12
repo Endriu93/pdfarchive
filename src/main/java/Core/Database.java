@@ -14,6 +14,7 @@ public class Database {
   public String Password;
   public String Port;
   public String Host;
+  public static final String COLLATION = " COLLATE utf8_unicode_ci "; // use this in where clauses in strings
   
   public Database(String DbName, String Host, String port, String user, String password) {
 	  this.DbName = DbName+"?characterEncoding=utf8";
