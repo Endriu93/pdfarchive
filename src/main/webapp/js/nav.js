@@ -69,6 +69,7 @@ $("#navUploadFile").click(function(){
 		currentDiv.detach();
 		uploadDiv.appendTo(mainDiv);
 		currentDiv = uploadDiv;
+		loadCategories($(uploadDiv.find("#select_category")));
 		if(isUploadInitialized==false)
 		{
 			uploadInit();

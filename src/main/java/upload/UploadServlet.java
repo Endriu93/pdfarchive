@@ -40,6 +40,7 @@ import Core.PDFManager;
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ERR_FILE_UNEXPECTED = "Format pliku, który próbujesz dodać, jest nieonsługiwany.";
 	private static final String ERR_MSG_TITLE_EXIST = "Dokument o podanej nazwie już istnieje w archiwum.";
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,6 +103,7 @@ public class UploadServlet extends HttpServlet {
 		catch(Exception e)
 		{
 			e.printStackTrace(response.getWriter());
+			response.sendError(516, ERR_FILE_UNEXPECTED);
 		}
 	    finally
 	    {

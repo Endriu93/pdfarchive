@@ -94,6 +94,8 @@ function loadCategories(select){
         data: mUser.makeUserJson(),
         //Ajax events
         success: function(xml){
+    		select.empty();
+
         	var root = $(xml).find('category')
         	root.each(function(){
         		var val = $(this).text();
@@ -200,7 +202,12 @@ function loadCategories(select){
    }
 
    function uploadFailed(xhr, ajaxOptions, thrownError) {
-     alert("There was an error attempting to upload the file."+xhr.status+" "+thrownError);
+	   if(xhr.status==515)
+		   alert("Dokument o podanej nazwie już istnieje w archiwum");
+	   else if(xhr.status==516)
+		   alert("Wystąpił błąd podczas dodawania dokumentu. Upewnij się czy dodawany plik jest w formacie PDF");
+	   else
+		   alert("There was an error attempting to upload the file."+xhr.status+" "+thrownError);
    }
 
    function uploadCanceled(evt) {

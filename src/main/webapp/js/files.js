@@ -70,7 +70,9 @@ var ContentManager = {
                        primary: "ui-icon-check"
                    },
                    click: function() {
+                	   $("#categoryDialog").dialog("close");
                        $( this ).dialog( "close" );
+                       $("#filesCategories").trigger("click");
                    }
                }
            ]
@@ -203,7 +205,7 @@ var ContentManager = {
             root.each(function () {
                 var val = $(this).text();
                 content[i++] = '<div class="item">' +
-                    '<img src="images/PDF_icon.png" alt="pdf">' +
+                    '<img src="images/PDF_icon.png" alt="pdf" class="pointer">' +
                     '<span class="item_title">' + val + '</span>' +
                     '</div>';
             });
@@ -275,13 +277,20 @@ var ContentManager = {
             root.each(function () {
                 var val = $(this).text();
                 content[i++] = '<div class="item">' +
-                    '<img src="images/folder.png" alt="pdf">' +
+                    '<img src="images/folder.png" alt="pdf" class="pointer">' +
                     '<span class="item_title">' + val + '</span>' +
                     '</div>';
             });
             var container_end = '</div>';
             var result = container_start + content.join("\n") + container_end;
             ref.categories = $(result);
+            ref.categories.find(".item").click(
+            		function(){
+            		var tit = $(this).find('.item_title').text().trim();
+                    NavManager.HLight($('#filesDocuments'));
+            		ContentManager.showAllFiles("",tit,"","");
+            		}
+            		);
             //ref.allFilesCreated = true;
         }).fail(function () {
             var container_start = '<div class="container">';
