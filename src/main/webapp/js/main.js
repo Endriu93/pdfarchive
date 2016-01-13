@@ -49,3 +49,9 @@ mDownloadUtil = {
 		}
 }
 
+mDeleteUtil = {
+		makeDeleteJson: function(title1){
+			return {json: JSON.stringify({ userID: mUser.id.toString(), title: title1 })};
+		}
+}
+

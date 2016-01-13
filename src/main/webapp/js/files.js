@@ -77,6 +77,61 @@ var ContentManager = {
                }
            ]
         });
+        
+        $("#fileDialog").dialog({
+            autoOpen: false,
+            buttons: [
+                {
+                    text: "Pokaż",
+                    icons: {
+                        primary: "ui-icon-document"
+                    },
+                    click: function() {
+                    	if(tit)
+                		mDownloadUtil.performRequest(tit);
+                    }
+                },
+                {
+                	text:"Usuń",
+                	icons: {
+                		primary: "ui-icon-trash"
+                	},
+                	click: function() {
+                    	if(tit)
+                    		{
+
+                    		$.ajax({
+                                url: 'http://pdfarchive-wfiisaw.rhcloud.com/DeleteDocumentServlet',  //Server script to process data
+                                type: 'POST',
+                                data:  mDeleteUtil.performRequest(tit),
+                                //Options to tell jQuery not to process data or worry about content-type.
+                                cache: false,
+                                
+                            }).done(function(reply) {
+                            	$( this ).dialog( "close" );
+                        		ContentManager.showAllFiles("","","","");
+                            }).always(function(xhr){
+                            	if(xhr.status==517)
+                         		   alert("Nie udało się usunąć dokumentu.");
+                            	else {
+                            		alert("Nieudana operacja usuwania dokumentu.");
+                            	}
+                    		});
+                    		}
+                    }
+                },
+                {
+                    text: "Close",
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+         });
+        
         $( "#categoryDialog" ).dialog({
             autoOpen: false,
             buttons: [
@@ -217,8 +272,8 @@ var ContentManager = {
     		s=6;
             ref.allFiles.find(".item").click(
             		function(){
-            		var tit = $(this).find('.item_title').text();
-            		mDownloadUtil.performRequest(tit);
+            		tit = $(this).find('.item_title').text();
+                    $( "#fileDialog" ).dialog( "open" );
             		}
             		);
             ref.allFilesCreated = true;

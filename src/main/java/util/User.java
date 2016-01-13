@@ -25,5 +25,21 @@ public class User {
 		return userID;
 	};
 	
+	public static String getTitle(HttpServletRequest request) {
+		JsonReader reader = Json.createReader(new StringReader(request.getParameter("json"))); 
+		JsonObject json = reader.readObject();
+		
+		String title = json.getString("title");	
+		return title;
+	};
+	
+	public static String getCategory(HttpServletRequest request) {
+		JsonReader reader = Json.createReader(new StringReader(request.getParameter("json"))); 
+		JsonObject json = reader.readObject();
+		
+		String title = json.getString("category");	
+		return title;
+	};
+	
 	
 }
