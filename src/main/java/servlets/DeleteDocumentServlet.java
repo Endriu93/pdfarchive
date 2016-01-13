@@ -42,10 +42,9 @@ public class DeleteDocumentServlet extends HttpServlet {
 		try {
 			deleteFile(database, UserId, title);
 		} catch (ClassNotFoundException e) {
-			response.sendError(517);
+			e.printStackTrace(response.getWriter());
 		} catch (SQLException e) {
 			e.printStackTrace(response.getWriter());
-			response.sendError(518);
 		}
 	}
 
