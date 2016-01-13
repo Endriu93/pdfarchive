@@ -44,6 +44,7 @@ public class DeleteDocumentServlet extends HttpServlet {
 		} catch (ClassNotFoundException e) {
 			response.sendError(517);
 		} catch (SQLException e) {
+			e.printStackTrace(response.getWriter());
 			response.sendError(518);
 		}
 	}

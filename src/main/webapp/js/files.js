@@ -103,7 +103,7 @@ var ContentManager = {
                     		$.ajax({
                                 url: 'http://pdfarchive-wfiisaw.rhcloud.com/DeleteDocumentServlet',  //Server script to process data
                                 type: 'POST',
-                                data:  mDeleteUtil.performRequest(tit),
+                                data:  mDeleteUtil.makeDeleteJson(tit),
                                 //Options to tell jQuery not to process data or worry about content-type.
                                 cache: false,
                                 
