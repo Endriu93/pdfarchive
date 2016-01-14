@@ -78,8 +78,44 @@ var ContentManager = {
            ]
         });
         
+        $("#fileDeleteDialog").dialog({
+            autoOpen: false,
+            buttons: [
+                {
+                    text: "Tak",
+                    click: function() {
+                    	if(tit)
+                		{
+                		$.ajax({
+                            url: 'http://pdfarchive-wfiisaw.rhcloud.com/DeleteDocumentServlet',  //Server script to process data
+                            type: 'POST',
+                            data:  mDeleteUtil.makeDeleteJson(tit),
+                            //Options to tell jQuery not to process data or worry about content-type.
+                            cache: false,
+                            
+                        }).done(function(reply) {
+                        	$("#fileDialog").dialog( "close" );
+                    		ContentManager.showAllFiles("","","","");
+                        }).fail(function(xhr){
+                        	if(xhr.status==517)
+                     		   alert("Nie udało się usunąć dokumentu.");
+                		});
+                		}
+                        $( this ).dialog( "close" );
+                    }
+                },
+                {
+                    text: "Nie",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+         });
+        
         $("#fileDialog").dialog({
             autoOpen: false,
+            width:500,
             buttons: [
                 {
                     text: "Pokaż",
@@ -89,6 +125,7 @@ var ContentManager = {
                     click: function() {
                     	if(tit)
                 		mDownloadUtil.performRequest(tit);
+                        $( this ).dialog( "close" );
                     }
                 },
                 {
@@ -97,27 +134,7 @@ var ContentManager = {
                 		primary: "ui-icon-trash"
                 	},
                 	click: function() {
-                    	if(tit)
-                    		{
-
-                    		$.ajax({
-                                url: 'http://pdfarchive-wfiisaw.rhcloud.com/DeleteDocumentServlet',  //Server script to process data
-                                type: 'POST',
-                                data:  mDeleteUtil.makeDeleteJson(tit),
-                                //Options to tell jQuery not to process data or worry about content-type.
-                                cache: false,
-                                
-                            }).done(function(reply) {
-                            	$( this ).dialog( "close" );
-                        		ContentManager.showAllFiles("","","","");
-                            }).always(function(xhr){
-                            	if(xhr.status==517)
-                         		   alert("Nie udało się usunąć dokumentu.");
-                            	else {
-                            		alert("Nieudana operacja usuwania dokumentu.");
-                            	}
-                    		});
-                    		}
+                    	$("#fileDeleteDialog").dialog( "open" );
                     }
                 },
                 {
@@ -274,6 +291,33 @@ var ContentManager = {
             		function(){
             		tit = $(this).find('.item_title').text();
                     $( "#fileDialog" ).dialog( "open" );
+                    $.ajax({
+                        url: 'http://pdfarchive-wfiisaw.rhcloud.com/DocInfoServlet',  //Server script to process data
+                        type: 'POST',
+                        data: mDeleteUtil.makeDeleteJson(tit),
+                        //Ajax events
+                        cache: false
+                    }).done(function(xml) {
+                        var root = $(xml);
+                        var title = $("#fileDialogTitle");
+                        var description = $("#fileDialogDescription");
+                        var add_date = $("#fileDialogAddDate");
+                        var author = $("#fileDialogAuthor");
+                        var category = $("#fileDialogCategory");
+                        
+                        var ti = root.find("title").text();
+                        var desc = root.find("desc").text();
+                        var add = root.find("add_date").text();
+                        var aut = root.find("author").text();
+                        var cat = root.find("category").text();
+
+                        
+                        title.append("<span>"+ti+"</span>");
+                        description.append("<span>"+desc+"</span>");
+                        add_date.append("<span>"+add+"</span>");
+                        author.append("<span>"+aut+"</span>");
+                        category.append("<span>"+cat+"</span>");
+                    });
             		}
             		);
             ref.allFilesCreated = true;
