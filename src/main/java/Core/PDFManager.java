@@ -67,7 +67,7 @@ public class PDFManager {
 		
 	    PreparedDocument document = new PreparedDocument();
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	    Date date = new Date();
+	    Date date = Calendar.getInstance().getTime();
 	    System.out.println(dateFormat.format(date)); //2014/08/06 15:59:48
 	    document.setAddDate(dateFormat.format(date));
 	    Calendar cal = new GregorianCalendar();
