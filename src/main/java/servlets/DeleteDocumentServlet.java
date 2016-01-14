@@ -60,8 +60,8 @@ public class DeleteDocumentServlet extends HttpServlet {
 				+ " where DocumentUser.USER_ID = "+userId+""
 				+ " and Titles.NAME='"+title+"');";
 		String query4 = " delete from Documents"
-				+ " where DOCUMENT_ID ="
-				+ " select DDT.DOCUMENT_ID from DDT;";
+				+ " where Documents.DOCUMENT_ID ="
+				+ " COALESCE(select DDT.DOCUMENT_ID from DDT,0);";
 
 		System.out.println(query1+query2+query3+query4);
 		Connection connection;
