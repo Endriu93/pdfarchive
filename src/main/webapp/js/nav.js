@@ -28,7 +28,7 @@ mainDiv.css("display","none");
 uploadDiv = $("<div></div>");
 uploadDiv.load("html/UploadFile.html");
 
-filesDiv = $("<div></div>");
+filesDiv = $("<div class='height100'></div>");
 filesDiv.load("html/FileManager.html");
 
 loginDiv = $("<div></div>");

@@ -298,6 +298,7 @@ var ContentManager = {
                         //Ajax events
                         cache: false
                     }).done(function(xml) {
+              
                         var root = $(xml);
                         var title = $("#fileDialogTitle");
                         var description = $("#fileDialogDescription");
@@ -312,11 +313,11 @@ var ContentManager = {
                         var cat = root.find("category").text();
 
                         
-                        title.append("<span>"+ti+"</span>");
-                        description.append("<span>"+desc+"</span>");
-                        add_date.append("<span>"+add+"</span>");
-                        author.append("<span>"+aut+"</span>");
-                        category.append("<span>"+cat+"</span>");
+                        title.text("tytuł: "+ti+"");
+                        description.text("opis: "+desc+"");
+                        add_date.text("data dodania: "+add+"");
+                        author.text("autor: "+aut+"");
+                        category.text("kategoria: "+cat+"");
                     });
             		}
             		);
