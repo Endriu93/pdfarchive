@@ -49,21 +49,21 @@ public class DeleteDocumentServlet extends HttpServlet {
 	}
 
 	private void deleteFile(Database database, String userId, String title) throws ClassNotFoundException, SQLException {
-		String query = "create table if not exists DDT (DOCUMENT_ID int not null);"
-				+ " delete from DDT;"
-				+ " insert into DDT "
+		String query1 = "create table if not exists DDT (DOCUMENT_ID int not null);";
+		String query2 = " delete from DDT;";
+		String query3 =	" insert into DDT "
 				+ " (select Documents.DOCUMENT_ID from Documents"
 				+ " inner join DocumentUser"
 				+ " on Documents.DOCUMENT_ID = DocumentUser.DOCUMENT_ID"
 				+ " inner join Titles"
 				+ " on Documents.TITLE_ID = Titles.TITLE_ID"
 				+ " where DocumentUser.USER_ID = "+userId+""
-				+ " and Titles.NAME='"+title+"');"
-				+ " delete from Documents"
+				+ " and Titles.NAME='"+title+"');";
+		String query4 = " delete from Documents"
 				+ " where DOCUMENT_ID ="
 				+ " select DDT.DOCUMENT_ID from DDT;";
 
-		System.out.println(query);
+		System.out.println(query1+query2+query3+query4);
 		Connection connection;
 		Statement statement;
 		int resultSet;
@@ -71,7 +71,11 @@ public class DeleteDocumentServlet extends HttpServlet {
 
 		connection = database.getConnection();
 		statement = connection.createStatement();
-		resultSet = statement.executeUpdate(query);
+		resultSet = statement.executeUpdate(query1);
+		resultSet = statement.executeUpdate(query2);
+		resultSet = statement.executeUpdate(query3);
+		resultSet = statement.executeUpdate(query4);
+
 
 		connection.close();
 		
