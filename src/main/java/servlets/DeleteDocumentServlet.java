@@ -59,9 +59,9 @@ public class DeleteDocumentServlet extends HttpServlet {
 				+ " on Documents.TITLE_ID = Titles.TITLE_ID"
 				+ " where DocumentUser.USER_ID = "+userId+""
 				+ " and Titles.NAME='"+title+"');";
-		String query4 = " delete from Documents"
-				+ " where Documents.DOCUMENT_ID ="
-				+ " COALESCE(select DDT.DOCUMENT_ID from DDT,0);";
+		String query4 = "set @x = (select DDT.DOCUMENT_ID from DDT limit 1)";
+		String query5 = " delete from Documents"
+				+ " where Documents.DOCUMENT_ID = @x";
 
 		System.out.println(query1+query2+query3+query4);
 		Connection connection;
@@ -75,6 +75,7 @@ public class DeleteDocumentServlet extends HttpServlet {
 		resultSet = statement.executeUpdate(query2);
 		resultSet = statement.executeUpdate(query3);
 		resultSet = statement.executeUpdate(query4);
+		resultSet = statement.executeUpdate(query5);
 
 
 		connection.close();
