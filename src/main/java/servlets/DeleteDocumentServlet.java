@@ -66,14 +66,13 @@ public class DeleteDocumentServlet extends HttpServlet {
 		System.out.println(query);
 		Connection connection;
 		Statement statement;
-		ResultSet resultSet;
+		int resultSet;
 		boolean result;
 
 		connection = database.getConnection();
 		statement = connection.createStatement();
-		resultSet = statement.executeQuery(query);
+		resultSet = statement.executeUpdate(query);
 
-		resultSet.close();
 		connection.close();
 		
 		return;
