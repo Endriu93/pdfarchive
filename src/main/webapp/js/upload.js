@@ -21,10 +21,23 @@ function uploadInit(){
 				    $("#tags").find(".tag").each(function(){
 				    	Tags[i++] = $(this).text();
 				    });
+				    
+				    if(!Validator.isAllFieldValid())
+				    	{
+				    	 alert("Proszę wypełnić wszystkie pola \n Błędne pola są oznaczone czerwonym znakiem");
+				    	 return;
+				    	}
+				    
+				    
 				    var form = $('#form1')[0];
 				    var formJ = $(form);
 				    formJ.find("#UserID").val(mUser.getId().toString());
 				    formJ.find("#Index").val(Index);
+				    formJ.find("#Filename").val(Filename);
+				    formJ.find("#Category").val(Category);
+				    formJ.find("#Tags").val(Tags.join(":"));
+				    formJ.find("#Description").val(Description);
+
 				    var formData = new FormData(form);
 //				    formData.set('UserID',mUser.getId().toString());
 //				    formData.set('Index',Index);
@@ -38,13 +51,13 @@ function uploadInit(){
 				            }
 				            return myXhr;
 				        },
-				        beforeSend: function (request)
-			            {
-			                request.setRequestHeader("Filename",Filename);
-			                request.setRequestHeader("Description",Description);
-			                request.setRequestHeader("Category",Category);
-			                request.setRequestHeader("Tags",Tags.join(":"));
-			            },
+//				        beforeSend: function (request)
+//			            {
+//			                request.setRequestHeader("Filename",Filename);
+//			                request.setRequestHeader("Description",Description);
+//			                request.setRequestHeader("Category",Category);
+//			                request.setRequestHeader("Tags",Tags.join(":"));
+//			            },
 				        //Ajax events
 				        success: uploadComplete,
 				        error: uploadFailed,
@@ -112,6 +125,26 @@ function loadCategories(select){
         cache: false
     });
 	
+}
+
+Validator = {
+		isAllFieldValid: function(){
+			var Filename = $("#fileName").text();
+		    var Description = $("#description").find(".tag").text();
+		    var Category = $("#category").find(".tag").text();
+		    var Tags = [];
+		    var Index = $('#words').find(".tag").text();
+		    var i=0;
+		    $("#tags").find(".tag").each(function(){
+		    	Tags[i++] = $(this).text();
+		    });
+		    
+		    if(!Filename || !Description || !Category || !Index)
+		    	return false;
+		    else if(!Tags || Tags.length==0)
+		    	return false;
+		    else return true;
+		}
 }
  var ItemValidator =  {
 		 items: new Object(),
@@ -203,6 +236,7 @@ function loadCategories(select){
      alert("Poprawnie dodano plik do archiwum");
      $("progress").hide();
      $("#progressNumber").html("");
+     ShowDocumentsAfterUpload();
    }
 
    function uploadFailed(xhr, ajaxOptions, thrownError) {
@@ -212,6 +246,8 @@ function loadCategories(select){
 		   alert("Wystąpił błąd podczas dodawania dokumentu. Upewnij się czy dodawany plik jest w formacie PDF");
 	   else
 		   alert("There was an error attempting to upload the file."+xhr.status+" "+thrownError);
+	   $("progress").hide();
+	     $("#progressNumber").html("");
    }
 
    function uploadCanceled(evt) {

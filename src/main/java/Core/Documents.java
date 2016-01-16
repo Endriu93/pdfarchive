@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -178,14 +179,16 @@ public class Documents {
 		PreparedStatement myStmt = null;
 		String insert2 = "insert into Documents values(default,?,?,?,?,?,?,?)";
 
+		long datemillis = Calendar.getInstance().getTimeInMillis();
+		
 		connection = database.getConnection();
 		myStmt = connection.prepareStatement(insert2);
 		myStmt.setBinaryStream(1, document.getData());
 		myStmt.setInt(2, document.getAuthorID());
 		myStmt.setInt(3, document.getTitleId());
 		myStmt.setString(4, document.getDescription());
-		myStmt.setDate(5, new Date(2001, 7, 7));
-		myStmt.setDate(6, new Date(2001, 3, 3));
+		myStmt.setDate(5, new Date(datemillis));
+		myStmt.setDate(6, new Date(datemillis));
 		myStmt.setInt(7, document.getSize());
 
 		System.out.println("adding file to database: "+System.currentTimeMillis());

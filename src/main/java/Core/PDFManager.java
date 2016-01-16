@@ -73,7 +73,7 @@ public class PDFManager {
 	    Calendar cal = new GregorianCalendar();
 	    cal.set(2001,1,1);
 	    Date dates = cal.getTime();
-	    document.setCreateDate(dateFormat.format(dates));
+	    document.setCreateDate(dateFormat.format(date));
 	    document.setAuthorId(AuthorId);
 	    document.setTitleId(TitleId);
 	    document.setDescription(description);

@@ -67,29 +67,37 @@ public class UploadServlet extends HttpServlet {
 	    userIDString = (new BufferedReader(new InputStreamReader(userPart.getInputStream()))).readLine();
 	    userID = Integer.parseInt(userIDString);
 	    
+	    Part FilenamePart = request.getPart("Filename");
+	    String Filename = (new BufferedReader(new InputStreamReader(FilenamePart.getInputStream()))).readLine();
+	    
+	    Part CategoryPart = request.getPart("Category");
+	    String Category = (new BufferedReader(new InputStreamReader(CategoryPart.getInputStream()))).readLine();
+	    
+	    Part DescriptionPart = request.getPart("Description");
+	    String Description = (new BufferedReader(new InputStreamReader(DescriptionPart.getInputStream()))).readLine();
+	    
+	    Part TagsPart = request.getPart("Tags");
+	    String Tags = (new BufferedReader(new InputStreamReader(TagsPart.getInputStream()))).readLine();
+	    
 	    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-	    String fileName = request.getHeader("Filename");
 	    
 	    String dbHost = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
 	    String dbPort = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
 	    Database database = new Database("pdfarchive",dbHost , dbPort, "adminIBymkZq", "DRTJ4PEjeMsG");
 	    
 	    // if provided title exist resend error message
-	    if(!validateFile(fileName,userIDString,database)) 
+	    if(!validateFile(Filename,userIDString,database)) 
 	    	{
 	    		response.sendError(515,ERR_MSG_TITLE_EXIST);
 	    		return;
 	    	}
 	    
-	    String description = request.getHeader("Description");
-	    String category = request.getHeader("Category");
-	    String multipleTags = request.getHeader("Tags");
 	    String[] tags = null;
-	    if(multipleTags!=null)tags  = multipleTags.split(":");
+	    if(Tags!=null)tags  = Tags.split(":");
 	    InputStream fileContent = filePart.getInputStream();
 	    if(fileContent==null) return;
 	   
-	    response.getWriter().println(fileName);
+	    response.getWriter().println(Filename);
 //	    response.getWriter().println("start: "+System.currentTimeMillis());
 	    long start = System.currentTimeMillis();
 	   
@@ -99,12 +107,12 @@ public class UploadServlet extends HttpServlet {
 		
 		input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, tags != null ? tags : new String[]{""},category != null ? category : "", index(index),fileName,userIDString);
+		manager.upload(input,Description!=null ? Description : "", tags != null ? tags : new String[]{""},Category != null ? Category : "", index(index),Filename != null ? Filename : "Untitled File",userIDString);
 	    }
 		catch(Exception e)
 		{
 			e.printStackTrace(response.getWriter());
-//			response.sendError(516, ERR_FILE_UNEXPECTED);
+			response.sendError(516, ERR_FILE_UNEXPECTED);
 		}
 	    finally
 	    {

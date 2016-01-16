@@ -54,12 +54,14 @@ $("#navYourFiles").click(function(){
 		currentDiv.detach();
 		filesDiv.appendTo(mainDiv);
 		currentDiv = filesDiv;
-		if(isInitialized==false)
+//		if(isInitialized==false)
 			{
 			initFilesManager();
 			isInitialized = true;
 			}
 		mainDiv.fadeIn(mAnimationSpeed);
+		uploadDiv.empty();
+		uploadDiv.load("html/UploadFile.html");
 	})
 	
 });
@@ -67,17 +69,40 @@ $("#navUploadFile").click(function(){
 	mainDiv.fadeOut(mAnimationSpeed);
 	mainDiv.promise().done(function(){
 		currentDiv.detach();
+		
 		uploadDiv.appendTo(mainDiv);
 		currentDiv = uploadDiv;
 		loadCategories($(uploadDiv.find("#select_category")));
-		if(isUploadInitialized==false)
+//		if(isUploadInitialized==false)
 		{
 			uploadInit();
 			isUploadInitialized = true;
 		}
 		mainDiv.fadeIn(mAnimationSpeed);
+		filesDiv.empty();
+		filesDiv.load("html/FileManager.html");
 	})
 });
+
+ShowDocumentsAfterUpload = function(){
+	mainDiv.fadeOut(mAnimationSpeed);
+	mainDiv.promise().done(function(){
+		currentDiv.detach();
+		filesDiv.appendTo(mainDiv);
+		currentDiv = filesDiv;
+//		if(isInitialized==false)
+			{
+			initFilesManager();
+			isInitialized = true;
+			}
+		mainDiv.fadeIn(mAnimationSpeed).done(function(){
+			$("#filesDocuments").trigger("click");
+			uploadDiv.empty();
+			uploadDiv.load("html/UploadFile.html");
+		})
+		
+	});
+};
 $("#navStart").click(function(){
 	mainDiv.fadeOut(mAnimationSpeed);
 	mainDiv.promise().done(function(){
