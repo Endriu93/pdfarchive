@@ -12,7 +12,8 @@ function uploadInit(){
 			 var progres = $("progress");
 			 progres.hide();
 			 $('#upload_button').click(function(){
-				    var Filename = ConvertToAscii($("#fileName").text());
+//				    var Filename = ConvertToAscii($("#fileName").text());
+				    var Filename = $("#fileName").text();
 				    var Description = $("#description").find(".tag").text();
 				    var Category = ConvertToAscii($("#category").find(".tag").text());
 				    var Tags = [];
