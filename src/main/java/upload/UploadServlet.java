@@ -84,7 +84,8 @@ public class UploadServlet extends HttpServlet {
 	    String description = request.getHeader("Description");
 	    String category = request.getHeader("Category");
 	    String multipleTags = request.getHeader("Tags");
-	    String[] tags = multipleTags.split(":");
+	    String[] tags = null;
+	    if(multipleTags!=null)tags  = multipleTags.split(":");
 	    InputStream fileContent = filePart.getInputStream();
 	    if(fileContent==null) return;
 	   
@@ -98,7 +99,7 @@ public class UploadServlet extends HttpServlet {
 		
 		input = new ReusableInputStream(fileContent);
 		System.out.println("input available: "+input.available());
-		manager.upload(input,description, tags != null ? tags : new String[]{"other"},category, index(index),fileName,userIDString);
+		manager.upload(input,description, tags != null ? tags : new String[]{""},category != null ? category : "", index(index),fileName,userIDString);
 	    }
 		catch(Exception e)
 		{

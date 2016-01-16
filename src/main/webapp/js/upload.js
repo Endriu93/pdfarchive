@@ -22,12 +22,12 @@ function uploadInit(){
 				    	Tags[i++] = $(this).text();
 				    });
 				    var form = $('#form1')[0];
-//				    var formJ = $(form);
-//				    formJ.find("#UserID").val(mUser.getId().toString());
-//				    formJ.find("#Index").val(Index);
+				    var formJ = $(form);
+				    formJ.find("#UserID").val(mUser.getId().toString());
+				    formJ.find("#Index").val(Index);
 				    var formData = new FormData(form);
-				    formData.set('UserID',mUser.getId().toString());
-				    formData.set('Index',Index);
+//				    formData.set('UserID',mUser.getId().toString());
+//				    formData.set('Index',Index);
 				    $.ajax({
 				        url: 'http://pdfarchive-wfiisaw.rhcloud.com/UploadServlet',  //Server script to process data
 				        type:'POST',
