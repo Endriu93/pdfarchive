@@ -13,7 +13,7 @@ function uploadInit(){
 			 progres.hide();
 			 $('#upload_button').click(function(){
 				    var Filename = ConvertToAscii($("#fileName").text());
-				    var Description = ConvertToAscii($("#description").find(".tag").text());
+				    var Description = $("#description").find(".tag").text();
 				    var Category = ConvertToAscii($("#category").find(".tag").text());
 				    var Tags = [];
 				    var Index = ConvertToAscii($('#words').find(".tag").text());
@@ -88,6 +88,7 @@ function uploadInit(){
 					 value = select.val();
 					 }
 				 if(!value || !value.toString().trim()) return false;
+//				 value = ConvertToAscii(value);
 				 var closest = $(this).closest(".extInCtn");
 				 var content="<div class=\"tag\">"+value
 				 +"<img src=\"images/remove2.png\" data-toggle=\"tooltip\" title=\"remove this tag\" class=\"tag_inside\">"
@@ -259,7 +260,7 @@ Validator = {
    
 ConvertToAscii = function(name){
 	if(!name) return false;
-	name.toString();
+	name = name.replace(/ /g,'')
 	newname= name.replace(/[^\x00-\x7F]/g, "_");
 	return newname;
 };   
