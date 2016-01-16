@@ -12,11 +12,11 @@ function uploadInit(){
 			 var progres = $("progress");
 			 progres.hide();
 			 $('#upload_button').click(function(){
-				    var Filename = $("#fileName").text();
-				    var Description = $("#description").find(".tag").text();
-				    var Category = $("#category").find(".tag").text();
+				    var Filename = ConvertToAscii($("#fileName").text());
+				    var Description = ConvertToAscii($("#description").find(".tag").text());
+				    var Category = ConvertToAscii($("#category").find(".tag").text());
 				    var Tags = [];
-				    var Index = $('#words').find(".tag").text();
+				    var Index = ConvertToAscii($('#words').find(".tag").text());
 				    var i=0;
 				    $("#tags").find(".tag").each(function(){
 				    	Tags[i++] = $(this).text();
@@ -35,7 +35,9 @@ function uploadInit(){
 				    formJ.find("#Index").val(Index);
 				    formJ.find("#Filename").val(Filename);
 				    formJ.find("#Category").val(Category);
-				    formJ.find("#Tags").val(Tags.join(":"));
+				    tagsAS = ConvertToAscii(Tags.join(":"));
+				    if(!tagsAS) tagsAS="";
+				    formJ.find("#Tags").val(tagsAS);
 				    formJ.find("#Description").val(Description);
 
 				    var formData = new FormData(form);
@@ -85,6 +87,7 @@ function uploadInit(){
 					 select=$(this).parent().find("select");
 					 value = select.val();
 					 }
+				 if(!value || !value.toString().trim()) return false;
 				 var closest = $(this).closest(".extInCtn");
 				 var content="<div class=\"tag\">"+value
 				 +"<img src=\"images/remove2.png\" data-toggle=\"tooltip\" title=\"remove this tag\" class=\"tag_inside\">"
@@ -253,4 +256,11 @@ Validator = {
    function uploadCanceled(evt) {
      alert("The upload has been canceled by the user or the browser dropped the connection.");
    }
+   
+ConvertToAscii = function(name){
+	if(!name) return false;
+	name.toString();
+	newname= name.replace(/[^\x00-\x7F]/g, "_");
+	return newname;
+};   
 	

@@ -61,7 +61,7 @@ public class PDFManager {
 		PDDocumentInformation info = doc.getDocumentInformation();
 		if(filename==null) filename="untitled";
 		int AuthorId = authors.addEntity(info.getAuthor()==null ? "" : info.getAuthor());
-		int TitleId = titles.addEntity(info.getTitle()==null? filename : info.getTitle());
+		int TitleId = titles.addEntity(filename);
 		int CategoryId = categories.addEntity(Category);
 		List<Integer> tagIds = tags.addEntities(Tags);
 		

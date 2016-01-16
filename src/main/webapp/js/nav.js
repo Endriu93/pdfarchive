@@ -95,7 +95,7 @@ ShowDocumentsAfterUpload = function(){
 			initFilesManager();
 			isInitialized = true;
 			}
-		mainDiv.fadeIn(mAnimationSpeed).done(function(){
+		mainDiv.fadeIn(mAnimationSpeed).promise().done(function(){
 			$("#filesDocuments").trigger("click");
 			uploadDiv.empty();
 			uploadDiv.load("html/UploadFile.html");
