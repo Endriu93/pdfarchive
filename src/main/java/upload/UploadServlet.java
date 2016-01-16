@@ -103,7 +103,7 @@ public class UploadServlet extends HttpServlet {
 		catch(Exception e)
 		{
 			e.printStackTrace(response.getWriter());
-			response.sendError(516, ERR_FILE_UNEXPECTED);
+//			response.sendError(516, ERR_FILE_UNEXPECTED);
 		}
 	    finally
 	    {

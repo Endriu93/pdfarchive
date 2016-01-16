@@ -21,7 +21,11 @@ function uploadInit(){
 				    $("#tags").find(".tag").each(function(){
 				    	Tags[i++] = $(this).text();
 				    });
-				    var formData = new FormData($('#form1')[0]);
+				    var form = $('#form1')[0];
+//				    var formJ = $(form);
+//				    formJ.find("#UserID").val(mUser.getId().toString());
+//				    formJ.find("#Index").val(Index);
+				    var formData = new FormData(form);
 				    formData.set('UserID',mUser.getId().toString());
 				    formData.set('Index',Index);
 				    $.ajax({
